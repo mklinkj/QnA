@@ -29,7 +29,7 @@ class MainTests {
 
   /*
      TODO: MVC 매처라면 아래 URL로도 성공해야하는데, Spring Boot 3.0.1 + (Spring Security 6.0.1)에서 실패한다.
-     TODO: If it is an MVC matcher, it should succeed with the url below, but it fails in Spring Boot 3.0.1 + (Spring Security 6.0.1).
+     TODO: Since I used the MVC matcher, it should succeed with the URL below, but fails with Spring Boot 3.0.1+ (Spring Security 6.0.1).
   */
   @Test
   @DisplayName("인증하여 /hello/ 엔드포인트 호출")

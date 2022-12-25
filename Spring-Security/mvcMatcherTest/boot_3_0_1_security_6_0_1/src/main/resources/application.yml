@@ -1,0 +1,16 @@
+# application.yml
+spring:
+  output:
+    ansi:
+      enabled: always
+logging:
+  pattern:
+    console: "%clr(%d{HH:mm:ss.SSS}){faint} [%thread] %clr(%-5level) %clr(%logger{36}){cyan} - %msg%n"
+  level:
+    root: INFO
+    web:
+      DEBUG # 로그인이 안되는 것처럼 보여서 DEBUG로그로 확인을 해보니..
+      # 접근 대상 페이지가 없어서 404 응답처리하게 되면(resource not found) 기본으로 로그인 페이지로 돌리는 것 같다.
+      # 이렇게 DEBUG로 찍어두는 것이 낫겠다.
+    "[org.springframework.security]": TRACE
+    "[org.mklinkj.qna]": DEBUG

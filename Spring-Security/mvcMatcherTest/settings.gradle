@@ -1,0 +1,11 @@
+pluginManagement {
+  repositories {
+    maven { url 'https://repo.spring.io/milestone' }
+    gradlePluginPortal()
+  }
+}
+
+rootProject.name = 'mvcMatcherTest'
+
+include 'boot_2_7_7_security_5_7_6'
+include 'boot_3_0_1_security_6_0_1'

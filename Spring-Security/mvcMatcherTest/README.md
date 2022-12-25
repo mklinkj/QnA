@@ -8,7 +8,7 @@ MVC Matcher rules that worked in Spring Security 5.7.6 don't work in 6.0.1.
 
 
 
-#### Spring 5.7.6 configuration (Spring Boot 2.7.7 environment)
+#### Spring Security 5.7.6 configuration (Spring Boot 2.7.7 environment)
 
 * Example Project: [boot_2_7_7_security_5_7_6](boot_2_7_7_security_5_7_6)
 
@@ -36,7 +36,7 @@ MVC Matcher rules that worked in Spring Security 5.7.6 don't work in 6.0.1.
 
 
 
-#### Spring 6.0.1 configuration (Spring Boot 3.0.1 environment)
+#### Spring Security 6.0.1 configuration (Spring Boot 3.0.1 environment)
 
 * Example Project: [boot_3_0_1_security_6_0_1](boot_3_0_1_security_6_0_1)
 
@@ -82,7 +82,7 @@ Spring Security 5.7.6에서 동작하던 MVC Matcher 규칙이 6.0.1에서 동�
 
 
 
-#### Spring 5.7.6 설정 (Spring Boot 2.7.7 환경)
+#### Spring Security 5.7.6 설정 (Spring Boot 2.7.7 환경)
 
 * 예제 프로젝트: [boot_2_7_7_security_5_7_6](boot_2_7_7_security_5_7_6)
 
@@ -97,7 +97,7 @@ Spring Security 5.7.6에서 동작하던 MVC Matcher 규칙이 6.0.1에서 동�
 * 테스트 코드 
 
   ```java
-    // HTTP 200 응답입니다.
+    // HTTP 200 응답
     @Test
     @WithUserDetails("mklinkj")
     void testCallingHelloVariationWithAuthentication() throws Exception {
@@ -108,7 +108,7 @@ Spring Security 5.7.6에서 동작하던 MVC Matcher 규칙이 6.0.1에서 동�
 
   
 
-#### Spring 6.0.1 설정 (Spring Boot 3.0.1 환경) 
+#### Spring Security 6.0.1 설정 (Spring Boot 3.0.1 환경) 
 
 * 예제 프로젝트: [boot_3_0_1_security_6_0_1](boot_3_0_1_security_6_0_1)
 

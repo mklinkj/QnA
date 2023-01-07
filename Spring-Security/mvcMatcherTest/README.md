@@ -142,5 +142,9 @@ Spring Security 5.7.6에서 동작하던 MVC Matcher 규칙이 6.0.1에서 동�
 
 
 
+---
 
+### 해결됨
+
+* https://github.com/spring-projects/spring-security/issues/12463
 

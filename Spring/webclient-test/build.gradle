@@ -16,10 +16,13 @@ compileJava.options.encoding = "${projectEncoding}"
 compileTestJava.options.encoding = "${projectEncoding}"
 
 dependencies {
+  implementation "ch.qos.logback:logback-classic:${logbackVersion}"
+
   implementation "org.springframework:spring-context:${springVersion}"
   implementation "org.springframework:spring-web:${springVersion}"
   implementation "org.springframework:spring-webflux:${springVersion}"
   implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+
   testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
 }
 

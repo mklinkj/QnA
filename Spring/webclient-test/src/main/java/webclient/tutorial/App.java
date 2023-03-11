@@ -34,19 +34,21 @@ public class App {
     this.erApi = erApi;
   }
 
-  @SuppressWarnings("unchecked")
   void run() {
     // RestTemplate 사용
+    @SuppressWarnings("unchecked")
     Map<String, Map<String, Double>> result =
         restTemplate.getForObject(API_HOST + API_PATH, Map.class);
     System.out.println(result.get("rates").get("KRW"));
 
     // WebClient 사용
+    @SuppressWarnings("unchecked")
     Map<String, Map<String, Double>> result2 =
         webClient.get().uri(API_PATH).retrieve().bodyToMono(Map.class).block();
     System.out.println(result2.get("rates").get("KRW"));
 
     // HTTP interface 사용
+    @SuppressWarnings("unchecked")
     Map<String, Map<String, Double>> result3 = erApi.getLatest();
     System.out.println(result3.get("rates").get("KRW"));
   }

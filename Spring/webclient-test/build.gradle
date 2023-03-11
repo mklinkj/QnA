@@ -1,0 +1,32 @@
+plugins {
+  id 'application'
+}
+
+repositories {
+  mavenCentral()
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of("${javaVersion}")
+  }
+}
+
+compileJava.options.encoding = "${projectEncoding}"
+compileTestJava.options.encoding = "${projectEncoding}"
+
+dependencies {
+  implementation "org.springframework:spring-context:${springVersion}"
+  implementation "org.springframework:spring-web:${springVersion}"
+  implementation "org.springframework:spring-webflux:${springVersion}"
+  implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+  testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+}
+
+application {
+  mainClass = 'webclient.tutorial.App'
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+}

@@ -101,6 +101,16 @@ task updateReactView(type: Copy) {
   into "$buildDir/inplaceWebapp/statics"
 }
 
+// Gretty가 프로젝트에 "src/main/webapp" 경로가 반스시 있을 것으로 간주한다.
+// 빌드할 프로젝트에 webapp 경로가 없다면 만들어 주자.
+def mkdirWebappIfNoExist = { ->
+  def webappDir = new File("$projectDir/src/main/webapp")
+  if (!webappDir.exists()) {
+    webappDir.mkdir()
+  }
+}
+mkdirWebappIfNoExist()
+
 // gretty appRunWar를 실행하면 같이 처리됨.
 war {
   from "$buildDir/frontend"

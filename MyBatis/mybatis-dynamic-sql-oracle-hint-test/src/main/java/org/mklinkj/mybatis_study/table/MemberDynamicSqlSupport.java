@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import org.mybatis.dynamic.sql.SqlColumn;
 import org.mybatis.dynamic.sql.SqlTable;
 
-public final class MemberDymamicSqlSupport {
+public final class MemberDynamicSqlSupport {
   public static final Member member = new Member();
   public static final SqlColumn<String> id = member.id;
   public static final SqlColumn<String> pwd = member.pwd;

@@ -1,6 +1,6 @@
 package org.mklinkj.mybatis_study;
 
-import static org.mklinkj.mybatis_study.table.MemberDymamicSqlSupport.*;
+import static org.mklinkj.mybatis_study.table.MemberDynamicSqlSupport.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.select;
 
 import java.util.List;

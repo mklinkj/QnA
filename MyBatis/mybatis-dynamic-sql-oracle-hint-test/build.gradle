@@ -1,0 +1,42 @@
+plugins {
+  id 'application'
+  id 'io.freefair.lombok' version "${lombokPluginVersion}"
+}
+
+repositories {
+  mavenCentral()
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of("${javaVersion}")
+  }
+}
+
+compileJava.options.encoding = "${projectEncoding}"
+compileTestJava.options.encoding = "${projectEncoding}"
+
+dependencies {
+  implementation "ch.qos.logback:logback-classic:${logbackVersion}"
+
+  implementation "com.oracle.database.jdbc:ojdbc11:${ojdbcVersion}"
+
+  implementation "org.mybatis:mybatis:${mybatisVersion}"
+  implementation "org.mybatis.dynamic-sql:mybatis-dynamic-sql:${mybatisDynamicSqlVersion}"
+  implementation "org.mybatis:mybatis-spring:${mybatisSpringVersion}"
+
+
+  implementation "org.springframework:spring-context:${springVersion}"
+  implementation "org.springframework:spring-jdbc:${springVersion}"
+
+  testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+  testImplementation "org.assertj:assertj-core:${assertjVersion}"
+}
+
+application {
+  mainClass = 'org.mklinkj.mybatis_study'
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+}

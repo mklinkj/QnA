@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configuration>
+<Configuration>
+  <Appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <Encoder>
+      <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+    </Encoder>
+  </Appender>
+
+  <Root level="info">
+    <Appender-ref ref="STDOUT"/>
+  </Root>
+</Configuration>

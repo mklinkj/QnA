@@ -24,8 +24,15 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class App {
-  void run() {
-    Constant<String> hint = Constant.of("/*+ INDEX_DESC(t_member_test) */ 'dummy'");
+
+  enum OrderType {
+    ASC,
+    DESC
+  }
+
+  void run(OrderType orderType) {
+    Constant<String> hint =
+        Constant.of(String.format("/*+ INDEX_%s(t_member_test) */ 'dummy'", orderType.name()));
 
     SelectStatementProvider selectStatementProvider =
         select(hint, id, pwd, name, joinDate)
@@ -51,7 +58,7 @@ public class App {
   public static void main(String[] args) {
     try (AnnotationConfigApplicationContext context =
         new AnnotationConfigApplicationContext(AppConfig.class)) {
-      context.getBean("app", App.class).run();
+      context.getBean("app", App.class).run(OrderType.valueOf(args[0]));
     } catch (Exception e) {
       e.printStackTrace();
     }

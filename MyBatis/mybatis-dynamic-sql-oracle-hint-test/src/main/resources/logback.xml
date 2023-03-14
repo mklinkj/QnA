@@ -7,7 +7,7 @@
     </Encoder>
   </Appender>
 
-  <Root level="info">
+  <Root level="INFO">
     <Appender-ref ref="STDOUT"/>
   </Root>
 </Configuration>

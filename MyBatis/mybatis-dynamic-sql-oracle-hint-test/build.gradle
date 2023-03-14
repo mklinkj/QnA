@@ -34,9 +34,14 @@ dependencies {
 }
 
 application {
-  mainClass = 'org.mklinkj.mybatis_study'
+  mainClass = 'org.mklinkj.mybatis_study.App'
 }
 
-tasks.named('test') {
+test {
   useJUnitPlatform()
+
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
 }

@@ -1,0 +1,5 @@
+ext {
+    ver = [:]
+}
+
+ver.awaitility = '4.2.0'

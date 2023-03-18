@@ -1,0 +1,3 @@
+rootProject.name = 'spring-guide'
+
+include('getting-started-guildes:scheduling-tasks')

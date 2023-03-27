@@ -28,7 +28,7 @@ public class ConsumingRestApplication {
   }
 
   @Bean
-  public RestTemplate restTemplate(RestTemplateBuilder builder) {
+  RestTemplate restTemplate(RestTemplateBuilder builder) {
     return builder.build();
   }
 }

@@ -9,6 +9,7 @@
 ## Getting Started Guildes
 
 * [Scheduling Tasks](getting-started-guildes/scheduling-tasks)
+* [Consuming a RESTful Web Service](getting-started-guildes/consuming-rest)
 
 
 

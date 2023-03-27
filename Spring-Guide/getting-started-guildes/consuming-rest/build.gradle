@@ -1,0 +1,36 @@
+plugins {
+  id 'java'
+  id 'io.freefair.lombok' version "${lombokPluginVersion}"
+  id 'org.springframework.boot' version "${springBootVersion}"
+  id 'io.spring.dependency-management' version "${dependencyManagementPluginVersion}"
+}
+
+apply from: "../../gradle/dependencies.gradle"
+
+group = 'org.mklinkj.qna.spring_guide'
+version = '0.0.1-SNAPSHOT'
+
+sourceCompatibility = "${javaVersion}"
+targetCompatibility = "${javaVersion}"
+
+tasks.withType(JavaCompile).configureEach {
+  options.encoding = "${projectEncoding}"
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
+}

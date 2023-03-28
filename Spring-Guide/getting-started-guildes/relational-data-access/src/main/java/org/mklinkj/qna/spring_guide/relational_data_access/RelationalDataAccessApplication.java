@@ -73,7 +73,7 @@ public class RelationalDataAccessApplication {
 
     try (Scanner sc = new Scanner(System.in)) {
       String yes = "n";
-      System.out.println("[알림] 프로그램 종료하시려면 y키 눌러주세요.");
+      System.out.println("[알림] 프로그램 종료하시려면 y + 엔터 눌러주세요.");
       while (!"y".equals(yes)) {
         yes = sc.next();
       }

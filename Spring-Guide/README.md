@@ -10,6 +10,7 @@
 
 * [Scheduling Tasks](getting-started-guildes/scheduling-tasks)
 * [Consuming a RESTful Web Service](getting-started-guildes/consuming-rest)
+* [Accessing Relational Data using JDBC with Spring](getting-started-guildes/relational-data-access)
 
 
 

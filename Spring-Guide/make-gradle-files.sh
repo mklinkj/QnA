@@ -9,7 +9,7 @@ do
   cp .gitattributes $folder
   cp $folder/local-settings.gradle $folder/settings.gradle
 
-  cp -r gradle $folder/
+  cp -r gradle/wrapper/ $folder/wrapper
   cp gradlew $folder
   cp gradlew.bat $folder
 done

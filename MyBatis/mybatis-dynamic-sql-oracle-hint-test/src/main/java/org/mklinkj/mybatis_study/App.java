@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mklinkj.mybatis_study.mapper.MemberMapper;
 import org.mybatis.dynamic.sql.Constant;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
+import org.mybatis.dynamic.sql.select.render.DefaultSelectStatementProvider;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -31,6 +32,7 @@ public class App {
   }
 
   void run(OrderType orderType) {
+    // 내가 한것
     Constant<String> hint =
         Constant.of(String.format("/*+ INDEX_%s(t_member_test) */ 'dummy'", orderType.name()));
 
@@ -45,6 +47,24 @@ public class App {
     // select /*+ INDEX_DESC(t_member_test) */ 'dummy', id, pwd, name, joindate from t_member_test
 
     List<Member> members = mapper.selectMany(selectStatementProvider);
+
+    members.forEach(m -> log.info(m.toString()));
+
+    // 빙 챗봇이 한 것, 의견이 새롭다. 😄👍
+    SelectStatementProvider bingAiCode =
+        select(id, pwd, name, joinDate).from(member).build().render(RenderingStrategies.MYBATIS3);
+
+    String sql =
+        bingAiCode
+            .getSelectStatement()
+            .replaceFirst(
+                "(?i)select",
+                String.format("select /*+ INDEX_%s(t_member_test) */", orderType.name()));
+    log.info("### bing 챗봇의 sql: {}", sql);
+    SelectStatementProvider newSelectStatement =
+        new DefaultSelectStatementProvider.Builder().withSelectStatement(sql).build();
+
+    members = mapper.selectMany(newSelectStatement);
 
     members.forEach(m -> log.info(m.toString()));
   }

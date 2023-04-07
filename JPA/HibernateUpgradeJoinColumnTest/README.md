@@ -59,7 +59,7 @@ For example, two entities are:
 
 
 
-### Table creation SQL for MemberShipCard entity in Hibernate 6.1.7.Final
+### Table creation SQL for MemberShipCard entity in Hibernate 6.2.0.Final
 
 ```sql
     create table membership_card (
@@ -177,3 +177,4 @@ Hibernate 6.1.7.Final 버전 사용할 때는 문제가 없었는데, Hibernate 
 ### 이슈 보고
 
 * [[HHH-16448\] After upgrading to Hibernate 6.2.0.Final, the unique attribute of `@JoinColumn` always behaves as true. - Hibernate JIRA (atlassian.net)](https://hibernate.atlassian.net/browse/HHH-16448)
+

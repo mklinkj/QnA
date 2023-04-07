@@ -172,3 +172,8 @@ Hibernate 6.1.7.Final 버전 사용할 때는 문제가 없었는데, Hibernate 
   * https://github.com/mklinkj/QnA/tree/master/JPA/HibernateUpgradeJoinColumnTest
   * HSQLDB 메모리 모드로 예제를 작성해서 바로 확인하실 수 있습니다.
 
+
+
+### 이슈 보고
+
+* [[HHH-16448\] After upgrading to Hibernate 6.2.0.Final, the unique attribute of `@JoinColumn` always behaves as true. - Hibernate JIRA (atlassian.net)](https://hibernate.atlassian.net/browse/HHH-16448)

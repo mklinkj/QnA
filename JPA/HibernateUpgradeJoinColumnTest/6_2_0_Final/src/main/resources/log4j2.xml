@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configuration>
+<Configuration>
+  <Appenders>
+    <Console name="console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
+    </Console>
+  </Appenders>
+
+  <Loggers>
+    <Logger name="org.mklinkj.qna.hibernate" level="DEBUG"/>
+
+    <Logger name="org.hibernate.orm.jdbc.bind" level="TRACE"/>
+    <Logger name="org.hibernate.orm.jdbc.extract" level="TRACE"/>
+
+    <logger name="org.hibernate.engine.transaction" level="DEBUG"/> <!-- 이 패키지는 최소 DEBUG 레벨인 듯.. -->
+
+    <Root level="INFO">
+      <AppenderRef ref="console"/>
+    </Root>
+  </Loggers>
+</Configuration>

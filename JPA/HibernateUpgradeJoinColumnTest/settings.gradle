@@ -1,0 +1,4 @@
+rootProject.name = 'HibernateUpgradeJoinColumnTest'
+
+include '6_1_7_Final'
+include '6_2_0_Final'

@@ -34,3 +34,8 @@
 
 * [mybatis-dynamic-sql 모듈에서 Oracle Hnit 넣어 쿼리 실행해보기](MyBatis/mybatis-dynamic-sql-oracle-hint-test)
 
+
+
+## JPA
+
+* [Hibernate 6.2.0.Final로 업그레이드 이후 `@JoinColumn` 의 unique 속성이 항상 ture로 동작합니다. - 문의](JPA/HibernateUpgradeJoinColumnTest)

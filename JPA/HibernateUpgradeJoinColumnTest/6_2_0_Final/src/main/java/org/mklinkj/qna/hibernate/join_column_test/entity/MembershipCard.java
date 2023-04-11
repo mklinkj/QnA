@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
@@ -20,7 +21,7 @@ public class MembershipCard {
   @Column(name = "card_number")
   private String number;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "user_email")
   private Student owner;
 

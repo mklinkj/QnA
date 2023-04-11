@@ -81,7 +81,16 @@ Please inquire if there is any problem with the above operation.
   * https://github.com/mklinkj/QnA/tree/master/JPA/HibernateUpgradeJoinColumnTest
   * An example has been created in HSQLDB memory mode so you can check it right away
 
+## 
 
+## Result
+
+* I made a mistake while testing.
+* It is `@OneToOne`, but the initial data is put in like many-to-one.
+* In 6.1.7, even if set to `@OneToOne`, the unique setting for the join column is not automatically set when the initial table is created.
+* In 6.2.0, if set to `@OneToOne`, unique is automatically and forcefully set for the join column when the initial table is created.
+* In the end, it can be seen that the behavior of 6.2.0 has been further improved.
+* When I post an issue, I'll do some more checking before posting. 😅
 
 
 
@@ -178,3 +187,13 @@ Hibernate 6.1.7.Final 버전 사용할 때는 문제가 없었는데, Hibernate 
 
 * [[HHH-16448\] After upgrading to Hibernate 6.2.0.Final, the unique attribute of `@JoinColumn` always behaves as true. - Hibernate JIRA (atlassian.net)](https://hibernate.atlassian.net/browse/HHH-16448)
 
+
+
+## 결과
+
+* 내가 테스트 하는데 실수가 있었음.
+* @OneToOne인데 초기 데이터를 다대일 처럼 넣었다.
+* 6.1.7에서는 `@OneToOne`으로 설정을 해도 초기 테이블 생성시 조인 컬럼에 unique 설정이 자동으로 설정되지 않음.
+* 6.2.0에서는 `@OneToOne`으로 설정을 하면 초기 테이블 생성시 조인 컬럼에 unique 가 강제 및 자동으로 설정됨.
+* 결국 6.2.0의 동작이 더 개선된 것으로 볼 수 있음.
+* 이슈올릴 때, 좀 더 확인을 하고 올리도록 하자 😅

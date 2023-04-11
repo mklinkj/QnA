@@ -29,7 +29,7 @@ class JoinColumnTest {
 
           List<MembershipCard> cardList = query.getResultList();
           LOGGER.info("cardList: {}", cardList);
-          assertThat(cardList).isNotEmpty().hasSize(6);
+          assertThat(cardList).isNotEmpty().hasSize(3);
         });
   }
 }

@@ -414,5 +414,55 @@ touch src/routes/contact.jsx
 
 
 
+## 중첩 라우트
 
+우리는 연락처 컴포넌트가 다음과 같이 `<Root>` 레이아웃 내부에서 렌더링되기를 원합니다.
 
+![image-20230422003446579](doc-resources/image-20230422003446579.png)
+
+연락처 경로를 루트 경로의 *하위 (child)* 경로로 만들면 됩니다.
+
+👉 연락처 경로를 루트 경로의 하위 경로로 이동합니다.
+
+* `src/main.jsx`
+
+  ```jsx
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          path: "contacts/:contactId",
+          element: <Contact />,
+        },
+      ],
+    },
+  ]);
+  ```
+
+이제 루트 레이아웃이 다시 표시되지만 오른쪽에 여전히 빈 페이지가 표시됩니다. 루트 경로에 하위 경로를 렌더링할 위치를 알려줘야 합니다. [`<Outlet>`](https://reactrouter.com/en/main/components/outlet)으로 이를 수행합니다.
+
+`<div id="detail">`를 찾아 outlet 안에 넣습니다.
+
+**👉 [`<Outlet>`](https://reactrouter.com/en/main/components/outlet) 렌더링하기**
+
+* `src/routes/root.jsx`
+
+  ```jsx
+  import { Outlet } from "react-router-dom";
+  
+  export default function Root() {
+    return (
+      <>
+        {/* all the other elements */}
+        <div id="detail">
+          <Outlet />
+        </div>
+      </>
+    );
+  }
+  ```
+
+  

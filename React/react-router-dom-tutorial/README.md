@@ -505,3 +505,116 @@ touch src/routes/contact.jsx
   ```
 
   브라우저 개발자 도구에서 네트워크 탭을 열어 더 이상 문서를 요청하지 않는지 확인할 수 있습니다.
+
+
+
+## 데이터 로드
+
+URL 세그먼트, 레이아웃, 데이터는 종종 함께 결합되어(세 배로?) 있습니다. 이 앱에서 이미 확인할 수 있습니다:
+
+| URL 세그먼트 | 컴포넌트    | 데이터      |
+| ------------ | ----------- | ----------- |
+| /            | `<Root>`    | 연락처 목록 |
+| contacts/:id | `<Contact>` | 개별 연락처 |
+
+이러한 자연스러운 결합으로 인해 React 라우터에는 경로 구성 요소에 데이터를 쉽게 가져올 수 있는 데이터 규칙이 있습니다.
+
+데이터를 로드하는 데 사용할 두 가지 API는 [`loader`](https://reactrouter.com/en/main/route/loader)와 [`useLoaderData`](https://reactrouter.com/en/main/hooks/use-loader-data)입니다. 먼저 Root 모듈에서 loader 함수를 생성하고 내보낸 다음 route에 연결합니다. 마지막으로 데이터에 액세스하고 렌더링합니다.
+
+👉 root.jsx에서 loader 내보내기
+
+* `src/routes/root.jsx`
+
+  ```jsx
+  import { Outlet, Link } from "react-router-dom";
+  import { getContacts } from "../contacts";
+  
+  export async function loader() {
+    const contacts = await getContacts();
+    return { contacts };
+  }
+  ```
+
+**👉 route에서 loader 구성하기**
+
+* `src/main.jsx`
+
+  ```jsx
+  /* other imports */
+  import Root, { loader as rootLoader } from "./routes/root";
+  
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      errorElement: <ErrorPage />,
+      loader: rootLoader,
+      children: [
+        {
+          path: "contacts/:contactId",
+          element: <Contact />,
+        },
+      ],
+    },
+  ]);
+  ```
+
+  
+
+**👉 데이터 엑세스 및 렌더링**
+
+* `src/routes/root.jsx`
+
+  ```jsx
+  import {
+    Outlet,
+    Link,
+    useLoaderData,
+  } from "react-router-dom";
+  import { getContacts } from "../contacts";
+  
+  /* other code */
+  
+  export default function Root() {
+    const { contacts } = useLoaderData();
+    return (
+      <>
+        <div id="sidebar">
+          <h1>React Router Contacts</h1>
+          {/* other code */}
+  
+          <nav>
+            {contacts.length ? (
+              <ul>
+                {contacts.map((contact) => (
+                  <li key={contact.id}>
+                    <Link to={`contacts/${contact.id}`}>
+                      {contact.first || contact.last ? (
+                        <>
+                          {contact.first} {contact.last}
+                        </>
+                      ) : (
+                        <i>No Name</i>
+                      )}{" "}
+                      {contact.favorite && <span>★</span>}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>
+                <i>No contacts</i>
+              </p>
+            )}
+          </nav>
+  
+          {/* other code */}
+        </div>
+      </>
+    );
+  }
+  ```
+
+  이제 끝입니다! 이제 React 라우터가 자동으로 해당 데이터를 UI와 동기화합니다. 아직 데이터가 없으므로 이와 같은 빈 목록이 표시될 것입니다:
+
+![image-20230422010643260](doc-resources/image-20230422010643260.png)

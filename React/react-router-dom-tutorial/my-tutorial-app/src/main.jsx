@@ -1,19 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import {
-  createBrowserRouter,
-  RouterProvider
-} from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
 import Root from './routes/root.jsx'
 import ErrorPage from './error-page.jsx'
+import Contact from './routes/contact.jsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
     errorElement: <ErrorPage />
-
+  },
+  {
+    path: 'contacts/:contactId',
+    element: <Contact />
   }
 ])
 

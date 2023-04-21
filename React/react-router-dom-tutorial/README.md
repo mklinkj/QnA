@@ -269,3 +269,150 @@ touch src/error-page.jsx
 [`useRouteError`](https://reactrouter.com/en/main/hooks/use-route-error)는 발생한 오류를 제공합니다. 사용자가 존재하지 않는 경로로 이동하면 "Not Found" `statusText`가 포함된 [오류 응답](https://reactrouter.com/en/main/utils/is-route-error-response)을 받게 됩니다. 튜토리얼의 뒷부분에서 몇 가지 다른 오류를 살펴보고 이에 대해 자세히 설명하겠습니다.
 
 지금은 무한 회전(infinite spinners), 응답하지 않는 페이지 또는 빈 화면 대신 이 페이지에서 거의 모든 오류를 처리할 수 있다는 것만으로도 충분합니다 🙌.
+
+
+
+## 연락처 Route UI
+
+404 "Not Found" 페이지 대신 링크한 URL에 실제로 무언가를 렌더링하고 싶습니다. 그러기 위해서는 새로운 경로를 만들어야 합니다.
+
+**👉 연락처 route 모듈 생성**
+
+```sh
+touch src/routes/contact.jsx
+```
+
+👉 **연락처 컴포넌트 UI 추가**
+
+여러 요소로 구성되어 있으므로 자유롭게 복사/붙여넣기할 수 있습니다.
+
+* `src/route/contact.jsx`
+
+  ```jsx
+  import { Form } from "react-router-dom";
+  
+  export default function Contact() {
+    const contact = {
+      first: "Your",
+      last: "Name",
+      avatar: "https://placekitten.com/g/200/200",
+      twitter: "your_handle",
+      notes: "Some notes",
+      favorite: true,
+    };
+  
+    return (
+      <div id="contact">
+        <div>
+          <img
+            key={contact.avatar}
+            src={contact.avatar || null}
+          />
+        </div>
+  
+        <div>
+          <h1>
+            {contact.first || contact.last ? (
+              <>
+                {contact.first} {contact.last}
+              </>
+            ) : (
+              <i>No Name</i>
+            )}{" "}
+            <Favorite contact={contact} />
+          </h1>
+  
+          {contact.twitter && (
+            <p>
+              <a
+                target="_blank"
+                href={`https://twitter.com/${contact.twitter}`}
+              >
+                {contact.twitter}
+              </a>
+            </p>
+          )}
+  
+          {contact.notes && <p>{contact.notes}</p>}
+  
+          <div>
+            <Form action="edit">
+              <button type="submit">Edit</button>
+            </Form>
+            <Form
+              method="post"
+              action="destroy"
+              onSubmit={(event) => {
+                if (
+                  !confirm(
+                    "Please confirm you want to delete this record."
+                  )
+                ) {
+                  event.preventDefault();
+                }
+              }}
+            >
+              <button type="submit">Delete</button>
+            </Form>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  function Favorite({ contact }) {
+    // yes, this is a `let` for later
+    let favorite = contact.favorite;
+    return (
+      <Form method="post">
+        <button
+          name="favorite"
+          value={favorite ? "false" : "true"}
+          aria-label={
+            favorite
+              ? "Remove from favorites"
+              : "Add to favorites"
+          }
+        >
+          {favorite ? "★" : "☆"}
+        </button>
+      </Form>
+    );
+  }
+  ```
+
+  이제 컴포넌트가 생겼으니 새 경로에 연결해 보겠습니다.
+
+👉 연락처 컴포넌트 가져오기 및 새 경로 만들기
+
+* `src/main.jsx`
+
+  ```jsx
+  /* existing imports */
+  import Contact from "./routes/contact";
+  
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "contacts/:contactId",
+      element: <Contact />,
+    },
+  ]);
+  
+  /* existing code */
+  ```
+
+이제 링크 중 하나를 클릭하거나 `/contacts/1`을 방문하면 새 구성 요소가 표시됩니다!
+
+![image-20230422001755502](doc-resources/image-20230422001755502.png)
+
+하지만 루트 레이아웃 내부에 있지 않습니다 😠.
+
+
+
+
+

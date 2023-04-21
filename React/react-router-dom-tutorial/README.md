@@ -466,3 +466,42 @@ touch src/routes/contact.jsx
   ```
 
   
+
+## 클라이언트 측 라우팅
+
+눈치채셨을 수도 있고 그렇지 않으셨을 수도 있지만, 사이드바의 링크를 클릭하면 브라우저는 React 라우터를 사용하는 대신 다음 URL에 대한 전체 문서 요청을 수행합니다.
+
+클라이언트 측 라우팅을 사용하면 앱이 서버에 다른 문서를 요청하지 않고도 URL을 업데이트할 수 있습니다. 대신 앱은 즉시 새 UI를 렌더링할 수 있습니다. [`<Link>`](https://reactrouter.com/en/main/components/link)를 통해 이를 구현해 보겠습니다.
+
+**👉 사이드바의 `<a href>`를 `<Link>`로 변경합니다.**
+
+* `src/routes/root.jsx`
+
+  ```jsx
+  import { Outlet, Link } from "react-router-dom";
+  
+  export default function Root() {
+    return (
+      <>
+        <div id="sidebar">
+          {/* other elements */}
+  
+          <nav>
+            <ul>
+              <li>
+                <Link to={`contacts/1`}>Your Name</Link>
+              </li>
+              <li>
+                <Link to={`contacts/2`}>Your Friend</Link>
+              </li>
+            </ul>
+          </nav>
+  
+          {/* other elements */}
+        </div>
+      </>
+    );
+  }
+  ```
+
+  브라우저 개발자 도구에서 네트워크 탭을 열어 더 이상 문서를 요청하지 않는지 확인할 수 있습니다.

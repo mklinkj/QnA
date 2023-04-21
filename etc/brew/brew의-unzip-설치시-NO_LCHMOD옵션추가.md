@@ -28,10 +28,8 @@ lchmod (file attributes) error: Operation not supported
 
 * /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/unzip.rb
 
-  * https://github.com/Homebrew/homebrew-core/blob/master/Formula/unzip.rb
-
   ```ruby
-    def install
+  def install
       # These macros also follow Ubuntu, and are required:
       # - to correctly handle large archives (> 4GB)
       # - extract & print archive contents with non-latin characters
@@ -44,8 +42,19 @@ lchmod (file attributes) error: Operation not supported
         -DNO_LCHMOD     
       ]    
   ```
-
+  
   * `-DNO_LCHMOD` 라는 매크로를 마지막에 추가했습니다.
+* https://github.com/Homebrew/homebrew-core/blob/master/Formula/unzip.rb
+
+위와 같이 매크로를 추가한 후, `unzip`을 삭제하고 수정된 `unzip.rb`로 다시 설치했습니다.
+
+```sh
+brew uninstall --ignore-dependencies unzip
+
+brew install --build-from-source /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/unzip.rb
+```
+
+
 
 이렇게 한 상태에서 SDKMan을 통해 java 17 temurin을 설치하면 더이상 오류가 발생하지 않았습니다.
 
@@ -96,9 +105,20 @@ It was said that lchmod could not be used in the Ubuntu environment anyway, so I
       ]
   ```
 
+  * I added the `-DNO_LCHMOD` macro at the end.
   * https://github.com/Homebrew/homebrew-core/blob/master/Formula/unzip.rb
 
-After adding the macro as above, installing java 17 temurin using SDKMan will no longer throw an error.
+After adding the macro as above, I deleted the `unzip` and reinstalled it with the modified `unzip.rb`.
+
+```sh
+brew uninstall --ignore-dependencies unzip
+
+brew install --build-from-source /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/unzip.rb
+```
+
+
+
+Installing Java 17 Temurin using SDKMan no longer caused any errors.
 
 Is it okay to use it like this?
 

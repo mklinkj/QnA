@@ -924,7 +924,71 @@ touch src/routes/edit.jsx
 
 
 
+## FormData로 연락처 업데이트하기
 
+방금 만든 edit 경로가 이미 양식을 렌더링하고 있습니다. 레코드를 업데이트하기 위해 해야 할 일은 경로에 action을 연결하기만 하면 됩니다. 양식이 action에 게시되고 데이터가 자동으로 재검증됩니다.
+
+👉 **edit 모듈에 action 추가**
+
+* `src/routes/edit.jsx`
+
+  ```jsx
+  import {
+    Form,
+    useLoaderData,
+    redirect,
+  } from "react-router-dom";
+  import { updateContact } from "../contacts";
+  
+  export async function action({ request, params }) {
+    const formData = await request.formData();
+    const updates = Object.fromEntries(formData);
+    await updateContact(params.contactId, updates);
+    return redirect(`/contacts/${params.contactId}`);
+  }
+  
+  /* existing code */
+  ```
+
+**👉 action을 경로에 연결**
+
+* `src/main/jsx`
+
+  ```jsx
+  /* existing code */
+  import EditContact, {
+    action as editAction,
+  } from "./routes/edit";
+  
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      errorElement: <ErrorPage />,
+      loader: rootLoader,
+      action: rootAction,
+      children: [
+        {
+          path: "contacts/:contactId",
+          element: <Contact />,
+          loader: contactLoader,
+        },
+        {
+          path: "contacts/:contactId/edit",
+          element: <EditContact />,
+          loader: contactLoader,
+          action: editAction,
+        },
+      ],
+    },
+  ]);
+  
+  /* existing code */
+  ```
+
+양식을 작성하고 저장을 누르면 다음과 같은 화면이 표시됩니다! (눈이 더 편하고 털이 덜 난다는 점만 빼면요.)
+
+![image-20230422135808379](doc-resources/image-20230422135808379.png)
 
 
 

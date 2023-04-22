@@ -8,7 +8,9 @@ import Root, {
   loader as rootLoader,
   action as rootAction
 } from './routes/root.jsx'
-import EditContact from './routes/edit.jsx'
+import EditContact, {
+  action as editAction
+} from './routes/edit.jsx'
 
 
 const router = createBrowserRouter([
@@ -27,7 +29,8 @@ const router = createBrowserRouter([
       {
         path: 'contacts/:contactId/edit',
         element: <EditContact />,
-        loader: contactLoader
+        loader: contactLoader,
+        action: editAction
       }
     ]
   }

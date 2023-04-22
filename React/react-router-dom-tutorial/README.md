@@ -724,6 +724,84 @@ React 라우터는 자바스크립트 캄브리아기 폭발 이전의 웹 개�
 
 
 
+## 로더의 URL 매개변수
+
+**👉 No Name 레코드를 클릭 합니다.**
+
+이전 정적 연락처 페이지가 다시 표시되지만 한 가지 차이점이 있습니다. 이제 URL에 레코드에 대한 실제 ID가 있다는 점입니다.
+
+![image-20230422133059297](doc-resources/image-20230422133059297.png)
+
+경로 구성을 검토하면 다음과 같은 경로가 표시됩니다:
+
+```jsx
+[
+  {
+    path: 'contacts/:contactId',
+    element: <Contact />
+  }
+]
+```
+
+`contactId` URL 세그먼트에 주목하세요. 콜론(`:`)은 특별한 의미를 가지며 "동적 세그먼트(Dynamic segment)"로 바뀝니다. 동적 세그먼트는 연락처 ID와 같이 URL의 해당 위치에서 동적(변경되는) 값과 일치합니다. URL에서 이러한 값을 "URL 매개변수" 또는 줄여서 "매개변수(params)"라고 부릅니다.
+
+이러한 [`params`](https://reactrouter.com/en/main/route/loader#params)는 동적 세그먼트와 일치하는 키와 함께 로더에 전달됩니다. 예를 들어, 세그먼트의 이름은 :contactId이므로 값은 `params.contactId`로 전달됩니다.
+
+이 매개변수는 ID로 레코드를 찾는 데 가장 자주 사용됩니다. 한번 사용해 보겠습니다.
+
+**👉 연락처 페이지에 로더를 추가하고 `useLoaderData`를 사용하여 데이터에 액세스합니다.**
+
+* `src/route/contact.jsx`
+
+  ```jsx
+  import { Form, useLoaderData } from "react-router-dom";
+  import { getContact } from "../contacts";
+  
+  export async function loader({ params }) {
+    const contact = await getContact(params.contactId);
+    return { contact };
+  }
+  
+  export default function Contact() {
+    const { contact } = useLoaderData();
+    // existing code
+  }
+  ```
+
+**👉 경로에서 로더 구성**
+
+* `src/main.jsx`
+
+  ```jsx
+  /* existing code */
+  import Contact, {
+    loader as contactLoader,
+  } from "./routes/contact";
+  
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      errorElement: <ErrorPage />,
+      loader: rootLoader,
+      action: rootAction,
+      children: [
+        {
+          path: "contacts/:contactId",
+          element: <Contact />,
+          loader: contactLoader,
+        },
+      ],
+    },
+  ]);
+  
+  /* existing code */
+  ```
+
+  ![image-20230422133930692](doc-resources/image-20230422133930692.png)
+
+
+
 
 
 

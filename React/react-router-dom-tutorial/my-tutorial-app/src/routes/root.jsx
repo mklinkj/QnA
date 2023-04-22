@@ -2,17 +2,17 @@ import { Form, Link, Outlet, useLoaderData } from 'react-router-dom'
 import { getContacts, createContact } from '../contacts.js'
 
 export async function action() {
-  const contact = await createContact();
-  return { contact };
+  const contact = await createContact()
+  return { contact }
 }
 
 export async function loader() {
-  const contacts = await getContacts();
-  return { contacts };
+  const contacts = await getContacts()
+  return { contacts }
 }
 
 export default function Root() {
-  const { contacts } = useLoaderData();
+  const { contacts } = useLoaderData()
   return (
     <>
       <div id='sidebar'>
@@ -52,7 +52,7 @@ export default function Root() {
                       </>
                     ) : (
                       <i>No Name</i>
-                    )}{" "}
+                    )}{' '}
                     {contact.favorite && <span>★</span>}
                   </Link>
                 </li>

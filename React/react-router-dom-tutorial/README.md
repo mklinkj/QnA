@@ -802,6 +802,130 @@ React 라우터는 자바스크립트 캄브리아기 폭발 이전의 웹 개�
 
 
 
+## 데이터 업데이트
+
+데이터를 만들 때와 마찬가지로 [`<Form>`](https://reactrouter.com/en/main/components/form)으로 데이터를 업데이트합니다. `contacts/:contactId/edit`에 새 경로를 만들어 보겠습니다. 이번에도 컴포넌트로 시작한 다음 경로 구성에 연결하겠습니다.
+
+👉 **edit 컴포넌트 만들기**
+
+```sh
+touch src/routes/edit.jsx
+```
+
+**👉 edit 페이지 UI 추가**
+
+이전에 본 적이 없는 내용은 자유롭게 복사/붙여넣기하세요:
+
+* `src/routes/edit.jsx`
+
+  ```jsx
+  import { Form, useLoaderData } from "react-router-dom";
+  
+  export default function EditContact() {
+    const { contact } = useLoaderData();
+  
+    return (
+      <Form method="post" id="contact-form">
+        <p>
+          <span>Name</span>
+          <input
+            placeholder="First"
+            aria-label="First name"
+            type="text"
+            name="first"
+            defaultValue={contact.first}
+          />
+          <input
+            placeholder="Last"
+            aria-label="Last name"
+            type="text"
+            name="last"
+            defaultValue={contact.last}
+          />
+        </p>
+        <label>
+          <span>Twitter</span>
+          <input
+            type="text"
+            name="twitter"
+            placeholder="@jack"
+            defaultValue={contact.twitter}
+          />
+        </label>
+        <label>
+          <span>Avatar URL</span>
+          <input
+            placeholder="https://example.com/avatar.jpg"
+            aria-label="Avatar URL"
+            type="text"
+            name="avatar"
+            defaultValue={contact.avatar}
+          />
+        </label>
+        <label>
+          <span>Notes</span>
+          <textarea
+            name="notes"
+            defaultValue={contact.notes}
+            rows={6}
+          />
+        </label>
+        <p>
+          <button type="submit">Save</button>
+          <button type="button">Cancel</button>
+        </p>
+      </Form>
+    );
+  }
+  ```
+
+  **👉 새로운 edit 경로 추가**
+
+  * `src/main.jsx`
+
+    ```jsx
+    /* existing code */
+    import EditContact from "./routes/edit";
+    
+    const router = createBrowserRouter([
+      {
+        path: "/",
+        element: <Root />,
+        errorElement: <ErrorPage />,
+        loader: rootLoader,
+        action: rootAction,
+        children: [
+          {
+            path: "contacts/:contactId",
+            element: <Contact />,
+            loader: contactLoader,
+          },
+          {
+            path: "contacts/:contactId/edit",
+            element: <EditContact />,
+            loader: contactLoader,
+          },
+        ],
+      },
+    ]);
+    
+    /* existing code */
+    ```
+
+    
+
+    루트 경로의 outlet에서 렌더링되기를 원하므로 기존 하위 경로의 형제 경로로 만들었습니다.
+
+    (이 경로에 `contactLoader`를 재사용한 것을 알 수 있습니다. 이는 튜토리얼에서 게으르기 때문일 뿐입니다. 라우트 간에 로더를 공유하려고 시도할 이유는 없습니다. 보통 라우트마다 고유한 로더가 있기 때문입니다).
+
+    이제 "Edit" 버튼을 클릭하면 새로운 UI가 표시됩니다:
+
+  ![image-20230422134837489](doc-resources/image-20230422134837489.png)
+
+
+
+
+
 
 
 

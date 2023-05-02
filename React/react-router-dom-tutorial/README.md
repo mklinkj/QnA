@@ -2102,15 +2102,56 @@ fetcher는 액션에 제출되는 양식 데이터를 알고 있으므로 `fetch
 
 
 
+## JSX 라우트
 
+마지막 트릭으로, 많은 사람들이 JSX로 라우트를 구성하는 것을 선호합니다. `createRoutesFromElements`로 이를 수행할 수 있습니다. 라우트를 구성할 때 JSX와 객체 사이에 기능적인 차이는 없으며, 단지 스타일 선호도일 뿐입니다.
 
+```jsx
+import {
+  createRoutesFromElements,
+  createBrowserRouter,
+} from "react-router-dom";
 
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route
+      path="/"
+      element={<Root />}
+      loader={rootLoader}
+      action={rootAction}
+      errorElement={<ErrorPage />}
+    >
+      <Route errorElement={<ErrorPage />}>
+        <Route index element={<Index />} />
+        <Route
+          path="contacts/:contactId"
+          element={<Contact />}
+          loader={contactLoader}
+          action={contactAction}
+        />
+        <Route
+          path="contacts/:contactId/edit"
+          element={<EditContact />}
+          loader={contactLoader}
+          action={editAction}
+        />
+        <Route
+          path="contacts/:contactId/destroy"
+          action={destroyAction}
+        />
+      </Route>
+    </Route>
+  )
+);
+```
+
+---
+
+끝입니다! React 라우터를 사용해 주셔서 감사합니다. 이 튜토리얼이 멋진 사용자 경험을 구축하는 데 도움이 되었기를 바랍니다. React 라우터로 할 수 있는 일이 더 많으니 모든 API를 확인해 보세요 😀.
 
 
 
 ---
-
-
 
 
 

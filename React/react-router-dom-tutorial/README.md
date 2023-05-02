@@ -1451,9 +1451,46 @@ http://localhost:5173/?q=mklink
 
 
 
+## 클라이언트 측 라우팅으로 GET 제출
 
+클라이언트 측 라우팅을 사용하여 이 양식을 제출하고 기존 로더에서 목록을 필터링해 보겠습니다.
 
+**👉 `<form>`을 `<Form>`으로 변경**
 
+* `src/routes/root.jsx`
+
+  ```jsx
+  <Form id="search-form" role="search">
+    <input
+      id="q"
+      aria-label="Search contacts"
+      placeholder="Search"
+      type="search"
+      name="q"
+    />
+    <div id="search-spinner" aria-hidden hidden={true} />
+    <div className="sr-only" aria-live="polite"></div>
+  </Form>
+  ```
+
+**👉 URLSearchParams가 있는 경우 목록을 필터링합니다.**
+
+* `src/routes/root.jsx`
+
+  ```jsx
+  export async function loader({ request }) {
+    const url = new URL(request.url);
+    const q = url.searchParams.get("q");
+    const contacts = await getContacts(q);
+    return { contacts };
+  }
+  ```
+
+![image-20230503010718928](doc-resources/image-20230503010718928.png)
+
+이것은 POST가 아닌 GET이기 때문에 React 라우터는 `action`을 호출하지 않습니다. GET 양식을 제출하는 것은 링크를 클릭하는 것과 동일하며 URL만 변경됩니다. 그렇기 때문에 필터링을 위해 추가한 코드는 이 경로의 `action`이 아니라 `loader`에 있습니다.
+
+이는 정상적인 페이지 탐색이라는 의미이기도 합니다. 뒤로가기 버튼을 클릭하면 원래 위치로 돌아갈 수 있습니다.
 
 
 

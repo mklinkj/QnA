@@ -992,6 +992,74 @@ touch src/routes/edit.jsx
 
 
 
+## 변화(Mutation) 논의
+
+> 😑 작동은 했는데, 여기서 무슨일이 일어나고 있는지 모르겠어요...
+
+조금 더 자세히 살펴봅시다...
+
+`src/routes/edit.jsx`를 열고 양식 요소를 살펴봅니다. 각 요소에 이름이 있는 것을 주목하세요:
+
+* `src/routes/edit.jsx`
+
+  ```jsx
+  <input
+    placeholder="First"
+    aria-label="First name"
+    type="text"
+    name="first"
+    defaultValue={contact.first}
+  />
+  ```
+
+자바스크립트 없이, 양식이 제출되면 브라우저는 [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)를 생성하고 이를 서버로 보낼 때 요청의 본문으로 설정합니다. 앞서 언급했듯이 React 라우터는 이를 방지하고 대신 [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)를 포함한 요청을 사용자의 액션으로 전송합니다.
+
+양식의 각 필드는 `formData.get(name)`을 사용하여 액세스할 수 있습니다. 예를 들어 위의 입력 필드가 주어지면 다음과 같이 이름과 성에 액세스할 수 있습니다:
+
+```javascript
+export async function action({ request, params }) {
+  const formData = await request.formData();
+  const firstName = formData.get("first");
+  const lastName = formData.get("last");
+  // ...
+}
+```
+
+몇 개의 양식 필드가 있으므로 [`Object.fromEntries`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries)를 사용하여 모든 필드를 객체로 수집했으며, 이는 `updateContact` 함수가 원하는 것과 정확히 일치합니다.
+
+```javascript
+const updates = Object.fromEntries(formData);
+updates.first; // "Some"
+updates.last; // "Name"
+```
+
+`action`을 제외하고, 우리가 논의하는 이 API들 중 어느 것도 React Router에서 제공하지 않습니다: [`request`](https://developer.mozilla.org/en-US/docs/Web/API/Request), [`request.formData`](https://developer.mozilla.org/en-US/docs/Web/API/Request/formData), [`Object.fromEntries`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries)는 모두 웹 플랫폼에서 제공합니다.
+
+액션을 완료한 후 마지막에 [`redirect`](https://reactrouter.com/en/main/fetch/redirect)를 주목하세요:
+
+* `src/routes/edit.jsx`
+
+  ```jsx
+  export async function action({ request, params }) {
+    const formData = await request.formData();
+    const updates = Object.fromEntries(formData);
+    await updateContact(params.contactId, updates);
+    return redirect(`/contacts/${params.contactId}`);
+  }
+  ```
+
+로더와 액션은 모두 [`Response`을 반환](https://reactrouter.com/en/main/route/loader#returning-responses)할 수 있습니다([`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request)을 받았으니 당연한 일입니다!). [`redirect`](https://reactrouter.com/en/main/fetch/redirect) 헬퍼는 앱에 위치 변경을 지시하는 [`response`](https://developer.mozilla.org/en-US/docs/Web/API/Response)을 더 쉽게 반환할 수 있도록 해줍니다.
+
+클라이언트 측 라우팅이 없으면 서버가 POST 요청 후 리디렉션되면 새 페이지가 최신 데이터를 가져와 렌더링합니다. 앞서 배운 것처럼 React 라우터는 이 모델을 에뮬레이션하고 액션 후 페이지의 데이터를 자동으로 재검증합니다. 양식을 저장할 때 사이드바가 자동으로 업데이트되는 이유입니다. 추가 재검증 코드는 클라이언트 측 라우팅 없이는 존재하지 않으므로 클라이언트 측 라우팅과 함께 존재할 필요도 없습니다!
+
+> 🎈 리다이렉트를 해도 리엑트 라우터가 알아서 페이지를 업데이트 해준다는 말 같음, 클라언트 측 라우팅이 없을 경우 전체 페이지 리로드가 발생하는 경우 없이...
+
+
+
+
+
+
+
 
 
 ---

@@ -2018,6 +2018,39 @@ fetcher는 액션에 제출되는 양식 데이터를 알고 있으므로 `fetch
 
 
 
+## [데이터를 찾을 수 없음](https://reactrouter.com/en/main/start/tutorial#not-found-data)
+
+로드하려는 연락처가 존재하지 않으면 어떻게 되나요?
+
+![image-20230503025445936](doc-resources/image-20230503025445936.png)
+
+루트 [`errorElement`](https://reactrouter.com/en/main/route/error-element)가 `null` 연락처를 렌더링하려고 할 때 이 예기치 않은 오류를 포착하고 있습니다. 오류가 제대로 처리되어 다행이지만 더 잘할 수 있습니다!
+
+로더나 액션에서 데이터가 존재하지 않는 것과 같은 예상되는 에러 케이스가 있을 때마다 던질(`throw`) 수 있습니다. 호출 스택이 중단되고 React 라우터가 이를 포착하며 오류 경로가 대신 렌더링됩니다. 심지어 `null `컨택을 렌더링하려고 시도하지도 않습니다.
+
+**👉 로더에서 404 응답 던지기**
+
+* `src/routes/contact.jsx`
+
+  ```jsx
+  export async function loader({ params }) {
+    const contact = await getContact(params.contactId);
+    if (!contact) {
+      throw new Response("", {
+        status: 404,
+        statusText: "Not Found",
+      });
+    }
+    return { contact };
+  }
+  ```
+
+![image-20230503030111461](doc-resources/image-20230503030111461.png)
+
+`null의 속성을 읽을 수 없음`으로 렌더링 오류를 발생시키는 대신 컴포넌트를 완전히 피하고 대신 오류 경로(path)를 렌더링하여 사용자에게 더 구체적인 내용을 알려줍니다.
+
+이렇게 하면 행복한 경로(path)가 유지됩니다. 라우트 엘리먼트는 오류 및 로딩 상태에 신경 쓸 필요가 없습니다.
+
 
 
 ---

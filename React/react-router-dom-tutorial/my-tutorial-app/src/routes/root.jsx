@@ -1,5 +1,5 @@
-import { Form, NavLink, Outlet, redirect, useLoaderData } from 'react-router-dom'
-import { getContacts, createContact } from '../contacts.js'
+import { Form, NavLink, Outlet, redirect, useLoaderData, useNavigation } from 'react-router-dom'
+import { createContact, getContacts } from '../contacts.js'
 import { useEffect } from 'react'
 
 export async function action() {
@@ -7,19 +7,20 @@ export async function action() {
   return redirect(`/contacts/${contact.id}/edit`)
 }
 
-export async function loader({request}) {
-  const url = new URL(request.url);
-  const q = url.searchParams.get("q");
-  const contacts = await getContacts(q);
+export async function loader({ request }) {
+  const url = new URL(request.url)
+  const q = url.searchParams.get('q')
+  const contacts = await getContacts(q)
   return { contacts, q }
 }
 
 export default function Root() {
   const { contacts, q } = useLoaderData()
+  const navigation = useNavigation()
 
   useEffect(() => {
-    document.getElementById("q").value = q;
-  }, [q]);
+    document.getElementById('q').value = q
+  }, [q])
   return (
     <>
       <div id='sidebar'>
@@ -83,7 +84,11 @@ export default function Root() {
           )}
         </nav>
       </div>
-      <div id='detail'>
+      <div id='detail'
+           className={
+             navigation.state === 'loading' ? 'loading' : ''
+           }
+      >
         <Outlet />
       </div>
     </>

@@ -1096,6 +1096,56 @@ updates.last; // "Name"
 
 
 
+##  [Global Pending UI (전역 보류중인 UI)](https://reactrouter.com/en/main/start/tutorial#global-pending-ui)
+
+사용자가 앱을 탐색할 때 React 라우터는 다음 페이지의 데이터를 로드하는 동안 이전 페이지를 그대로 유지합니다. 목록 사이를 클릭할 때 앱이 약간 반응이 없는 것처럼 느껴질 수 있습니다. 앱이 응답하지 않는다고 느끼지 않도록 사용자에게 몇 가지 피드백을 제공하겠습니다.
+
+React 라우터는 백그라운드에서 모든 상태를 관리하며 동적 웹 앱을 빌드하는 데 필요한 부분만 표시합니다. 여기서는 [`useNavigation`](https://reactrouter.com/en/main/hooks/use-navigation) 훅을 사용하겠습니다.
+
+**👉 `useNivigation`으로 Global Pendding UI 추가**
+
+* `src/routes/root.jsx`
+
+  ```jsx
+  import {
+    // existing code
+    useNavigation,
+  } from "react-router-dom";
+  
+  // existing code
+  
+  export default function Root() {
+    const { contacts } = useLoaderData();
+    const navigation = useNavigation();
+  
+    return (
+      <>
+        <div id="sidebar">{/* existing code */}</div>
+        <div
+          id="detail"
+          className={
+            navigation.state === "loading" ? "loading" : ""
+          }
+        >
+          <Outlet />
+        </div>
+      </>
+    );
+  }
+  ```
+
+[`useNavigation`](https://reactrouter.com/en/main/hooks/use-navigation)은 현재 탐색 상태를 반환합니다. `"idle"` | `"submitting"` | `"loading"` 중 하나일 수 있습니다.
+
+우리의 경우, 유휴 상태가 아닌 경우 앱의 주요 부분에 `"loading"` 클래스를 추가합니다. 그런 다음 CSS는 빠른 로딩을 위해 UI가 깜빡이는 것을 방지하기 위해 짧은 지연 후 멋진 페이드 효과를 추가합니다. 상단에 스피너나 로딩 바를 표시하는 등 원하는 것은 무엇이든 할 수 있습니다.
+
+![image-20230503014003759](doc-resources/image-20230503014003759.png)
+
+> 🎈 Ctrl + 5로 캐시를 지우고.. mklinkj 에서 dsf로 클릭을 하게되면 잠깐 흐려지면서 전환되는 효과가 추가되었다.
+
+데이터 모델(`src/contacts.js`)에는 클라이언트 측 캐시가 있으므로 동일한 연락처를 두 번째로 탐색하는 것이 빠릅니다. 이 동작은 React 라우터가 아니며, 이전에 가본 적이 있든 없든 경로를 변경하기 위해 데이터를 다시 로드합니다. 그러나 탐색 중에 목록과 같이 변경되지 않는 경로에 대한 로더 호출은 피합니다.
+
+
+
 ## [액티브 링크 스타일링](https://reactrouter.com/en/main/start/tutorial#active-link-styling)
 
 이제 많은 레코드가 있으므로 사이드바에서 어떤 레코드를 보고 있는지 명확하지 않습니다. [`NavLink`](https://reactrouter.com/en/main/components/nav-link)를 사용하면 이 문제를 해결할 수 있습니다.

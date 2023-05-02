@@ -2053,6 +2053,61 @@ fetcher는 액션에 제출되는 양식 데이터를 알고 있으므로 `fetch
 
 
 
+##  Pathless Routes (경로 없는 라우트)
+
+마지막으로 한 가지 더. 마지막 오류 페이지는 전체 페이지가 아닌 루트 Outlet 내부에서 렌더링하면 더 좋을 것 같습니다. 실제로 모든 하위 라우트의 모든 오류를 아울렛에 렌더링하면 사용자가 새로 고침을 누르는 것보다 더 많은 선택지를 가질 수 있습니다.
+
+우리는 다음과 같이 표시되기를 원합니다:
+
+![image-20230503031245015](doc-resources/image-20230503031245015.png)
+
+모든 하위 라우트에 오류 요소를 추가할 수도 있지만 모두 동일한 오류 페이지이므로 권장하지 않습니다.
+
+더 깔끔한 방법이 있습니다. 경로 없이 라우트를 사용할 수 있으므로 URL에 새로운 경로 세그먼트를 추가하지 않고도 UI 레이아웃에 참여할 수 있습니다. 확인해 보세요:
+
+
+
+**👉 하위 경로를 경로 없는 라우트로 감싸기**
+
+* `src/main.jsx`
+
+  ```jsx
+  createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      loader: rootLoader,
+      action: rootAction,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          errorElement: <ErrorPage />,
+          children: [
+            { index: true, element: <Index /> },
+            {
+              path: "contacts/:contactId",
+              element: <Contact />,
+              loader: contactLoader,
+              action: contactAction,
+            },
+            /* the rest of the routes */
+          ],
+        },
+      ],
+    },
+  ]);
+  ```
+
+하위 라우트에서 오류가 발생하면 새로운 경로 없는 라우트가 이를 포착하고 렌더링하여 루트 경로의 UI를 보존합니다!
+
+
+
+
+
+
+
+
+
 ---
 
 
@@ -2066,3 +2121,10 @@ fetcher는 액션에 제출되는 양식 데이터를 알고 있으므로 `fetch
 > `async`와 `await`는 자바스크립트의 비동기 처리 패턴 중 가장 최근에 나온 문법입니다. `async` 함수는 `await` 키워드가 함수 본문 내에서 허용되는 비동기 함수를 선언합니다. `async`와 `await` 키워드는 비동기적인, 프로미스 기반의 동작을 더 깔끔한 스타일로 작성할 수 있게 해주어 명시적으로 프로미스 체인을 구성할 필요가 없습니다.
 >
 > `async` 함수에는 `await` 식이 포함될 수 있습니다. 이 식은 `async` 함수의 실행을 일시 중지하고 전달 된 `Promise`의 해결을 기다린 다음 `async` 함수의 실행을 다시 시작하고 완료후 값을 반환합니다.
+
+
+
+#### 경로를 그냥 라우트라고 명시할 껄 그랬다.. path하고 route를 둘다 경로로 하고나니 해깔림... 🎃
+
+
+

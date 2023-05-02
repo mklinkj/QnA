@@ -1286,9 +1286,90 @@ destroy 경로에 대한 상황에 맞는 오류 메시지를 만들어 보겠�
 
 ![image-20230503003002849](doc-resources/image-20230503003002849.png)
 
+이제 사용자는 새로 고침을 강행하는 대신 문제가 없는 페이지 부분과 계속 상호 작용할 수 있습니다 🙌.
+
+destroy 경로에는 자체 `errorElement`가 있고 루트 경로의 자식이므로 오류가 루트 대신에 렌더링됩니다. 눈치채셨겠지만, 이러한 오류는 가장 가까운 `errorElement`까지 퍼집니다. 루트에 하나만 있으면 원하는 만큼 추가할 수 있습니다.
+
+
+
+## [인덱스 라우트](https://reactrouter.com/en/main/start/tutorial#index-routes)
+
+앱을 로드하면 목록 오른쪽에 커다란 빈 페이지가 표시됩니다.
+
+![image-20230503003604238](doc-resources/image-20230503003604238.png)
+
+경로에 자식이 있고 부모 경로의 경로에 있는 경우 일치하는 자식이 없기 때문에 `<Outlet>`은 렌더링할 항목이 없습니다. 인덱스 경로를 해당 공간을 채우는 기본 자식 경로로 생각할 수 있습니다.
+
+**👉 index 경로 모듈 생성**
+
+```sh
+touch src/routes/index.jsx
+```
+
+**👉 인덱스 컴포넌트의 요소를 채우기**
+
+자유롭게 붙여넣기를 복사하세요. 여기에 특별한 것은 없습니다.
+
+* `src/routes/index.jsx`
+
+  ```jsx
+  export default function Index() {
+    return (
+      <p id="zero-state">
+        This is a demo for React Router.
+        <br />
+        Check out{" "}
+        <a href="https://reactrouter.com">
+          the docs at reactrouter.com
+        </a>
+        .
+      </p>
+    );
+  }
+  ```
+
+**👉 index 경로 구성**
+
+* `src/main.jsx`
+
+  ```jsx
+  // existing code
+  import Index from "./routes/index";
+  
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      errorElement: <ErrorPage />,
+      loader: rootLoader,
+      action: rootAction,
+      children: [
+        { index: true, element: <Index /> },
+        /* existing routes */
+      ],
+    },
+  ]);
+  ```
+
+  
+
+[`{ path: "" }`](https://reactrouter.com/en/main/route/route#path) 대신 [`{ index:true }`](https://reactrouter.com/en/main/route/route#index)에 유의하십시오. 이는 라우터가 사용자가 상위 경로의 정확한 경로에 있을 때 이 경로를 일치시키고 렌더링하도록 지시하므로 `<Outlet>`에서 렌더링할 다른 하위 경로가 없습니다.
+
+![image-20230503004403583](doc-resources/image-20230503004403583.png)
+
+짜잔! 더 이상 빈 공간이 없습니다. 인덱스 경로에 대시보드, 통계, 피드 등을 배치하는 것이 일반적입니다. 그들은 데이터 로딩에도 참여할 수 있습니다.
+
+
+
+
+
 
 
 ---
+
+
+
+
 
 ## 기타
 

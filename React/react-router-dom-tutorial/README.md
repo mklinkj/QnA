@@ -1250,6 +1250,42 @@ touch src/routes/destroy.jsx
 
 
 
+## 컨텍스트 에러
+재미 삼아 destroy 액션에 에러를 던져보세요:
+
+* `src/routes/destory.jsx`
+
+  ```jsx
+  export async function action({ params }) {
+    throw new Error("oh dang!");    //*
+    await deleteContact(params.contactId);
+    return redirect("/");
+  }
+  ```
+
+![image-20230503002656634](doc-resources/image-20230503002656634.png)
+
+이 화면을 기억하시나요? 앞서 살펴본 [`errorElement`](https://reactrouter.com/en/main/route/error-element)입니다. 하지만 사용자는 새로 고침을 누르는 것 외에는 이 화면에서 복구할 수 있는 방법이 없습니다.
+
+destroy 경로에 대한 상황에 맞는 오류 메시지를 만들어 보겠습니다:
+
+* `src/main.jsx`
+
+  ```jsx
+  [
+    /* other routes */
+    {
+      path: "contacts/:contactId/destroy",
+      action: destroyAction,
+      errorElement: <div>Oops! There was an error.</div>,
+    },
+  ];
+  ```
+
+이제 다시 시도해 보세요:
+
+![image-20230503003002849](doc-resources/image-20230503003002849.png)
+
 
 
 ---

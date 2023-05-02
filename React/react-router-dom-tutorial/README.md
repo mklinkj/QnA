@@ -1361,7 +1361,55 @@ touch src/routes/index.jsx
 
 
 
+## [Cancel 버튼](https://reactrouter.com/en/main/start/tutorial#cancel-button)
 
+편집 페이지에는 아직 아무것도 하지 않는 cancel 버튼이 있습니다. 우리는 그것이 브라우저의 뒤로가기 버튼과 같은 일을 하기를 원합니다.
+
+버튼에 대한 클릭 핸들러와 React Router의 [`useNavigate`](https://reactrouter.com/en/main/hooks/use-navigate)가 필요합니다.
+
+👉 `useNavigate`를 사용하여 cancel 버튼 클릭 핸들러 추가
+
+* `src/routes/edit.jsx`
+
+  ```jsx
+  import {
+    Form,
+    useLoaderData,
+    redirect,
+    useNavigate,
+  } from "react-router-dom";
+  
+  export default function EditContact() {
+    const { contact } = useLoaderData();
+    const navigate = useNavigate();
+  
+    return (
+      <Form method="post" id="contact-form">
+        {/* existing code */}
+  
+        <p>
+          <button type="submit">Save</button>
+          <button
+            type="button"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            Cancel
+          </button>
+        </p>
+      </Form>
+    );
+  }
+  ```
+
+이제 사용자가 "Cancel"를 클릭하면 브라우저 히스토리에 있는 한 항목이 다시 전송됩니다.
+
+> 🧐 버튼에 `event.preventDefault`가 없는 이유는 무엇인가요?
+
+`<button type="button">`은 중복되는 것처럼 보이지만 버튼이 양식을 제출하지 못하도록 하는 HTML 방식입니다.
+
+두 가지 기능이 더 남았습니다. 이제 막바지에 이르렀습니다!
 
 
 

@@ -1856,6 +1856,121 @@ http://localhost:5173/?q=mklink
 
 
 
+## [탐색이 없는 변화(Mutations)](https://reactrouter.com/en/main/start/tutorial#mutations-without-navigation)
+
+지금까지의 모든 변경(데이터를 변경하는 경우)은 탐색을 통해 히스토리 스택에 새 항목을 생성하는 양식을 사용했습니다. 이러한 사용자 흐름이 일반적이지만, 탐색을 유발하지 않고 데이터를 변경하려는 경우도 그에 못지않게 흔합니다.
+
+이러한 경우를 위해 [`useFetcher`](https://reactrouter.com/en/main/hooks/use-fetcher) 후크가 있습니다. 이를 통해 탐색을 유발하지 않고 로더 및 액션과 통신할 수 있습니다.
+
+연락처 페이지의 ★ 버튼이 여기에 적합합니다. 새 레코드를 만들거나 삭제하는 것이 아니며, 페이지를 변경하려는 것이 아니라 단순히 보고 있는 페이지의 데이터를 변경하려는 것이기 때문입니다.
+
+> 🎈 네비게이션에 즐겨찾기 버튼 기능이 있을 때.. 탐색 없이 네비게이션의 요소에 즐겨찾기 마킹만 하는 것? 인줄 알았는데.. 사용자 상세 페이지에서 즐겨찾기 버튼을 누르면 네비게이션의 이름 옆에 반영하는 내용이다.
+
+👉 `<Favorite>` form을 fetcher form으로 변경하기
+
+* `/src/routes/contact.jsx`
+
+  ```jsx
+  import {
+    useLoaderData,
+    Form,
+    useFetcher,
+  } from "react-router-dom";
+  
+  // existing code
+  
+  function Favorite({ contact }) {
+    const fetcher = useFetcher();
+    let favorite = contact.favorite;
+  
+    return (
+      <fetcher.Form method="post">
+        <button
+          name="favorite"
+          value={favorite ? "false" : "true"}
+          aria-label={
+            favorite
+              ? "Remove from favorites"
+              : "Add to favorites"
+          }
+        >
+          {favorite ? "★" : "☆"}
+        </button>
+      </fetcher.Form>
+    );
+  }
+  ```
+
+여기 있는 동안 양식을 살펴보고 싶을 것입니다. 항상 그렇듯이 폼에는 이름 소품이 있는 필드가 있습니다. 이 양식은 `"true"` | `"false"` 중 하나의 `favorite` 키가 있는 [`formData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)를 전송합니다. `method="post"`가 있으므로 액션을 호출합니다. `<fetcher.Form action="...">` prop이 없으므로 폼이 렌더링되는 경로에 게시됩니다.
+
+**👉 액션 만들기**
+
+* `src/routes/contact.jsx`
+
+  ```jsx
+  // existing code
+  import { getContact, updateContact } from "../contacts";
+  
+  export async function action({ request, params }) {
+    let formData = await request.formData();
+    return updateContact(params.contactId, {
+      favorite: formData.get("favorite") === "true",
+    });
+  }
+  
+  export default function Contact() {
+    // existing code
+  }
+  ```
+
+  아주 간단합니다. 요청에서 양식 데이터를 가져와서 데이터 모델로 전송하면 됩니다.
+
+**👉 라우트의 새 액션 구성하기**
+
+* `src/main.jsx`
+
+  ```jsx
+  // existing code
+  import Contact, {
+    loader as contactLoader,
+    action as contactAction,
+  } from "./routes/contact";
+  
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      errorElement: <ErrorPage />,
+      loader: rootLoader,
+      action: rootAction,
+      children: [
+        { index: true, element: <Index /> },
+        {
+          path: "contacts/:contactId",
+          element: <Contact />,
+          loader: contactLoader,
+          action: contactAction,
+        },
+        /* existing code */
+      ],
+    },
+  ]);
+  ```
+
+이제 사용자 이름 옆에 있는 별을 클릭할 준비가 되었습니다!
+
+![image-20230503024419522](doc-resources/image-20230503024419522.png)
+
+
+
+두 별이 자동으로 업데이트되는 것을 확인해 보세요. 새로운 `<fetcher.Form method="post">`는 기존에 사용하던 `<Form>`과 거의 동일하게 작동합니다. 액션을 호출하면 모든 데이터가 자동으로 재검증되며, 오류도 같은 방식으로 포착됩니다.
+
+하지만 한 가지 중요한 차이점이 있는데, 내비게이션이 아니라 URL이 변경되지 않고 히스토리 스택에 영향을 미치지 않는다는 점입니다.
+
+
+
+
+
 ---
 
 

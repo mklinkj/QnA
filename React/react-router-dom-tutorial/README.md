@@ -1494,6 +1494,67 @@ http://localhost:5173/?q=mklink
 
 
 
+## [URL을 Form 상태와 동기화하기](https://reactrouter.com/en/main/start/tutorial#synchronizing-urls-to-form-state)
+
+여기에는 빠르게 처리할 수 있는 몇 가지 UX 문제가 있습니다.
+
+1. 검색 후 다시 클릭하면 목록이 더 이상 필터링되지 않더라도 양식 필드에 입력한 값이 남아 있습니다.
+2. 검색 후 페이지를 새로 고치면 목록이 필터링되더라도 양식 필드에 더 이상 입력한 값이 없습니다.
+
+즉, URL과 양식 상태가 동기화되지 않습니다.
+
+**👉 로더에서 `q`를 반환하고 검색 필드 기본값으로 설정합니다.**
+
+* `src/routes/root.jsx`
+
+  ```jsx
+  // existing code
+  
+  export async function loader({ request }) {
+    const url = new URL(request.url);
+    const q = url.searchParams.get("q");
+    const contacts = await getContacts(q);
+    return { contacts, q };
+  }
+  
+  export default function Root() {
+    const { contacts, q } = useLoaderData();
+    const navigation = useNavigation();
+  
+    return (
+      <>
+        <div id="sidebar">
+          <h1>React Router Contacts</h1>
+          <div>
+            <Form id="search-form" role="search">
+              <input
+                id="q"
+                aria-label="Search contacts"
+                placeholder="Search"
+                type="search"
+                name="q"
+                defaultValue={q}
+              />
+              {/* existing code */}
+            </Form>
+            {/* existing code */}
+          </div>
+          {/* existing code */}
+        </div>
+        {/* existing code */}
+      </>
+    );
+  }
+  ```
+
+  그러면 문제 (2)가 해결됩니다. 지금 페이지를 새로 고치면 입력 필드에 쿼리가 표시됩니다.
+
+![image-20230503011829547](doc-resources/image-20230503011829547.png)
+
+> 🎈 URL에 q=검색어가 설정된 상태에서 새로고침을 해도 검색 필드에 검색어값이 남아있게 되었다.
+
+
+
 
 
 

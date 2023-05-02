@@ -1096,6 +1096,65 @@ updates.last; // "Name"
 
 
 
+## [액티브 링크 스타일링](https://reactrouter.com/en/main/start/tutorial#active-link-styling)
+
+이제 많은 레코드가 있으므로 사이드바에서 어떤 레코드를 보고 있는지 명확하지 않습니다. [`NavLink`](https://reactrouter.com/en/main/components/nav-link)를 사용하면 이 문제를 해결할 수 있습니다.
+
+**👉 사이드바에서 내비링크 사용**
+
+* **src/routes/root.jsx**
+
+  ```jsx
+  import {
+    Outlet,
+    NavLink,
+    useLoaderData,
+    Form,
+    redirect,
+  } from "react-router-dom";
+  
+  export default function Root() {
+    return (
+      <>
+        <div id="sidebar">
+          {/* other code */}
+  
+          <nav>
+            {contacts.length ? (
+              <ul>
+                {contacts.map((contact) => (
+                  <li key={contact.id}>
+                    <NavLink
+                      to={`contacts/${contact.id}`}
+                      className={({ isActive, isPending }) =>
+                        isActive
+                          ? "active"
+                          : isPending
+                          ? "pending"
+                          : ""
+                      }
+                    >
+                      {/* other code */}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>{/* other code */}</p>
+            )}
+          </nav>
+        </div>
+      </>
+    );
+  }
+  ```
+
+  `className`에 함수를 전달하고 있다는 점에 유의하세요. 사용자가 `NavLink`의 URL에 있으면 `isActive`가 참이 됩니다. 활성화되려고 하면(데이터가 아직 로드 중인 상태) `isPending`이 참이 됩니다. 이를 통해 사용자가 어디에 있는지 쉽게 표시할 수 있을 뿐만 아니라 클릭했지만 데이터가 로드되기를 기다리는 링크에 대한 즉각적인 피드백을 제공할 수 있습니다.
+
+![image-20230502235956213](doc-resources/image-20230502235956213.png)
+
+
+
 
 
 

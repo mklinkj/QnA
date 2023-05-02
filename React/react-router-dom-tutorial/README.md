@@ -1969,6 +1969,55 @@ http://localhost:5173/?q=mklink
 
 
 
+## 낙관적인(Optimistic) UI
+
+마지막 섹션에서 즐겨 찾기 버튼을 클릭했을 때 앱이 다소 느리게 반응하는 것을 느끼셨을 것입니다. 다시 한 번, 실제 환경에서 네트워크 지연이 발생할 수 있기 때문에 약간의 지연 시간을 추가했습니다!
+
+사용자에게 피드백을 주기 위해 [`fetcher.state`](https://reactrouter.com/en/main/hooks/use-fetcher#fetcherstate)를 사용하여 별을 로딩 상태로 만들 수 있지만(이전의 `navigation.state`와 매우 유사), 이번에는 더 나은 방법을 사용할 수 있습니다. "Optimistic UI"라는 전략을 사용할 수 있습니다.
+
+fetcher는 액션에 제출되는 양식 데이터를 알고 있으므로 `fetcher.formData`에서 사용할 수 있습니다. 네트워크가 완료되지 않았더라도 이를 사용하여 별의 상태를 즉시 업데이트할 수 있습니다. 업데이트가 결국 실패하면 UI는 실제 데이터로 되돌아갑니다.
+
+> 🎈 일단 미리 별 업데이트를 해두고(성공할 거라는 낙관적인 전략) 나중에 실패가되면 되돌리는...
+
+**👉 `fetcher.formData`에서 낙관적 값 읽기**
+
+* `src/routes/contact.jsx`
+
+  ```jsx
+  // existing code
+  
+  function Favorite({ contact }) {
+    const fetcher = useFetcher();
+  
+    let favorite = contact.favorite;
+    if (fetcher.formData) {
+      favorite = fetcher.formData.get("favorite") === "true";
+    }
+  
+    return (
+      <fetcher.Form method="post">
+        <button
+          name="favorite"
+          value={favorite ? "false" : "true"}
+          aria-label={
+            favorite
+              ? "Remove from favorites"
+              : "Add to favorites"
+          }
+        >
+          {favorite ? "★" : "☆"}
+        </button>
+      </fetcher.Form>
+    );
+  }
+  ```
+
+지금 버튼을 클릭하면 별이 즉시 새 상태로 변경되는 것을 볼 수 있습니다. 항상 실제 데이터를 렌더링하는 대신 페처에 제출 중인 `formData`가 있는지 확인하고, 있다면 그 데이터를 대신 사용합니다. 작업이 완료되면 `fetcher.formData`는 더 이상 존재하지 않으며 실제 데이터를 다시 사용하게 됩니다. 따라서 낙관적인 UI 코드에 버그를 작성하더라도 결국 올바른 상태로 돌아갑니다 🥹.
+
+
+
+
+
 
 
 ---

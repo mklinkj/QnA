@@ -1413,6 +1413,54 @@ touch src/routes/index.jsx
 
 
 
+## [URL 검색 파라미터와 GET 제출](https://reactrouter.com/en/main/start/tutorial#url-search-params-and-get-submissions)
+
+지금까지의 모든 인터랙티브 UI는 URL을 변경하는 링크이거나 데이터를 액션에 게시하는 양식이었습니다. 검색 필드는 이 두 가지가 혼합되어 있다는 점에서 흥미롭습니다. 양식이지만 URL만 변경하고 데이터는 변경하지 않습니다.
+
+지금은 React 라우터 `<Form>`이 아닌 일반 HTML `<from>`일 뿐입니다. 브라우저가 기본적으로 이 폼으로 무엇을 하는지 살펴봅시다:
+
+👉 검색 필드에 이름을 입력하고 Enter 키를 누릅니다.
+
+이제 브라우저의 URL에 쿼리가 [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)로 포함되어 있습니다:
+
+```
+http://localhost:5173/?q=mklink
+```
+
+검색 양식을 검토하면 다음과 같습니다:
+
+* `src/routes/root.jsx`
+
+  ```html
+  <form id="search-form" role="search">
+    <input
+      id="q"
+      aria-label="Search contacts"
+      placeholder="Search"
+      type="search"
+      name="q"
+    />
+    <div id="search-spinner" aria-hidden hidden={true} />
+    <div className="sr-only" aria-live="polite"></div>
+  </form>
+  ```
+
+앞서 살펴본 것처럼 브라우저는 input 요소의 `name` 속성으로 폼을 직렬화할 수 있습니다. 이 input의 name은 `q`이므로 URL에 ?q=가 있습니다. `search`이라고 이름을 지정하면 URL은 `?search=`가 됩니다.
+
+이 양식은 지금까지 사용한 다른 양식과 다르며 `<form method="post">`가 없다는 점에 유의하세요. 기본 `method`는 `"get"`입니다. 즉, 브라우저가 다음 문서에 대한 요청을 생성할 때 양식 데이터를 요청 POST 본문에 넣지 않고 GET 요청의 [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)에 넣는다는 뜻입니다.
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
 
 

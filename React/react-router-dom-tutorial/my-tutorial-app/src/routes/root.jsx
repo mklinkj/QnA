@@ -1,4 +1,4 @@
-import { Form, NavLink, Outlet, redirect, useLoaderData, useNavigation } from 'react-router-dom'
+import { Form, NavLink, Outlet, redirect, useLoaderData, useNavigation, useSubmit } from 'react-router-dom'
 import { createContact, getContacts } from '../contacts.js'
 import { useEffect } from 'react'
 
@@ -7,6 +7,7 @@ export async function action() {
   return redirect(`/contacts/${contact.id}/edit`)
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export async function loader({ request }) {
   const url = new URL(request.url)
   const q = url.searchParams.get('q')
@@ -17,6 +18,7 @@ export async function loader({ request }) {
 export default function Root() {
   const { contacts, q } = useLoaderData()
   const navigation = useNavigation()
+  const submit = useSubmit()
 
   useEffect(() => {
     document.getElementById('q').value = q
@@ -34,6 +36,9 @@ export default function Root() {
               type='search'
               name='q'
               defaultValue={q}
+              onChange={(event) => {
+                submit(event.currentTarget.form)
+              }}
             />
             <div
               id='search-spinner'

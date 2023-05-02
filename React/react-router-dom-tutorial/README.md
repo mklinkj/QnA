@@ -1683,7 +1683,62 @@ http://localhost:5173/?q=mklink
 
   
 
+## 폼  제출  `onChanage`
+
+여기서 제품 결정을 내려야 합니다. 이 UI의 경우 양식이 명시적으로 제출될 때 대신 모든 키 입력 시 필터링이 수행되도록 하는 것이 좋습니다.
+
+이미   `useNavigate`를 살펴봤으니, 여기서는 그 사촌인 [`useSubmit`](https://reactrouter.com/en/main/hooks/use-submit)을 사용하겠습니다.
+
+* `src/routes/root.jsx`
+
+  ```jsx
+  // existing code
+  import {
+    // existing code
+    useSubmit,
+  } from "react-router-dom";
   
+  export default function Root() {
+    const { contacts, q } = useLoaderData();
+    const navigation = useNavigation();
+    const submit = useSubmit();
+  
+    return (
+      <>
+        <div id="sidebar">
+          <h1>React Router Contacts</h1>
+          <div>
+            <Form id="search-form" role="search">
+              <input
+                id="q"
+                aria-label="Search contacts"
+                placeholder="Search"
+                type="search"
+                name="q"
+                defaultValue={q}
+                onChange={(event) => {
+                  submit(event.currentTarget.form);
+                }}
+              />
+              {/* existing code */}
+            </Form>
+            {/* existing code */}
+          </div>
+          {/* existing code */}
+        </div>
+        {/* existing code */}
+      </>
+    );
+  }
+  ```
+
+이제 입력하면 양식이 자동으로 제출됩니다!
+
+[`submit`](https://reactrouter.com/en/main/hooks/use-submit)할 인수를 주목하세요. `event.currentTarget.form`을 전달합니다. `currentTarget`은 이벤트가 연결된 DOM 노드이고, `currentTarget.form`은 입력의 부모 양식 노드입니다. `submit` 함수는 사용자가 전달한 모든 양식을 직렬화하여 제출합니다.
+
+
+
+
 
 
 

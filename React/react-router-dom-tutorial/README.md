@@ -1738,7 +1738,67 @@ http://localhost:5173/?q=mklink
 
 
 
+## [검색 스피너 추가하기](https://reactrouter.com/en/main/start/tutorial#adding-search-spinner)
 
+프로덕션 앱에서는 이 검색이 한 번에 전송하고 클라이언트 측에서 필터링하기에는 너무 큰 데이터베이스의 레코드를 찾을 가능성이 높습니다. 이 데모에 가짜 네트워크 지연 시간이 있는 이유가 바로 여기에 있습니다.
+
+로딩 표시기가 없으면 검색이 다소 느리게 느껴집니다. 데이터베이스를 더 빠르게 만들 수 있다고 해도 사용자의 네트워크 지연은 항상 방해가 되고 우리가 통제할 수 없는 요소입니다. 더 나은 UX를 위해 검색에 즉각적인 UI 피드백을 추가해 보겠습니다. 이를 위해 다시 [`useNavigation`](https://reactrouter.com/en/main/hooks/use-navigation)을 사용하겠습니다.
+
+**👉 검색 스피너 추가**
+
+* `src/routes/root.jsx`
+
+  ```jsx
+  // existing code
+  
+  export default function Root() {
+    const { contacts, q } = useLoaderData();
+    const navigation = useNavigation();
+    const submit = useSubmit();
+  
+    const searching =
+      navigation.location &&
+      new URLSearchParams(navigation.location.search).has(
+        "q"
+      );
+  
+    useEffect(() => {
+      document.getElementById("q").value = q;
+    }, [q]);
+  
+    return (
+      <>
+        <div id="sidebar">
+          <h1>React Router Contacts</h1>
+          <div>
+            <Form id="search-form" role="search">
+              <input
+                id="q"
+                className={searching ? "loading" : ""}
+                // existing code
+              />
+              <div
+                id="search-spinner"
+                aria-hidden
+                hidden={!searching}
+              />
+              {/* existing code */}
+            </Form>
+            {/* existing code */}
+          </div>
+          {/* existing code */}
+        </div>
+        {/* existing code */}
+      </>
+    );
+  }
+  ```
+
+  ![image-20230503020204357](doc-resources/image-20230503020204357.png)
+
+앱이 새 URL로 이동하여 해당 데이터를 로드할 때 `navigation.location`이 표시됩니다. 그런 다음 보류 중인 탐색이 더 이상 없으면 사라집니다.
+
+> 🎈 검색어 입력 앞부분에 회전하는 화살표가 나타난다.
 
 
 

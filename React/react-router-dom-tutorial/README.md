@@ -1802,6 +1802,60 @@ http://localhost:5173/?q=mklink
 
 
 
+## [히스토리 스택 관리하기](https://reactrouter.com/en/main/start/tutorial#managing-the-history-stack)
+
+이제 모든 키 입력에 대해 양식이 제출되었으므로 "seba"라는 문자를 입력한 다음 백스페이스로 삭제하면 스택에 7개의 새 항목이 생깁니다 😂. 이런 상황은 절대 원하지 않습니다.
+
+![image-20230503020834624](doc-resources/image-20230503020834624.png)
+
+> 🎈 검색 몇번하다보면 거의 한글자마다 기록이 남아버린다.
+
+기록 스택의 현재 항목을 밀어 넣는 대신 다음 페이지로 바꾸면 이 문제를 방지할 수 있습니다.
+
+👉 **`submit` 에서 `replace` 사용**
+
+* `src/routes/root.jsx`
+
+  ```jsx
+  // existing code
+  
+  export default function Root() {
+    // existing code
+  
+    return (
+      <>
+        <div id="sidebar">
+          <h1>React Router Contacts</h1>
+          <div>
+            <Form id="search-form" role="search">
+              <input
+                id="q"
+                // existing code
+                onChange={(event) => {
+                  const isFirstSearch = q == null;
+                  submit(event.currentTarget.form, {
+                    replace: !isFirstSearch,
+                  });
+                }}
+              />
+              {/* existing code */}
+            </Form>
+            {/* existing code */}
+          </div>
+          {/* existing code */}
+        </div>
+        {/* existing code */}
+      </>
+    );
+  }
+  ```
+
+검색을 시작하기 전 페이지가 아닌 검색 결과만 바꾸고 싶기 때문에 이것이 첫 번째 검색인지 아닌지 빠르게 확인한 다음 바꾸기로 결정합니다.
+
+키를 누를 때마다 더 이상 새 항목이 생성되지 않으므로 사용자는 검색 결과를 7번 클릭하지 않고도 다시 클릭할 수 있습니다 😅.
+
+
+
 ---
 
 

@@ -1155,7 +1155,98 @@ updates.last; // "Name"
 
 
 
+## [레코드 삭제하기](https://reactrouter.com/en/main/start/tutorial#deleting-records)
 
+연락처 route의 코드를 검토하면 삭제 버튼이 다음과 같이 표시되어 있음을 알 수 있습니다:
+
+* `src/routes/contact.jsx`
+
+  ```jsx
+  <Form
+    method="post"
+    action="destroy"
+    onSubmit={(event) => {
+      if (
+        !confirm(
+          "Please confirm you want to delete this record."
+        )
+      ) {
+        event.preventDefault();
+      }
+    }}
+  >
+    <button type="submit">Delete</button>
+  </Form>
+  ```
+
+  
+
+액션이 "`destroy`"를 가리키고 있음을 주목하세요. `<Link to>`과 마찬가지로 `<Form action>`도 상대값을 사용할 수 있습니다. 양식이 `contact/:contactId`에 렌더링되므로 `destroy`가 포함된 상대 액션은 클릭 시 양식을 `contact/:contactId/destroy`로 제출합니다.
+
+이 시점에서 삭제 버튼을 작동시키기 위해 알아야 할 모든 것을 알 수 있을 것입니다. 계속 진행하기 전에 한 번 해보시겠습니까? 다음이 필요합니다:
+
+1. 새 route
+2. 해당 route에서의 `action`
+3. `src/contacts.js`에서 `deleteContact`
+
+**👉 "destory" route 모듈 만들기**
+
+```sh
+touch src/routes/destroy.jsx
+```
+
+**👉 destory 액션 추가**
+
+* `src/routes/destory.jsx`
+
+  ```jsx
+  import { redirect } from "react-router-dom";
+  import { deleteContact } from "../contacts";
+  
+  export async function action({ params }) {
+    await deleteContact(params.contactId);
+    return redirect("/");
+  }
+  ```
+
+  
+
+**👉 route 구성에 destory route를 추가합니다.**
+
+* `src/main.jsx`
+
+  ```jsx
+  /* existing code */
+  import { action as destroyAction } from "./routes/destroy";
+  
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      /* existing root route props */
+      children: [
+        /* existing routes */
+        {
+          path: "contacts/:contactId/destroy",
+          action: destroyAction,
+        },
+      ],
+    },
+  ]);
+  
+  /* existing code */
+  ```
+
+이제 레코드로 이동해 "Delete" 버튼을 클릭합니다. 작동합니다!
+
+> 😅 나는 이 모든 것이 왜 작동하는지 여전히 혼란스럽습니다.
+
+사용자가 제출 버튼을 클릭할 때...:
+
+1. `<Form>`은 서버에 새 POST 요청을 보내는 기본 브라우저 동작을 방지하는 대신 클라이언트 측 라우팅을 사용하여 POST 요청을 생성하여 브라우저를 에뮬레이트합니다.
+2. `<Form action="destroy">`는 "`contacts/:contactId/destroy`"의 새 경로와 일치하여 요청을 보냅니다.
+3. 액션이 리디렉션된 후, React 라우터는 페이지의 데이터에 대한 모든 로더를 호출하여 최신 값을 가져옵니다("재검증(revalidation)"). `useLoaderData`는 새 값을 반환하고 컴포넌트가 업데이트되도록 합니다!
+
+양식을 추가하고 액션을 추가하면 나머지는 React 라우터가 알아서 처리합니다.
 
 
 

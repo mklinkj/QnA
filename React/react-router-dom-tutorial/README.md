@@ -1553,9 +1553,87 @@ http://localhost:5173/?q=mklink
 
 > 🎈 URL에 q=검색어가 설정된 상태에서 새로고침을 해도 검색 필드에 검색어값이 남아있게 되었다.
 
+이제 문제 (1)의 경우 뒤로가기 버튼을 클릭하고 입력을 업데이트합니다. React에서 useEffect를 가져와서 DOM에서 폼의 상태를 직접 조작할 수 있습니다.
 
+> 🎈2번문제가 검색을 한번하고 뒤로가기 버튼눌러서 뒤로갔을 때... 검색어가 남아있어서 문제란 말 같은데...
 
+**👉 입력값과 URL 검색 파라미터 동기화**
 
+* `src/routes/root.jsx`
+
+  ```jsx
+  import { useEffect } from "react";
+  
+  // existing code
+  
+  export default function Root() {
+    const { contacts, q } = useLoaderData();
+    const navigation = useNavigation();
+  
+    useEffect(() => {
+      document.getElementById("q").value = q;
+    }, [q]);
+  
+    // existing code
+  }
+  ```
+
+> 🤔 이를 위해 제어 컴포넌트와 React State를 사용해야 하지 않을까요?
+
+물론 이 작업을 제어 컴포넌트로 수행할 수도 있지만 동일한 동작에 대해 더 복잡해질 수 있습니다. URL을 제어하는 것은 사용자가 아니라 뒤로/앞으로 버튼으로 제어하는 것이기 때문입니다. 제어 컴포넌트를 사용하면 동기화 지점이 더 많아집니다.
+
+* 그래도 걱정이 된다면 이 항목을 확장하여 어떻게 표시되는지 확인하세요.
+
+  > 입력을 제어하려면 이제 하나의 동기화 지점이 아니라 세 개의 동기화 지점이 필요하다는 점을 주목하세요. 동작은 동일하지만 코드가 더 복잡해졌습니다.
+
+  * `src/routes/root.jsx`
+
+    ```jsx
+    import { useEffect, useState } from "react";
+    // existing code
+    
+    export default function Root() {
+      const { contacts, q } = useLoaderData();
+      const [query, setQuery] = useState(q);
+      const navigation = useNavigation();
+    
+      useEffect(() => {
+        setQuery(q);
+      }, [q]);
+    
+      return (
+        <>
+          <div id="sidebar">
+            <h1>React Router Contacts</h1>
+            <div>
+              <Form id="search-form" role="search">
+                <input
+                  id="q"
+                  aria-label="Search contacts"
+                  placeholder="Search"
+                  type="search"
+                  name="q"
+                  value={query}
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                  }}
+                />
+                {/* existing code */}
+              </Form>
+              {/* existing code */}
+            </div>
+            {/* existing code */}
+          </div>
+        </>
+      );
+    }
+    ```
+
+    
+
+  
+
+  
 
 
 

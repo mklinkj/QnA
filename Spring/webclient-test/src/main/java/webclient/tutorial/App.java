@@ -48,14 +48,13 @@ public class App {
     System.out.println(result2.get("rates").get("KRW"));
 
     // HTTP interface 사용
-    @SuppressWarnings("unchecked")
     Map<String, Map<String, Double>> result3 = erApi.getLatest();
     System.out.println(result3.get("rates").get("KRW"));
   }
 
   interface ErApi {
     @GetExchange(API_PATH)
-    Map getLatest();
+    <K, V> Map<K, V> getLatest();
   }
 
   public static void main(String[] args) {

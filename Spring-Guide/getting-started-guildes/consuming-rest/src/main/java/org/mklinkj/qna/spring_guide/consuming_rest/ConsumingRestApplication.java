@@ -18,7 +18,7 @@ public class ConsumingRestApplication {
   @Bean
   ApplicationRunner run(RestTemplate restTemplate) {
     return args -> {
-      Quote quote = restTemplate.getForObject("http://lvm.test-linux:8090/api/random", Quote.class);
+      Quote quote = restTemplate.getForObject("http://lvm.test-linux:18080/api/random", Quote.class);
       LOGGER.info("quote: {}", quote);
     };
   }

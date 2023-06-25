@@ -1,0 +1,78 @@
+plugins {
+  id 'java'
+  id "org.gretty" version "${grettyVersion}"
+  id 'war'
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of("${javaVersion}")
+  }
+}
+
+[compileJava, compileTestJava]*.options*.encoding = "${projectEncoding}"
+
+repositories {
+  mavenCentral()
+}
+
+
+dependencies {
+  implementation "org.thymeleaf:thymeleaf-spring6:${thymeleafVersion}"
+
+  // TODO: Using gretty with thymeleaf-layout-dialect causes an exception
+  // TODO: Gretty와 thymeleaf-layout-dialect를 함깨 사용하면 예외가 발생합니다.
+  implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleafLayoutVersion}"
+
+  // TODO: If I use the thymeleaf-layout-dialect modified by zhanhb, the exception does not occur.
+  // TODO: zhanhb에 의해 수정된 thymeleaf-layout-dialect를 사용하면 예외가 발생하지 않습니다.
+  // implementation "com.github.zhanhb:thymeleaf-layout-dialect:${zhanhbThymeleafLayoutVersion}"
+
+
+
+  implementation "org.thymeleaf.extras:thymeleaf-extras-java8time:${thymeleafExtrasJava8timeVersion}"
+
+  implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+
+  implementation "org.springframework:spring-context:${springVersion}"
+  implementation "org.springframework:spring-context-support:${springVersion}"
+  implementation "org.springframework:spring-webmvc:${springVersion}"
+
+  compileOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
+
+  implementation "org.webjars:jquery:${jqueryVersion}"
+  implementation "org.webjars:bootstrap:${bootstrapVersion}"
+  implementation "org.webjars:webjars-locator:${webjarsLocatorVersion}"
+
+
+  testImplementation "org.springframework:spring-test:${springVersion}"
+  testImplementation "io.micrometer:context-propagation:${ioMicrometerVersion}"
+  testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+  testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
+
+  testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+  testImplementation "org.assertj:assertj-core:${assertJVersion}"
+}
+
+// > gradle clean appRun
+gretty {
+  httpPort = 8090
+  contextPath = '/'
+  servletContainer = "tomcat10"
+  jvmArgs = [
+      "-Djava.security.egd=file:/dev/./urandom",
+      "--add-opens=java.base/java.lang=ALL-UNNAMED",
+      "--add-opens=java.base/java.io=ALL-UNNAMED",
+      "--add-opens=java.base/java.util=ALL-UNNAMED",
+      "--add-opens=java.base/java.util.concurrent=ALL-UNNAMED",
+      "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
+  ]
+}
+
+test {
+  useJUnitPlatform()
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
+}

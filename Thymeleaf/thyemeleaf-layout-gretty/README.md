@@ -35,7 +35,7 @@ When I run the web project, I run it with the command below.
 gradle clean appRun
 ```
 
-If you run through Gretty and access the page with the layout applied, you'll definitely get the exception I mentioned first.
+When I ran Gretty and accessed the page with the layout applied, I definitely saw the aforementioned exception.
 
 
 
@@ -45,9 +45,9 @@ However, there are two things that are unusual.
 
 ### ✨ Two unusual things
 
-1. Exceptions do not occur if you directly deploy and use Tomcat without using Gretty.
+1. If I'm using a direct deployment of Tomcat without using Gretty, I don't get the exception.
 
-2. If you use the `https://github.com/zhanhb/thymeleaf-layout-dialect` mentioned in the previous ripple, there is no problem running the web project with Gretty.
+2. If I use `https://github.com/zhanhb/thymeleaf-layout-dialect`, there's no problem running a web project with Gretty.
 
    ```groovy
      // TODO: Using gretty with thymeleaf-layout-dialect causes an exception
@@ -62,7 +62,7 @@ However, there are two things that are unusual.
 
 ### ✨ Example project to see the problem
 
-I've created an example project for you to see the issue. If you have time, please review it.
+I've created an example project for you to see the issue.
 
 * Example project github url
 
@@ -132,7 +132,7 @@ Gretty를 통해서 실행해서 레이아웃이 적용된 페이지에 접근�
 
 
 
-However, there are two things that are unusual.
+그런데, 특이한 점 2가지가 있습니다.
 
 
 
@@ -140,7 +140,7 @@ However, there are two things that are unusual.
 
 1. Gretty 를 사용하지 않고 직접 Tomcat에 배포해서 사용하면 오류가 나지 않습니다. 왜그런지 이유를 잘 모르겠습니다.
 
-2. 앞의 리플에서 언급된 `https://github.com/zhanhb/thymeleaf-layout-dialect` 를 사용하면 Gretty로 웹 프로젝트를 실행하더라도 문제가 없습니다.
+2. https://github.com/zhanhb/thymeleaf-layout-dialect`를 사용하면 Gretty로 웹 프로젝트를 실행하는 데 아무런 문제가 없습니다.
 
    ```groovy
      // TODO: Gretty와 thymeleaf-layout-dialect를 함깨 사용하면 오류가 발생합니다.
@@ -155,7 +155,7 @@ However, there are two things that are unusual.
 
 ### ✨ 문제를 확인해 볼 수 있는 예제 프로젝트
 
-문제를 확인해 볼 수 있는 예제 프로젝트를 만들었습니다. 시간되실 때, 검토를 부탁드립니다.
+문제를 확인해 볼 수 있는 예제 프로젝트를 만들었습니다.
 
 * 예제 프로젝트  깃허브 주소
   * https://github.com/mklinkj/QnA/tree/master/Thymeleaf/thyemeleaf-layout-gretty

@@ -1,3 +1,9 @@
+> ✨ 이 프로젝트는 상태를 남겨야하므로 Gretty, Thymeleaf 에 대해서는 버전업그레이드를 하지 않는게 낫겠다.
+>
+> * Gretty, Thymeleaf 
+>
+>   Gretty 버전을 `4.0.3`에서 `4.1.0`으로 올리면 다른 문제가 나타남.
+
 # When using Gretty with the Thymeleaf Layout Dialect, an exception was thrown when visiting a layout-applied page.
 
 

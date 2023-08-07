@@ -1,0 +1,69 @@
+plugins {
+  id 'java'
+  id "org.gretty" version "${grettyVersion}"
+  id 'war'
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of("${javaVersion}")
+  }
+}
+
+[compileJava, compileTestJava]*.options*.encoding = "${projectEncoding}"
+
+repositories {
+  mavenCentral()
+}
+
+
+dependencies {
+  implementation "org.thymeleaf:thymeleaf-spring6:${thymeleafVersion}"
+  implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleafLayoutVersion}"
+
+  implementation "org.thymeleaf.extras:thymeleaf-extras-java8time:${thymeleafExtrasJava8timeVersion}"
+
+  implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+
+  implementation "org.springframework:spring-context:${springVersion}"
+  implementation "org.springframework:spring-context-support:${springVersion}"
+  implementation "org.springframework:spring-webmvc:${springVersion}"
+
+  compileOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
+
+  implementation "org.webjars:jquery:${jqueryVersion}"
+  implementation "org.webjars:bootstrap:${bootstrapVersion}"
+  implementation "org.webjars:webjars-locator:${webjarsLocatorVersion}"
+
+
+  testImplementation "org.springframework:spring-test:${springVersion}"
+  testImplementation "io.micrometer:context-propagation:${ioMicrometerVersion}"
+  testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+  testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
+
+  testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+  testImplementation "org.assertj:assertj-core:${assertJVersion}"
+}
+
+// > gradle clean appRun
+gretty {
+  httpPort = 8090
+  contextPath = '/'
+  servletContainer = "tomcat10"
+  jvmArgs = [
+      "-Djava.security.egd=file:/dev/./urandom",
+      "--add-opens=java.base/java.lang=ALL-UNNAMED",
+      "--add-opens=java.base/java.io=ALL-UNNAMED",
+      "--add-opens=java.base/java.util=ALL-UNNAMED",
+      "--add-opens=java.base/java.util.concurrent=ALL-UNNAMED",
+      "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
+  ]
+}
+
+test {
+  useJUnitPlatform()
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
+}

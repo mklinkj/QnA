@@ -1,0 +1,41 @@
+plugins {
+  id 'java'
+  id "io.freefair.lombok" version "${lombokPluginVersion}"
+}
+
+group 'org.mklinkj.qna'
+version '1.0-SNAPSHOT'
+
+repositories {
+  mavenCentral()
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of("${javaVersion}")
+  }
+}
+
+[compileJava, compileTestJava]*.options*.encoding = "${projectEncoding}"
+
+
+dependencies {
+  implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+  implementation "org.hibernate.orm:hibernate-core:${hibernateVersion}"
+  implementation "org.hsqldb:hsqldb:${hsqldbVersion}"
+
+  testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+  testImplementation "org.assertj:assertj-core:${assertjVersion}"
+
+  // ScriptRunner, Resources 클래스를
+  // 테스트시 스키마 초기화 및 초기 데이터 입력 용도로 사용하기 위해 추가.
+  testImplementation "org.mybatis:mybatis:${mybatisVersion}"
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
+}

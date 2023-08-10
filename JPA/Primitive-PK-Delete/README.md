@@ -156,7 +156,7 @@ INSERT INTO t_employee (name) VALUES ('Spring');
 
 # 질문
 
-## Spring Data JPA를 사용할 때, 엔티티의 ID가 원시타입일 때 삭제 동작 문의
+## Spring Data JPA를 사용하면서  엔티티의 ID가 원시타입일 때 삭제 동작 문의
 
 
 
@@ -193,18 +193,34 @@ Spring Data JPA의 JpaRepository를 통해  ID가 0인 회원을 삭제하려할
 
 Hello.
 
-When using only JPA + Hibernate, I didn’t see this phenomenon, but when trying to delete a member with an ID of 0 through Spring Data JPA’s JpaRepository, I couldn’t delete it. The ID type of the entity was `int`. But when I changed it to `Integer`, it was deleted well.
+When using only JPA + Hibernate, I didn’t see this  phenomenon, but when trying to delete a member with an ID of 0 through  Spring Data JPA’s JpaRepository, I couldn’t delete it. The ID type of  the entity was `int`. But when I changed it to `Integer`, it was deleted well.
 
 In a situation where a numeric Id is used in an entity, is it a good way to use a reference type instead of a primitive type?
 
-Test project
+## Example project
 
-- JPA + Hibernate 
-  - 
-- JPA + Spring Data Jpa 
-  - 
+- JPA + Hibernate
+  - JPA-Hibernate.zip
+    - Hibernate `6.2.7.Final`
+  - https://github.com/mklinkj/QnA/tree/master/JPA/Primitive-PK-Delete/JPA-Hibernate
+  - Test Code
+    - https://github.com/mklinkj/QnA/blob/master/JPA/Primitive-PK-Delete/JPA-Hibernate/src/test/java/org/mklinkj/qna/primitive_pk/domain/EmployeeTests.java
+- JPA + Spring Data JPA
+  - JPA-Spring-Data-JPA.zip
+    - Hibernate `6.2.7.Final`
+    - Spring Data JPA `3.1.2`
+  - https://github.com/mklinkj/QnA/tree/master/JPA/Primitive-PK-Delete/JPA-Spring-Data-JPA
+  - Test Code
+    - https://github.com/mklinkj/QnA/blob/master/JPA/Primitive-PK-Delete/JPA-Spring-Data-JPA/src/test/java/org/mklinkj/qna/primitive_pk/domain/EmployeeTests.java
 
 Thank you. Have a good day.
 
 
 
+
+
+---
+
+* https://github.com/spring-projects/spring-data-jpa/issues/3107
+
+질문을 올리긴 했은데 stackoverflow 태깅 달릴 것 같음..😅

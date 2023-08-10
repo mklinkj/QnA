@@ -105,4 +105,106 @@ INSERT INTO t_employee (name) VALUES ('Spring');
 
 ## 2. JPA Spring Data JPA 프로젝트
 
-* ...
+* 예전 기억이 틀렸나 했는데, Spring Data JPA 를 적용한 예제 프로젝트를 만들고 나니 삭제할 수 없는 현상을 확실하게 확인했다.
+
+* 로그를 보면 DELETE가 수행되지 않았다.
+
+  ```
+  ...
+  EmployeeTests > deleteEmployee() STANDARD_OUT
+      Hibernate:
+          select
+              e1_0.id,
+              e1_0.name
+          from
+              t_employee e1_0
+          where
+              e1_0.id=?
+      20:10:35.612 [Test worker] TRACE org.hibernate.orm.jdbc.bind - binding parameter [1] as [INTEGER] - [0]
+      20:10:35.615 [Test worker] TRACE org.hibernate.orm.jdbc.extract - extracted value ([1] : [INTEGER]) - [0]
+      20:10:35.615 [Test worker] TRACE org.hibernate.orm.jdbc.extract - extracted value ([2] : [VARCHAR]) - [Tomcat]
+      20:10:35.691 [Test worker] INFO  org.mklinkj.qna.primitive_pk.domain.EmployeeTests - Before delete. / employee id: 0: Employee(id=0, name=Tomcat)
+      Hibernate:
+          select
+              e1_0.id,
+              e1_0.name
+          from
+              t_employee e1_0
+          where
+              e1_0.id=?
+      20:10:35.699 [Test worker] TRACE org.hibernate.orm.jdbc.bind - binding parameter [1] as [INTEGER] - [0]
+      20:10:35.699 [Test worker] TRACE org.hibernate.orm.jdbc.extract - extracted value ([1] : [INTEGER]) - [0]
+      20:10:35.699 [Test worker] TRACE org.hibernate.orm.jdbc.extract - extracted value ([2] : [VARCHAR]) - [Tomcat]
+  
+  EmployeeTests > deleteEmployee() FAILED
+      org.opentest4j.AssertionFailedError at EmployeeTests.java:37
+  ```
+
+  * 그래서 DELETE 다음의 SELECT가 실패함.
+
+
+
+## 결론은 ...
+
+* 기본 키값으로 원시타입을 사용하지 않는 것이 나을 것 같다. null임을 표현해야할 때도 있는 것 같고...
+
+
+
+
+
+---
+
+# 질문
+
+## Spring Data JPA를 사용할 때, 엔티티의 ID가 원시타입일 때 삭제 동작 문의
+
+
+
+안녕하세요.
+
+단순하게 JPA + Hibernate만 사용할 때는 보지 못한 현상인데,
+
+Spring Data JPA의 JpaRepository를 통해  ID가 0인 회원을 삭제하려할 때.. 
+
+지울 수 없더라구요. 
+
+엔티티의 ID 타입은 int 였습니다.
+
+그런데 이걸 Integer로 바꾸면 잘 지워지더라구요.
+
+
+
+엔티티에 숫자형 Id를 사용하는 상황에서는, 원시타입이 아닌 레퍼 타입으로 쓰는 것이 좋은 방법이지요?
+
+
+
+테스트 프로젝트
+
+* JPA + Hibernate
+  * 
+* JPA + Spring Data Jpa
+  * 
+
+감사합니다. 좋은하루되세요.
+
+---
+
+## Question about delete behavior when using Spring Data JPA and the entity’s ID is a primitive type
+
+Hello.
+
+When using only JPA + Hibernate, I didn’t see this phenomenon, but when trying to delete a member with an ID of 0 through Spring Data JPA’s JpaRepository, I couldn’t delete it. The ID type of the entity was `int`. But when I changed it to `Integer`, it was deleted well.
+
+In a situation where a numeric Id is used in an entity, is it a good way to use a reference type instead of a primitive type?
+
+Test project
+
+- JPA + Hibernate 
+  - 
+- JPA + Spring Data Jpa 
+  - 
+
+Thank you. Have a good day.
+
+
+

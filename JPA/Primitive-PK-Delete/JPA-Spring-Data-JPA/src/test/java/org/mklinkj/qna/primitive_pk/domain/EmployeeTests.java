@@ -31,8 +31,10 @@ class EmployeeTests {
     repository.delete(employee);
     repository.flush();
 
-    // 3. A member with ID 0 exists, because it was not deleted from `2.`
+    // ~~3. A member with ID 0 exists, because it was not deleted from `2.`~~
+    // 엔티티에 Persistable 을 구현해서 다시 동작 확인했을 때.. 잘 동작함.
+    // 그런데. -1일 때 새 앤티티가 된다는 전제를 가지게 됨.
     result = repository.findById(0);
-    assertThat(result.isPresent()).isTrue();
+    assertThat(result.isPresent()).isFalse();
   }
 }

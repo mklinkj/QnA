@@ -224,3 +224,19 @@ Thank you. Have a good day.
 * https://github.com/spring-projects/spring-data-jpa/issues/3107
 
 질문을 올리긴 했은데 stackoverflow 태깅 달릴 것 같음..😅
+
+---
+
+감사해게도 개발자님께서 답변을 빠르게 주셨다.👍👍👍
+
+> Spring Data assumes that a primitive identifier set to its default value indicates an entity that is new (i.e. not saved). If you use wrapper types (Integer), then its default value is null. In that case, an entity with the identifier value 0 (zero) is considered not new as the identifier value isn't the default.
+>
+> The delete method doesn't remove entities that are considered new. If your objects use identifiers that can be set to their default value, either use the Integer wrapper type or let your entities implement Persistable to hint Spring Data whether the object instance is new.
+
+* Spring Data는 기본값으로 설정된 원시 식별자(int)가 새로운(즉, 저장되지 않은) 엔터티를 나타낸다고 가정함.
+  * int의 기본 값은 0.
+  * Integer라면 null이 기본 값이기 때문에 0이 설정되더라도 새로운 엔티티로 간주하지 않음.
+* delete 메서드는 새 것으로 간주되는 엔티티를 제거하지 않음.
+* 개발자님 답변 대로 `Persistable`를 엔티티에 구현해줘도 되는 것을 확인했다. 그러나 ... Wrapper 타입을 사용하는게 제일 나은 것 같다. 
+* 역시 태그 달아주셨네 😅 Stackoverflow도 가입을 해야겠다. 😅
+

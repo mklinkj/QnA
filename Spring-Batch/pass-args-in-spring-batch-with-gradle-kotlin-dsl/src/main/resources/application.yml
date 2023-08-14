@@ -2,7 +2,7 @@
 spring:
   datasource:
     driver-class-name: org.hsqldb.jdbc.JDBCDriver
-    url: jdbc:hsqldb:mem
+    url: jdbc:hsqldb:mem:batch_param_test
     username: SA
   batch:
     jdbc:

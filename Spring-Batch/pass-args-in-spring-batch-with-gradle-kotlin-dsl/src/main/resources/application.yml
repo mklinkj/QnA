@@ -1,0 +1,18 @@
+# application.yml
+spring:
+  datasource:
+    driver-class-name: org.hsqldb.jdbc.JDBCDriver
+    url: jdbc:hsqldb:mem
+    username: SA
+  batch:
+    jdbc:
+      initialize-schema: always
+
+logging:
+  pattern:
+    console: "%clr(%d{HH:mm:ss.SSS}){faint} %clr([%thread]){cyan} %clr(%-5level) %clr(%logger{36}){cyan} - %msg%n"
+  level:
+    root: info
+
+    org.mklinkj.qna: debug
+    org.springframework.batch: debug

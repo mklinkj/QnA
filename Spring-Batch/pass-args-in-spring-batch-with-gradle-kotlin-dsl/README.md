@@ -68,7 +68,7 @@ In the batch application, the following exception is thrown because you set the 
 - Exception Message
 
   ```
-  21:13:58.776 [main] INFO  o.s.b.c.l.support.SimpleJobLauncher - Job: [SimpleJob: [name=JobParamTestJob]] completed with the following parameters: [{param1=1, param2=2}] and the following status: [COMPLETED] in 39ms
+  Caused by: org.springframework.batch.core.JobParametersInvalidException: The JobParameters do not contain required keys: [param2]
   ```
 
 However, when I ran it directly as a jar, there was no problem.

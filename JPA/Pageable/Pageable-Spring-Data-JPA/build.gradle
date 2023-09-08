@@ -18,7 +18,6 @@ java {
 
 [compileJava, compileTestJava]*.options*.encoding = "${projectEncoding}"
 
-
 dependencies {
   implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
   implementation "org.hibernate.orm:hibernate-core:${hibernateVersion}"
@@ -35,6 +34,7 @@ dependencies {
   testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
   testRuntimeOnly "org.junit.platform:junit-platform-launcher"
   testImplementation "org.assertj:assertj-core:${assertjVersion}"
+  testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
 
   // ScriptRunner, Resources 클래스를
   // 테스트시 스키마 초기화 및 초기 데이터 입력 용도로 사용하기 위해 추가.

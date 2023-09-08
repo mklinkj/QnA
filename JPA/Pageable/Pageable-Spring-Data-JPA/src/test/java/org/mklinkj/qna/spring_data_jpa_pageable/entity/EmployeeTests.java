@@ -1,11 +1,10 @@
-package org.mklinkj.qna.spring_data_jpa_pageable.domain;
+package org.mklinkj.qna.spring_data_jpa_pageable.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mklinkj.qna.spring_data_jpa_pageable.constant.Constants.PAGE_SIZE;
 import static org.mklinkj.qna.spring_data_jpa_pageable.constant.Constants.TOTAL_EMPLOYEES;
 
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mklinkj.qna.spring_data_jpa_pageable.config.RootConfig;
@@ -18,7 +17,6 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @ExtendWith({DatabaseInitExtension.class})
 @SpringJUnitConfig(classes = RootConfig.class)
-@Slf4j
 class EmployeeTests {
   @Autowired private EmployeeRepository repository;
 

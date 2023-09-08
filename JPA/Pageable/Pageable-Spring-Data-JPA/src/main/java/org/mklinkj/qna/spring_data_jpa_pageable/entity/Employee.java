@@ -1,4 +1,4 @@
-package org.mklinkj.qna.spring_data_jpa_pageable.domain;
+package org.mklinkj.qna.spring_data_jpa_pageable.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,13 +9,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.apache.ibatis.type.Alias;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-@Alias("employee")
 @Entity
 @Table(name = "t_employee")
 public class Employee {
@@ -24,7 +22,6 @@ public class Employee {
     this.name = name;
   }
 
-  @Getter
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;

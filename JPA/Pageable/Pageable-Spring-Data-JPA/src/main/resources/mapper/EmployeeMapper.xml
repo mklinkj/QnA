@@ -3,7 +3,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.mklinkj.qna.spring_data_jpa_pageable.mapper.EmployeeMapper">
-  <select id="findAll" resultType="employee">
+  <select id="findAll" resultType="employeeVO">
     SELECT id,
            name
       FROM t_employee

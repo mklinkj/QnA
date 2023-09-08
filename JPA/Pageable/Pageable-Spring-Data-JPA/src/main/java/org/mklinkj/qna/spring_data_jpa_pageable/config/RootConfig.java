@@ -4,7 +4,6 @@ import jakarta.persistence.EntityManagerFactory;
 import java.util.Properties;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -21,7 +20,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
-@Slf4j
 @RequiredArgsConstructor
 @ComponentScan(basePackages = "org.mklinkj.qna")
 @MapperScan(basePackages = {"org.mklinkj.qna.spring_data_jpa_pageable.mapper"})
@@ -48,7 +46,7 @@ public class RootConfig {
 
     emfBean.setDataSource(dataSource);
     emfBean.setPersistenceUnitName("PAGEABLE_TEST");
-    emfBean.setPackagesToScan("org.mklinkj.qna.spring_data_jpa_pageable.domain");
+    emfBean.setPackagesToScan("org.mklinkj.qna.spring_data_jpa_pageable.entity");
 
     HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
     hibernateJpaVendorAdapter.setDatabase(Database.HSQL);
@@ -73,7 +71,7 @@ public class RootConfig {
 
     PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
     sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
-    sqlSessionFactoryBean.setTypeAliasesPackage("org.mklinkj.qna.spring_data_jpa_pageable.domain");
+    sqlSessionFactoryBean.setTypeAliasesPackage("org.mklinkj.qna.spring_data_jpa_pageable.vo");
     return sqlSessionFactoryBean.getObject();
   }
 

@@ -30,6 +30,8 @@ dependencies {
 
   implementation "org.hsqldb:hsqldb:${hsqldbVersion}"
 
+  implementation "org.modelmapper:modelmapper:${modelMapperVersion}"
+
   testImplementation "org.springframework:spring-test:${springVersion}"
   testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
   testRuntimeOnly "org.junit.platform:junit-platform-launcher"

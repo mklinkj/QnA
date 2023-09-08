@@ -28,6 +28,7 @@ dependencies {
   runtimeOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
 
   testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
   testImplementation "org.springframework:spring-test:${springVersion}"
   testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
 }

@@ -30,6 +30,7 @@ dependencies {
   implementation "org.springframework:spring-jdbc:${springVersion}"
 
   testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
   testImplementation "org.assertj:assertj-core:${assertjVersion}"
 }
 

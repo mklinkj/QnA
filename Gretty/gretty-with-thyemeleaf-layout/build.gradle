@@ -39,8 +39,9 @@ dependencies {
   testImplementation "org.springframework:spring-test:${springVersion}"
   testImplementation "io.micrometer:context-propagation:${ioMicrometerVersion}"
   testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
-  testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+  testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
   testImplementation "org.mockito:mockito-core:${mockitoVersion}"
   testImplementation "org.assertj:assertj-core:${assertJVersion}"
 }

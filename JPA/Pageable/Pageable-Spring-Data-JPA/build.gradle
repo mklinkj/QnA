@@ -24,7 +24,11 @@ dependencies {
   implementation "org.hibernate.orm:hibernate-core:${hibernateVersion}"
   
   implementation "org.springframework.data:spring-data-jpa:${springDataJpaVersion}"
-  
+
+  // MyBatis도 같이 사용해보자.
+  implementation "org.mybatis:mybatis:${mybatisVersion}"
+  implementation "org.mybatis:mybatis-spring:${mybatisSpringVersion}"
+
   implementation "org.hsqldb:hsqldb:${hsqldbVersion}"
 
   testImplementation "org.springframework:spring-test:${springVersion}"

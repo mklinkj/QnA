@@ -31,9 +31,7 @@ class EmployeeTests {
   @Test
   void employeePageTest() {
     int pageNumber = 10; // 페이지 번호는 zero-based, 0이 1페이지
-    int pageSize = PAGE_SIZE;
-
-    PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+    PageRequest pageRequest = PageRequest.of(pageNumber, PAGE_SIZE);
 
     Page<Employee> result = repository.findAll(pageRequest);
 

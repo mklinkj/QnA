@@ -1,20 +1,19 @@
 package org.mklinkj.qna.spring_data_jpa_pageable.config;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
 import java.util.Properties;
-import java.util.stream.IntStream;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mklinkj.qna.spring_data_jpa_pageable.domain.Employee;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -25,6 +24,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 @Slf4j
 @RequiredArgsConstructor
 @ComponentScan(basePackages = "org.mklinkj.qna")
+@MapperScan(basePackages = {"org.mklinkj.qna.spring_data_jpa_pageable.mapper"})
 @EnableJpaRepositories(basePackages = "org.mklinkj.qna.spring_data_jpa_pageable.repository")
 @PropertySource({"classpath:database.properties"})
 @Configuration
@@ -64,6 +64,17 @@ public class RootConfig {
     emfBean.setJpaProperties(jpaProp);
 
     return emfBean;
+  }
+
+  @Bean
+  SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+    SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+    sqlSessionFactoryBean.setDataSource(dataSource);
+
+    PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+    sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
+    sqlSessionFactoryBean.setTypeAliasesPackage("org.mklinkj.qna.spring_data_jpa_pageable.domain");
+    return sqlSessionFactoryBean.getObject();
   }
 
   @Bean

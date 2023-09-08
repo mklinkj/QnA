@@ -9,11 +9,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.ibatis.type.Alias;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
+@Alias("employee")
 @Entity
 @Table(name = "t_employee")
 public class Employee {
@@ -25,7 +27,7 @@ public class Employee {
   @Getter
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private Integer id;
 
   private String name;
 }

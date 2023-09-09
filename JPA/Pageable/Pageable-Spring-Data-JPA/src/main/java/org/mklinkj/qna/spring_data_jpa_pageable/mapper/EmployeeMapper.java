@@ -8,5 +8,5 @@ import org.mklinkj.qna.spring_data_jpa_pageable.vo.EmployeeVO;
 public interface EmployeeMapper {
   List<EmployeeVO> findAll();
 
-  int countAll();
+  long countAll();
 }

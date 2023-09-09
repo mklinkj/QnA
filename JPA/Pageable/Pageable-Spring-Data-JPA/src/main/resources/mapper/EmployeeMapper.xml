@@ -7,10 +7,11 @@
     SELECT id
          , name
          , location
+         , register_date
       FROM t_employee
   </select>
 
-  <select id="countAll" resultType="int">
+  <select id="countAll" resultType="long">
     SELECT COUNT(*)
       FROM t_employee
   </select>

@@ -20,12 +20,12 @@ class EmployeeMapperTests {
   @Test
   void findAll() {
     List<EmployeeVO> result = employeeMapper.findAll();
-    assertThat(result).isNotEmpty().hasSize(TOTAL_EMPLOYEES);
+    assertThat(result).isNotEmpty().hasSize((int) TOTAL_EMPLOYEES);
   }
 
   @Test
   void countAll() {
-    int count = employeeMapper.countAll();
-    assertThat(count).isEqualTo(TOTAL_EMPLOYEES);
+    long count = employeeMapper.countAll();
+    assertThat(count).isEqualTo(Long.valueOf(TOTAL_EMPLOYEES));
   }
 }

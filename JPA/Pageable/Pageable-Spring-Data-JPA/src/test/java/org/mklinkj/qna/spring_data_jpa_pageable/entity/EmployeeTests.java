@@ -23,7 +23,7 @@ class EmployeeTests {
   @Test
   void employeeCount() {
     List<Employee> result = repository.findAll();
-    assertThat(result).isNotEmpty().hasSize(TOTAL_EMPLOYEES);
+    assertThat(result).isNotEmpty().hasSize((int) (TOTAL_EMPLOYEES));
   }
 
   @Test
@@ -48,6 +48,6 @@ class EmployeeTests {
     assertThat(result.isFirst()).isFalse();
     assertThat(result.isLast()).isTrue();
 
-    assertThat(result.getContent()).hasSize(TOTAL_EMPLOYEES % PAGE_SIZE);
+    assertThat(result.getContent()).hasSize((int) TOTAL_EMPLOYEES % PAGE_SIZE);
   }
 }

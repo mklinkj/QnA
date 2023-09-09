@@ -7,9 +7,10 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Properties;
-import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import javax.sql.DataSource;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -54,21 +55,23 @@ public class DBUtil {
     val jdbcTemplate = new JdbcTemplate(dataSource);
 
     val empList =
-        IntStream.rangeClosed(1, TOTAL_EMPLOYEES)
+        LongStream.rangeClosed(1, TOTAL_EMPLOYEES)
             .mapToObj(
-                i -> {
-                  String name = "empId_%s".formatted(i);
-                  String location = getLocation(i);
-                  return new EmployeeVO(name, location);
-                })
+                i ->
+                    new EmployeeVO(
+                        "empId_%s".formatted(i), getLocation((int) i), getRegisterDate(i)))
             .toList();
 
     jdbcTemplate.batchUpdate(
-        "INSERT INTO t_employee (name, location) VALUES (?, ?)",
+        "INSERT INTO t_employee (name, location, register_date) VALUES (?, ?, ?)",
         new BatchPreparedStatementSetter() {
           public void setValues(PreparedStatement ps, int i) throws SQLException {
             ps.setString(1, empList.get(i).getName());
             ps.setString(2, empList.get(i).getLocation());
+            // JDBC 4.2 미만 사용시 ...
+            // ps.setDate(3, java.sql.Date.valueOf(empList.get(i).getRegisterDate()));
+            // JDBC 4.2 이상을 사용시 ...
+            ps.setObject(3, empList.get(i).getRegisterDate());
           }
 
           public int getBatchSize() {
@@ -83,6 +86,12 @@ public class DBUtil {
 
   private static final List<String> locations =
       List.of("서울", "경기", "인천", "강원", "충북", "충남", "경북", "경남", "전북", "전남");
+
+  private static final LocalDate BASE_REGISTER_DATE = LocalDate.of(2023, 8, 31);
+
+  private static LocalDate getRegisterDate(long i) {
+    return BASE_REGISTER_DATE.plusDays(i % 10);
+  }
 
   public static DriverManagerDataSource dataSource() {
     val dbProps = getDBProperties();

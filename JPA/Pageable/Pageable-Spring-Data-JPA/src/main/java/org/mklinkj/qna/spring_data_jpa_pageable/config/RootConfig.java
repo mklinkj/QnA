@@ -1,5 +1,7 @@
 package org.mklinkj.qna.spring_data_jpa_pageable.config;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;
 import java.util.Properties;
 import javax.sql.DataSource;
@@ -14,7 +16,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
@@ -30,14 +31,15 @@ public class RootConfig {
 
   private final Environment env;
 
+  // https://github.com/brettwooldridge/HikariCP#rocket-initialization
   @Bean
   DataSource dataSource() {
-    SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
-    dataSource.setDriverClass(org.hsqldb.jdbc.JDBCDriver.class);
-    dataSource.setUrl(env.getProperty("jdbc.url"));
-    dataSource.setUsername(env.getProperty("jdbc.username"));
-    dataSource.setPassword(env.getProperty("jdbc.password"));
-    return dataSource;
+    HikariConfig hikariConfig = new HikariConfig();
+    hikariConfig.setDriverClassName(env.getProperty("jdbc.driver"));
+    hikariConfig.setJdbcUrl(env.getProperty("jdbc.url"));
+    hikariConfig.setUsername(env.getProperty("jdbc.username"));
+    hikariConfig.setPassword(env.getProperty("jdbc.password"));
+    return new HikariDataSource(hikariConfig);
   }
 
   @Bean

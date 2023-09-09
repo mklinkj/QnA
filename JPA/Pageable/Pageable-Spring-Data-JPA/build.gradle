@@ -29,6 +29,7 @@ dependencies {
   implementation "org.mybatis:mybatis-spring:${mybatisSpringVersion}"
 
   implementation "org.hsqldb:hsqldb:${hsqldbVersion}"
+  implementation "com.zaxxer:HikariCP:${hikaricpVersion}"
 
   implementation "org.modelmapper:modelmapper:${modelMapperVersion}"
 

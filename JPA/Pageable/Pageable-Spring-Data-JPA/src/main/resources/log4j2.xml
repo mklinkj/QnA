@@ -8,7 +8,10 @@
 	</Appenders>
 
 	<Loggers>
-		<Logger name="org.mklinkj.qna" level="DEBUG" />    
+		<Logger name="org.mklinkj.qna" level="DEBUG" />
+
+	  <Logger name="org.mklinkj.qna.spring_data_jpa_pageable.mapper" level="TRACE"/>
+
     <Logger name="org.hibernate.orm.jdbc.bind" level="TRACE"/>
     <Logger name="org.hibernate.orm.jdbc.extract" level="TRACE"/>
 

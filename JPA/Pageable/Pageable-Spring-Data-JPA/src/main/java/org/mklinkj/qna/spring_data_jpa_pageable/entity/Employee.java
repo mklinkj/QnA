@@ -18,8 +18,9 @@ import lombok.ToString;
 @Table(name = "t_employee")
 public class Employee {
 
-  public Employee(String name) {
+  public Employee(String name, String location) {
     this.name = name;
+    this.location = location;
   }
 
   @Id
@@ -27,4 +28,6 @@ public class Employee {
   private Integer id;
 
   private String name;
+
+  private String location;
 }

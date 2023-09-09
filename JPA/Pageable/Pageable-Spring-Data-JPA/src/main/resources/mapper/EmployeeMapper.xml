@@ -4,14 +4,15 @@
 
 <mapper namespace="org.mklinkj.qna.spring_data_jpa_pageable.mapper.EmployeeMapper">
   <select id="findAll" resultType="employeeVO">
-    SELECT id,
-           name
+    SELECT id
+         , name
+         , location
       FROM t_employee
   </select>
 
   <select id="countAll" resultType="int">
     SELECT COUNT(*)
-    FROM t_employee
+      FROM t_employee
   </select>
 
 </mapper>

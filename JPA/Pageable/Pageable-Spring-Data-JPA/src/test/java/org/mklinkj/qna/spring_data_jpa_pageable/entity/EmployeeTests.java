@@ -28,14 +28,15 @@ class EmployeeTests {
 
   @Test
   void employeePageTest() {
-    int pageNumber = 10; // 페이지 번호는 zero-based, 0이 1페이지
-    PageRequest pageRequest = PageRequest.of(pageNumber, PAGE_SIZE);
+    int lastPageNumber = 20; // 페이지 번호는 zero-based, 0이 1페이지
+    PageRequest pageRequest = PageRequest.of(lastPageNumber, PAGE_SIZE);
 
     Page<Employee> result = repository.findAll(pageRequest);
 
     // PageRequest의 요청의 페이비 번호는 0부터이지만,
     // getTotalPages()의 값은 페이지의 수 그대로이다.
-    assertThat(result.getTotalPages()).isEqualTo(11);
+    assertThat(result.getTotalPages())
+        .isEqualTo((int) Math.ceil((double) TOTAL_EMPLOYEES / PAGE_SIZE));
 
     assertThat(result.getTotalElements()).isEqualTo(TOTAL_EMPLOYEES);
 
@@ -47,6 +48,6 @@ class EmployeeTests {
     assertThat(result.isFirst()).isFalse();
     assertThat(result.isLast()).isTrue();
 
-    assertThat(result.getContent()).hasSize(5);
+    assertThat(result.getContent()).hasSize(TOTAL_EMPLOYEES % PAGE_SIZE);
   }
 }

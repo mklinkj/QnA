@@ -13,11 +13,14 @@ import org.apache.ibatis.type.Alias;
 @NoArgsConstructor
 public class EmployeeVO {
 
-  public EmployeeVO(String name) {
+  public EmployeeVO(String name, String location) {
     this.name = name;
+    this.location = location;
   }
 
   private Integer id;
 
   private String name;
+
+  private String location;
 }

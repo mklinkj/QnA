@@ -7,6 +7,7 @@ import java.util.Properties;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.mklinkj.library.pagination.domain.PageRequest;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
@@ -74,6 +75,7 @@ public class RootConfig {
     PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
     sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
     sqlSessionFactoryBean.setTypeAliasesPackage("org.mklinkj.qna.spring_data_jpa_pageable.vo");
+    sqlSessionFactoryBean.addTypeAliases(PageRequest.class);
     return sqlSessionFactoryBean.getObject();
   }
 

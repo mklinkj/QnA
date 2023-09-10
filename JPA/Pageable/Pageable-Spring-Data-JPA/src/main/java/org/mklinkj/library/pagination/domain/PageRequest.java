@@ -1,15 +1,21 @@
 package org.mklinkj.library.pagination.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
-@ToString
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class PageRequest {
 
-  private int pageNumber;
+  @Builder.Default private int page = 1;
 
-  private int pageSize;
+  @Builder.Default private int size = PageConstants.PAGE_SIZE;
+
+  public int getOffset() {
+    return (page - 1) * size;
+  }
 }

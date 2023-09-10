@@ -6,6 +6,7 @@ import static org.mklinkj.qna.spring_data_jpa_pageable.constant.Constants.TOTAL_
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mklinkj.library.pagination.domain.PageRequest;
 import org.mklinkj.qna.spring_data_jpa_pageable.config.RootConfig;
 import org.mklinkj.qna.spring_data_jpa_pageable.vo.EmployeeVO;
 import org.mklinkj.qna.test.DatabaseInitExtension;
@@ -21,6 +22,13 @@ class EmployeeMapperTests {
   void findAll() {
     List<EmployeeVO> result = employeeMapper.findAll();
     assertThat(result).isNotEmpty().hasSize((int) TOTAL_EMPLOYEES);
+  }
+
+  @Test
+  void findAllPaged() {
+    PageRequest pageRequest = PageRequest.builder().page(1).page(10).build();
+    List<EmployeeVO> result = employeeMapper.findPaged(pageRequest);
+    assertThat(result).isNotEmpty().hasSize(10);
   }
 
   @Test

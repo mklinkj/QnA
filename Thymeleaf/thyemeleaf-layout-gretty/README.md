@@ -182,3 +182,33 @@ Gretty를 통해서 실행해서 레이아웃이 적용된 페이지에 접근�
 
 
 감사합니다. 좋은하루되세요. 👍
+
+
+---
+
+### 오랜만에 잠깐 봄..😅
+
+* 버전을 올려봄.
+  * Spring 6 (Spring Boot 아님)
+  * Thymeleaf
+    * thymeleaf-spring6: `3.2.1.RELEASE`
+    * thymeleaf-layout-dialect: `3.3.0`
+  * Gretty `4.1.1`
+    * Tomcat `10.1.15`
+
+예외 메시지가 좀 달라졌는데.. 다음과 같음.
+
+```
+Caused by: groovy.lang.MissingMethodException: No signature of method: org.thymeleaf.engine.Model.first() is applicable for argument types: () values: [] Possible solutions: print(java.io.PrintWriter), print(java.lang.Object), find(), find(groovy.lang.Closure), is(java.lang.Object), write(java.io.Writer)
+...
+```
+
+* 레이아웃이 적용된 페이지 접근시 아래 부분에서 예외가 발생하는 이유를 모르겠음.
+  * https://github.com/ultraq/thymeleaf-layout-dialect/blob/b986d7790c9d5f9657d111f470d32b724ea5b31a/thymeleaf-layout-dialect/source/nz/net/ultraq/thymeleaf/layoutdialect/decorators/DecorateProcessor.groovy#L102C3-L102C34
+
+* 그런데... 실제로 IModel에 first()라는 메서드가 진짜 없음.
+  * https://github.com/thymeleaf/thymeleaf/blob/3.1-master/lib/thymeleaf/src/main/java/org/thymeleaf/model/IModel.java
+  * IModelExtensions 에 뭔가 있음.
+    * https://github.com/ultraq/thymeleaf-layout-dialect/blob/b986d7790c9d5f9657d111f470d32b724ea5b31a/thymeleaf-layout-dialect/source/nz/net/ultraq/thymeleaf/layoutdialect/models/extensions/IModelExtensions.groovy#L162
+  * 그러나 이해가 여전히 안감..
+* 그러면 Tomcat에 war를 직접 올려서 실행시킬 때는 왜 문제가 없고, Gretty로 실행할 때만 문제가 생기는 걸까? 😅

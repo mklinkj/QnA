@@ -1,0 +1,68 @@
+plugins {
+  id "io.freefair.lombok" version "${lombokPluginVersion}"
+  id 'war'
+  id "org.gretty" version "${grettyVersion}"
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of("${javaVersion}")
+  }
+}
+
+[compileJava, compileTestJava]*.options*.encoding = "${projectEncoding}"
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "org.springframework:spring-context:${springVersion}"
+  implementation "org.springframework:spring-webmvc:${springVersion}"
+
+  implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+  implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+
+  implementation "org.springframework.security:spring-security-config:${springSecurityVersion}"
+  implementation "org.springframework.security:spring-security-web:${springSecurityVersion}"
+
+  implementation "jakarta.annotation:jakarta.annotation-api:${jakartaAnnotationApiVersion}"
+  compileOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
+
+  implementation "org.thymeleaf:thymeleaf-spring6:${thymeleafSpringVersion}"
+  implementation "org.thymeleaf.extras:thymeleaf-extras-java8time:${thymeleafExtrasJava8timeVersion}"
+  implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity6:${thymeleafSpringVersion}"
+
+  implementation "org.webjars:webjars-locator:${webjarsLocatorVersion}"
+  implementation "org.webjars:bootstrap:${bootstrapVersion}"
+  implementation "org.webjars:Semantic-UI:${semanticUiVersion}"
+
+  testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+  testImplementation "org.assertj:assertj-core:${assertJVersion}"
+
+  testImplementation "org.springframework:spring-test:${springVersion}"
+  testImplementation "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
+  testImplementation "org.springframework.security:spring-security-test:${springSecurityVersion}"
+  testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
+}
+
+gretty {
+  httpPort = 8080
+  contextPath = "/"
+  servletContainer = "tomcat10"
+  jvmArgs = [
+      "-Djava.security.egd=file:/dev/./urandom",
+      "--add-opens=java.base/java.io=ALL-UNNAMED",
+      "--add-opens=java.base/java.lang=ALL-UNNAMED",
+      "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
+  ]
+}

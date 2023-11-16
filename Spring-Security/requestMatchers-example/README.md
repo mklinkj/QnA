@@ -73,17 +73,17 @@ In 5.8.5 and later, to run without exceptions, you had to use `antMatcher()` lik
 
   * Set Gretty's settings in build.gradle to `servletContainer = "tomcat9"`
 
-  ```
-  gradle clean appRun
-  ```
+    ```
+    ./gradlew clean appRun
+    ```
 
 * **Jetty 10.0.18**
 
   * Set Gretty's settings to `servletContainer = "jetty10"`
 
-  ```sh
-  gradle clean appRun
-  ```
+    ```sh
+    ./gradlew clean appRun
+    ```
 
   
 
@@ -189,17 +189,17 @@ Thank you. Have a nice day. 👍
 
   * build.gradle의 Gretty의 설정을 `servletContainer = "tomcat9"` 으로 설정
 
-  ```
-  gradle clean appRun
-  ```
+    ```
+    ./gradlew clean appRun
+    ```
 
 * **Jetty 10.0.18**
 
   * Gretty의 설정을 `servletContainer = "jetty10"` 으로 설정
 
-  ```sh
-  gradle clean appRun
-  ```
+    ```sh
+    ./gradlew clean appRun
+    ```
 
   
 
@@ -235,3 +235,16 @@ java.lang.UnsupportedOperationException
 
 감사합니다. 좋은하루되세요. 👍
 
+
+
+---
+
+### 5.8.4 환경에서 실행하거나 5.8.8환경 에서 antMatchers()를 사용하여 정상 실행시켰을 때의 화면
+
+### (When running in a 5.8.4 environment, or when running normally using antMatchers() in a 5.8.8 environment.)
+
+![image-20231116152243835](doc-resources/image-20231116152243835.png)
+
+![image-20231116152402532](doc-resources/image-20231116152402532.png)
+
+![image-20231116152453055](doc-resources/image-20231116152453055.png)

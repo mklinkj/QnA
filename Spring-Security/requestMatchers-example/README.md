@@ -3,13 +3,133 @@
 * https://github.com/spring-projects/spring-security/issues/13789
 * https://github.com/spring-projects/spring-security/issues/13794
 
+---
+
+hello.
+
+I've created a simple example related to your issue.
+
+
+
+### Example Project URL
+
+* https://github.com/mklinkj/QnA/tree/master/Spring-Security/requestMatchers-example
+
+
+
+### Example project environment
+
+* Spring 5.3.30
+* Spring Security 
+  * 5.8.4: No problem.
+  * 5.8.8: Exception thrown when running WAS. (Version 5.8.5 and later)
+* Running WAS with Gretty
+  * Tomcat 9.0.82
+  * Jetty 10.0.18
+
+
+
+First, Spring Security version 5.8.4 is fine.
+
+Starting with 5.8.5 and later versions, the exception below occurs.
+
+In 5.8.5 and later, to run without exceptions, you had to use `antMatcher()` like the code below.
+
+```java
+    http.authorizeHttpRequests(
+            (authz) ->
+                authz
+                    /*
+                    .requestMatchers(
+                        "/webjars/**", //
+                        "/resources/**",
+                        "/",
+                        "/index",
+                        "/login",
+                        "/favicon.ico")
+                    */
+                    .requestMatchers(
+                        antMatcher("/webjars/**"), //
+                        antMatcher("/resources/**"),
+                        antMatcher("/"),
+                        antMatcher("/index"),
+                        antMatcher("/login"),
+                        antMatcher("/favicon.ico"))
+                    .permitAll()
+                    // .requestMatchers("/admin")
+                    .requestMatchers(antMatcher("/admin"))
+                    .hasAuthority("ADMIN")
+                    .anyRequest()
+                    .authenticated())
+```
+
+
+
+
+
+#### How to run the example project
+
+* **Tomcat 9.0.82**
+
+  * Set Gretty's settings in build.gradle to `servletContainer = "tomcat9"`
+
+  ```
+  gradle clean appRun
+  ```
+
+* **Jetty 10.0.18**
+
+  * Set Gretty's settings to `servletContainer = "jetty10"`
+
+  ```sh
+  gradle clean appRun
+  ```
+
+  
+
+### Exceptions that occur when running with Tomcat 9.0.82
+
+```
+Caused by: java.lang.UnsupportedOperationException: Section 4.4 of the Servlet 3.0 specification does not permit this method to be called from a ServletContextListener that was not defined in web.xml, a web-fragment.xml file nor annotated with @WebListener
+        at org.apache.catalina.core.StandardContext$NoPluggabilityServletContext.getServletRegistrations(StandardContext.java:6306)
+        at org.springframework.security.config.annotation.web.AbstractRequestMatcherRegistry.mappableServletRegistrations(AbstractRequestMatcherRegistry.java:333)
+        at org.springframework.security.config.annotation.web.AbstractRequestMatcherRegistry.requestMatchers(AbstractRequestMatcherRegistry.java:317)
+        at org.springframework.security.config.annotation.web.AbstractRequestMatcherRegistry.requestMatchers(AbstractRequestMatcherRegistry.java:394)
+        at org.mklinkj.qna.spring_security.security.HelloSecurityConfig.lambda$securityFilterChain$0(HelloSecurityConfig.java:50)
+        ...
+```
+
+
+
+### Exceptions encountered when running with Jetty 10.0.18
+
+```
+Caused by:
+java.lang.UnsupportedOperationException
+        at org.eclipse.jetty.servlet.ServletContextHandler$Context.getServletRegistrations(ServletContextHandler.java:1385)
+        at org.springframework.security.config.annotation.web.AbstractRequestMatcherRegistry.mappableServletRegistrations(AbstractRequestMatcherRegistry.java:333)
+        at org.springframework.security.config.annotation.web.AbstractRequestMatcherRegistry.requestMatchers(AbstractRequestMatcherRegistry.java:317)
+        at org.springframework.security.config.annotation.web.AbstractRequestMatcherRegistry.requestMatchers(AbstractRequestMatcherRegistry.java:394)
+        at org.mklinkj.qna.spring_security.security.HelloSecurityConfig.lambda$securityFilterChain$0(HelloSecurityConfig.java:50)
+```
+
+I would appreciate your confirmation.
+
+Thank you. Have a nice day. 👍
+
 
 
 ---
 
+
+
 안녕하세요.
 
 이슈와 관련해서 단순한 예제를 만들었습니다.
+
+### 예제 프로젝트 주소
+
+* https://github.com/mklinkj/QnA/tree/master/Spring-Security/requestMatchers-example
 
 
 
@@ -114,12 +234,4 @@ java.lang.UnsupportedOperationException
 그럼 확인을 부탁드립니다.
 
 감사합니다. 좋은하루되세요. 👍
-
----
-
-
-
-
-
-
 

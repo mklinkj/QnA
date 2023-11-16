@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>💡 requestMatchers() test example</title>
+  <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="card">
+  <div class="card-header">
+    <h2>requestMatchers() test example</h2>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">requestMatchers() test example</h5>
+    <ul>
+      <li><a th:href="@{/hello}">/hello</a></li>
+      <li><a th:href="@{/admin}">/admin : For Admin Only</a></li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>

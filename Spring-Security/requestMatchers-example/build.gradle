@@ -1,0 +1,68 @@
+plugins {
+  id "io.freefair.lombok" version "${lombokPluginVersion}"
+  id 'war'
+  id "org.gretty" version "${grettyVersion}"
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of("${javaVersion}")
+  }
+}
+
+[compileJava, compileTestJava]*.options*.encoding = "${projectEncoding}"
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "org.springframework:spring-context:${springVersion}"
+  implementation "org.springframework:spring-webmvc:${springVersion}"
+
+  implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+  implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+
+  implementation "org.springframework.security:spring-security-config:${springSecurityVersion}"
+  implementation "org.springframework.security:spring-security-web:${springSecurityVersion}"
+
+  implementation "javax.annotation:javax.annotation-api:${javaxAnnotationApiVersion}"
+
+  implementation "org.thymeleaf:thymeleaf-spring5:${thymeleafSpring5Version}"
+  implementation "org.thymeleaf.extras:thymeleaf-extras-java8time:${thymeleafExtrasJava8timeVersion}"
+  implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity5:${thymeleafSpring5Version}"
+
+  implementation "org.webjars:webjars-locator:${webjarsLocatorVersion}"
+  implementation "org.webjars:bootstrap:${bootstrapVersion}"
+  implementation "org.webjars:Semantic-UI:${semanticUiVersion}"
+
+  implementation "javax.servlet:javax.servlet-api:${javaxServletApiVersion}"
+
+  testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+  testImplementation "org.assertj:assertj-core:${assertJVersion}"
+
+  testImplementation "org.springframework:spring-test:${springVersion}"
+  testImplementation "org.springframework.security:spring-security-test:${springSecurityVersion}"
+  testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
+}
+
+gretty {
+  httpPort = 8080
+  contextPath = "/"
+  servletContainer = "tomcat9"
+  jvmArgs = [
+      "-Djava.security.egd=file:/dev/./urandom",
+      "--add-opens=java.base/java.io=ALL-UNNAMED",
+      "--add-opens=java.base/java.lang=ALL-UNNAMED",
+      "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
+  ]
+}

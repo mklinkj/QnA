@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="utf-8">
+  <title>Hello</title>
+  <link type="text/css" rel="stylesheet"
+        th:href="@{/webjars/Semantic-UI/semantic.min.css}"/>
+</head>
+
+<body>
+<div class="ui container">
+  <div class="ui menu">
+    <div class="item">requestMatchers() example</div>
+    <div class="right menu" sec:authorize="isAuthenticated()">
+      <div class="item">
+        <form th:action="@{/logout}" method="post">
+          <button class="ui small red basic compact button">Logout</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <th:block sec:authorize="isAuthenticated()">
+    <h3 th:text="|Hello ${#authentication.name}! 😜👍|"></h3>
+  </th:block>
+</div>
+</body>
+</html>
+

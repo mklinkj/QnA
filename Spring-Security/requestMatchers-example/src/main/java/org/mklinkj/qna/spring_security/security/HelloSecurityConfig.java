@@ -1,7 +1,6 @@
 package org.mklinkj.qna.spring_security.security;
 
 import static org.springframework.security.config.Customizer.withDefaults;
-import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -13,11 +12,17 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Slf4j
 @Configuration
 @EnableWebSecurity
 public class HelloSecurityConfig {
+  @Bean
+  HandlerMappingIntrospector mvcHandlerMappingIntrospector() {
+    return new HandlerMappingIntrospector();
+  }
+
   @Bean
   UserDetailsService userDetailsService() {
     val user =
@@ -42,7 +47,6 @@ public class HelloSecurityConfig {
     http.authorizeHttpRequests(
             (authz) ->
                 authz
-                    /*
                     .requestMatchers(
                         "/webjars/**", //
                         "/resources/**",
@@ -50,7 +54,8 @@ public class HelloSecurityConfig {
                         "/index",
                         "/login",
                         "/favicon.ico")
-                     */
+
+                    /*
                     .requestMatchers(
                         antMatcher("/webjars/**"), //
                         antMatcher("/resources/**"),
@@ -58,9 +63,10 @@ public class HelloSecurityConfig {
                         antMatcher("/index"),
                         antMatcher("/login"),
                         antMatcher("/favicon.ico"))
+                    */
                     .permitAll()
-                    // .requestMatchers("/admin")
-                    .requestMatchers(antMatcher("/admin"))
+                    .requestMatchers("/admin")
+                    // .requestMatchers(antMatcher("/admin"))
                     .hasAuthority("ADMIN")
                     .anyRequest()
                     .authenticated())

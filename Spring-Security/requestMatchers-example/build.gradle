@@ -59,6 +59,7 @@ gretty {
   httpPort = 8080
   contextPath = "/"
   servletContainer = "tomcat9"
+  // servletContainer = "jetty10"
   jvmArgs = [
       "-Djava.security.egd=file:/dev/./urandom",
       "--add-opens=java.base/java.io=ALL-UNNAMED",

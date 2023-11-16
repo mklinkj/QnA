@@ -54,7 +54,6 @@ public class HelloSecurityConfig {
                         "/index",
                         "/login",
                         "/favicon.ico")
-
                     /*
                     .requestMatchers(
                         antMatcher("/webjars/**"), //
@@ -63,7 +62,7 @@ public class HelloSecurityConfig {
                         antMatcher("/index"),
                         antMatcher("/login"),
                         antMatcher("/favicon.ico"))
-                    */
+                     */
                     .permitAll()
                     .requestMatchers("/admin")
                     // .requestMatchers(antMatcher("/admin"))

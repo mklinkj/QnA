@@ -71,7 +71,7 @@ In 5.8.5 and later, to run without exceptions, you had to use `antMatcher()` lik
 
 * **Tomcat 9.0.82**
 
-  * Set Gretty's settings in build.gradle to `servletContainer = "tomcat9"`
+  * Set Gretty's settings in `build.gradle` to `servletContainer = "tomcat9"`
 
     ```
     ./gradlew clean appRun
@@ -79,7 +79,7 @@ In 5.8.5 and later, to run without exceptions, you had to use `antMatcher()` lik
 
 * **Jetty 10.0.18**
 
-  * Set Gretty's settings to `servletContainer = "jetty10"`
+  * Set Gretty's settings in `build.gradle` to `servletContainer = "jetty10"`
 
     ```sh
     ./gradlew clean appRun

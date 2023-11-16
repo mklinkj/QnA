@@ -41,7 +41,7 @@
         <button class="ui fluid large submit green button">Login</button>
       </div>
       <div
-          th:if="${!#strings.isEmpty(param.error) && param.error}"
+          th:if="${param.error}"
           class="ui error message" style="display:block;">
         Authentication Failed<br/>
       </div>

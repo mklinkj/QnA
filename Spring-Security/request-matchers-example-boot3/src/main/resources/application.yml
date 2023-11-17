@@ -1,0 +1,8 @@
+logging:
+  pattern:
+    console: "%clr(%d{HH:mm:ss.SSS}){faint} [%thread] %clr(%-5level) %clr(%logger{36}){cyan} - %msg%n"
+  level:
+    web: debug
+    org.mklinkj.qna: debug
+    org.springframework: info
+    org.springframework.security: debug

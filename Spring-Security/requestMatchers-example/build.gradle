@@ -67,4 +67,5 @@ gretty {
       "--add-opens=java.base/java.lang=ALL-UNNAMED",
       "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
   ]
+  integrationTestTask = "test"
 }

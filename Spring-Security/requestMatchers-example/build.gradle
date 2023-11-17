@@ -13,6 +13,7 @@ java {
 [compileJava, compileTestJava]*.options*.encoding = "${projectEncoding}"
 
 repositories {
+  maven { url 'https://repo.spring.io/snapshot' }
   mavenCentral()
 }
 
@@ -27,6 +28,7 @@ dependencies {
   implementation "org.springframework.security:spring-security-web:${springSecurityVersion}"
 
   implementation "javax.annotation:javax.annotation-api:${javaxAnnotationApiVersion}"
+  compileOnly "javax.servlet:javax.servlet-api:${javaxServletApiVersion}"
 
   implementation "org.thymeleaf:thymeleaf-spring5:${thymeleafSpring5Version}"
   implementation "org.thymeleaf.extras:thymeleaf-extras-java8time:${thymeleafExtrasJava8timeVersion}"
@@ -36,12 +38,11 @@ dependencies {
   implementation "org.webjars:bootstrap:${bootstrapVersion}"
   implementation "org.webjars:Semantic-UI:${semanticUiVersion}"
 
-  implementation "javax.servlet:javax.servlet-api:${javaxServletApiVersion}"
-
   testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
   testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
   testImplementation "org.assertj:assertj-core:${assertJVersion}"
 
+  testImplementation "javax.servlet:javax.servlet-api:${javaxServletApiVersion}"
   testImplementation "org.springframework:spring-test:${springVersion}"
   testImplementation "org.springframework.security:spring-security-test:${springSecurityVersion}"
   testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"

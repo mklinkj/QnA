@@ -13,6 +13,7 @@ java {
 [compileJava, compileTestJava]*.options*.encoding = "${projectEncoding}"
 
 repositories {
+  maven { url 'https://repo.spring.io/snapshot' }
   mavenCentral()
 }
 
@@ -65,4 +66,11 @@ gretty {
       "--add-opens=java.base/java.lang=ALL-UNNAMED",
       "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
   ]
+  integrationTestTask = "test"
+}
+
+afterEvaluate {
+  appBeforeIntegrationTest {
+    httpPort = getRandomFreePort()
+  }
 }

@@ -69,3 +69,12 @@ gretty {
   ]
   integrationTestTask = "test"
 }
+
+afterEvaluate {
+  appBeforeIntegrationTest {
+    httpPort = getRandomFreePort()
+  }
+}
+
+
+

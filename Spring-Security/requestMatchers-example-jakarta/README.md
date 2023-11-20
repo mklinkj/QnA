@@ -22,3 +22,12 @@
 
 확인을 해보니..  최신환경에서도 Spring Security 6.1.1까지만 잘된다. 6.1.2 부터는 동일한 오류가 발생함.
 
+
+
+---
+
+### 설정 변경
+
+* https://github.com/spring-projects/spring-security/issues/13602#issuecomment-1816499124
+
+위의 댓글 내용대로 설정을 바꿨을 때, 정상 실행된다.

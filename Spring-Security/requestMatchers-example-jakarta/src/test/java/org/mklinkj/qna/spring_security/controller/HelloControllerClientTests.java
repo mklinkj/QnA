@@ -39,7 +39,7 @@ class HelloControllerClientTests {
   }
 
   @Test
-  void testHttpStatus500() throws IOException, InterruptedException {
+  void testHttpStatus200() throws IOException, InterruptedException {
 
     HttpClient client =
         HttpClient.newBuilder() //
@@ -51,7 +51,7 @@ class HelloControllerClientTests {
             .build();
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-    assertThat(response.statusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
   }
 
   @Test

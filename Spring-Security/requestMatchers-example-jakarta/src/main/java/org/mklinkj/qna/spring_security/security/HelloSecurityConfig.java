@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Slf4j
@@ -21,6 +22,11 @@ public class HelloSecurityConfig {
   @Bean
   HandlerMappingIntrospector mvcHandlerMappingIntrospector() {
     return new HandlerMappingIntrospector();
+  }
+
+  @Bean
+  MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
+    return new MvcRequestMatcher.Builder(introspector);
   }
 
   @Bean
@@ -43,10 +49,12 @@ public class HelloSecurityConfig {
   }
 
   @Bean
-  SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  SecurityFilterChain securityFilterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc)
+      throws Exception {
     http.authorizeHttpRequests(
             (authz) ->
                 authz
+                    /*
                     .requestMatchers(
                         "/webjars/**", //
                         "/resources/**",
@@ -54,6 +62,7 @@ public class HelloSecurityConfig {
                         "/index",
                         "/login",
                         "/favicon.ico")
+                     */
                     /*
                     .requestMatchers(
                         antMatcher("/webjars/**"), //
@@ -63,9 +72,19 @@ public class HelloSecurityConfig {
                         antMatcher("/login"),
                         antMatcher("/favicon.ico"))
                      */
+                    // https://github.com/spring-projects/spring-security/issues/13602#issuecomment-1816499124
+                    // 내용대로 설정을 바꿔봄.
+                    .requestMatchers(
+                        mvc.pattern("/webjars/**"), //
+                        mvc.pattern("/resources/**"),
+                        mvc.pattern("/"),
+                        mvc.pattern("/index"),
+                        mvc.pattern("/login"),
+                        mvc.pattern("/favicon.ico"))
                     .permitAll()
-                    .requestMatchers("/admin")
+                    // .requestMatchers("/admin")
                     // .requestMatchers(antMatcher("/admin"))
+                    .requestMatchers(mvc.pattern("/admin"))
                     .hasAuthority("ADMIN")
                     .anyRequest()
                     .authenticated())

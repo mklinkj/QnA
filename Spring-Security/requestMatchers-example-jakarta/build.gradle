@@ -2,6 +2,7 @@ plugins {
   id "io.freefair.lombok" version "${lombokPluginVersion}"
   id 'war'
   id "org.gretty" version "${grettyVersion}"
+  id "io.spring.dependency-management" version "${springDependencyManagementPluginVersion}"
 }
 
 java {
@@ -17,18 +18,29 @@ repositories {
   mavenCentral()
 }
 
+dependencyManagement {
+  imports {
+    mavenBom "org.springframework:spring-framework-bom:${springVersion}"
+    mavenBom "org.springframework.security:spring-security-bom:${springSecurityVersion}"
+  }
+  dependencies {
+    dependency "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
+  }
+}
+
+
 dependencies {
-  implementation "org.springframework:spring-context:${springVersion}"
-  implementation "org.springframework:spring-webmvc:${springVersion}"
+  implementation "org.springframework:spring-context"
+  implementation "org.springframework:spring-webmvc"
 
   implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
   implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
 
-  implementation "org.springframework.security:spring-security-config:${springSecurityVersion}"
-  implementation "org.springframework.security:spring-security-web:${springSecurityVersion}"
+  implementation "org.springframework.security:spring-security-config"
+  implementation "org.springframework.security:spring-security-web"
 
   implementation "jakarta.annotation:jakarta.annotation-api:${jakartaAnnotationApiVersion}"
-  compileOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
+  compileOnly "jakarta.servlet:jakarta.servlet-api"
 
   implementation "org.thymeleaf:thymeleaf-spring6:${thymeleafSpringVersion}"
   implementation "org.thymeleaf.extras:thymeleaf-extras-java8time:${thymeleafExtrasJava8timeVersion}"
@@ -42,9 +54,9 @@ dependencies {
   testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
   testImplementation "org.assertj:assertj-core:${assertJVersion}"
 
-  testImplementation "org.springframework:spring-test:${springVersion}"
-  testImplementation "jakarta.servlet:jakarta.servlet-api:${jakartaServletApiVersion}"
-  testImplementation "org.springframework.security:spring-security-test:${springSecurityVersion}"
+  testImplementation "org.springframework:spring-test"
+  testImplementation "jakarta.servlet:jakarta.servlet-api"
+  testImplementation "org.springframework.security:spring-security-test"
   testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
 }
 
@@ -60,13 +72,14 @@ gretty {
   httpPort = 8080
   contextPath = "/"
   servletContainer = "tomcat10"
+  tomcat10ServletApiVersion = "${jakartaServletApiVersion}"
   jvmArgs = [
       "-Djava.security.egd=file:/dev/./urandom",
       "--add-opens=java.base/java.io=ALL-UNNAMED",
       "--add-opens=java.base/java.lang=ALL-UNNAMED",
       "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
   ]
-  integrationTestTask = "test"
+  integrationTestTask = "test"  
 }
 
 afterEvaluate {

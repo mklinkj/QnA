@@ -47,11 +47,14 @@ class HelloControllerClientTests {
     HttpRequest request =
         HttpRequest.newBuilder() //
             .uri(URI.create("http://localhost:%d".formatted(getGrettyRandomPort())))
-            .timeout(Duration.ofSeconds(5)) // 타임아웃 설정을 꼭 해야한다. 제대로 연결이 안될 때, 무한정 대기함.
+            .timeout(Duration.ofSeconds(5))
+            // 타임아웃을 설정해야 합니다. 제대로 연결되지 않은 경우 무기한 대기합니다.
+            // Be sure to set a timeout.
+            // Waiting indefinitely when there is no proper connection.
             .build();
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-    assertThat(response.statusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
   }
 
   @Test

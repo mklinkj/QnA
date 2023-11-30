@@ -12,17 +12,11 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Slf4j
 @Configuration
 @EnableWebSecurity
 public class HelloSecurityConfig {
-  @Bean
-  HandlerMappingIntrospector mvcHandlerMappingIntrospector() {
-    return new HandlerMappingIntrospector();
-  }
-
   @Bean
   UserDetailsService userDetailsService() {
     val user =

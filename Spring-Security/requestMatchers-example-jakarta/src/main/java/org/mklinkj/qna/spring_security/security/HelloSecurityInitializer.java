@@ -6,11 +6,6 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
 
 @Slf4j
 public class HelloSecurityInitializer extends AbstractSecurityWebApplicationInitializer {
-
-  public HelloSecurityInitializer() {
-    super(HelloSecurityConfig.class);
-  }
-
   @Override
   protected void beforeSpringSecurityFilterChain(ServletContext servletContext) {
     LOGGER.info("### ServerInfo: {} ###", servletContext.getServerInfo()); // Tomcat 10.1.x

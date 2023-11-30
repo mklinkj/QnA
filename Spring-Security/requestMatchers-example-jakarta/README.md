@@ -31,3 +31,28 @@
 * https://github.com/spring-projects/spring-security/issues/13602#issuecomment-1816499124
 
 위의 댓글 내용대로 설정을 바꿨을 때, 정상 실행된다.
+
+
+
+---
+
+#### ✨ 2023년 12월 1일 확인
+
+* https://github.com/spring-projects/spring-security/issues/13794#issuecomment-1834103895
+
+개발자님 권고대로 Security 설정을 바꿈.
+
+* ✨ 그런데 새로 바꾼 설정 그대로 두고,  버전을 6.1.5로 낮추면 문제는 재현됨.
+
+현시점의 `6.1.6-SNAPSHOT`에서는 문제가 없어졌는데, 아무래도 이 스냅샷 버전에 변경이 있던 것 같다.
+
+`5.8.9-SNAPSHOT` 버전도  문제가 없어졌음.
+
+
+
+이렇다면, 스프링 버전을 `5.8.9`, `6.1.6` 으로 정식 버전업하게 되면  `.requestMatchers("{mvc경로 ...}") ` 
+
+이렇게 단순하게 쓰면 될 것 같다. 
+
+그래도 뭐 해결되서 다행이다. 😂
+

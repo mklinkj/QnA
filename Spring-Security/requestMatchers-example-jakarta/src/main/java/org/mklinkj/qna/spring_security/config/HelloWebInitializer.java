@@ -1,5 +1,6 @@
 package org.mklinkj.qna.spring_security.config;
 
+import org.mklinkj.qna.spring_security.security.HelloSecurityConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class HelloWebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -10,7 +11,7 @@ public class HelloWebInitializer extends AbstractAnnotationConfigDispatcherServl
 
   @Override
   protected Class<?>[] getServletConfigClasses() {
-    return new Class<?>[] {HelloWebConfig.class};
+    return new Class<?>[] {HelloSecurityConfig.class, HelloWebConfig.class};
   }
 
   @Override

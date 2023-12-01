@@ -13,8 +13,8 @@ java {
 [compileJava, compileTestJava]*.options*.encoding = "${projectEncoding}"
 
 repositories {
-  maven { url 'https://repo.spring.io/snapshot' }
   mavenCentral()
+  maven { url 'https://repo.spring.io/snapshot' }
 }
 
 dependencies {
@@ -48,14 +48,6 @@ dependencies {
   testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
 }
 
-tasks.named('test') {
-  useJUnitPlatform()
-  testLogging {
-    outputs.upToDateWhen { false }
-    showStandardStreams = true
-  }
-}
-
 gretty {
   httpPort = 8080
   contextPath = "/"
@@ -67,7 +59,7 @@ gretty {
       "--add-opens=java.base/java.lang=ALL-UNNAMED",
       "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
   ]
-  integrationTestTask = "test"
+  integrationTestTask = "integrationTest"
 }
 
 afterEvaluate {
@@ -76,5 +68,27 @@ afterEvaluate {
   }
 }
 
+tasks.named('test') {
+  useJUnitPlatform {
+    excludeTags 'integration'
+  }
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
+}
+
+
+tasks.register('integrationTest', Test) {
+  useJUnitPlatform {
+    includeTags 'integration'
+  }
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
+  testClassesDirs = sourceSets.test.output.classesDirs
+  classpath = sourceSets.test.runtimeClasspath
+}
 
 

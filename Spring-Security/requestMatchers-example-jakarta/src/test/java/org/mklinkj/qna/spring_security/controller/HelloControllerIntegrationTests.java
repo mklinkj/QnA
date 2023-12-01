@@ -16,11 +16,13 @@ import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.util.Properties;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
+@Tag("integration")
 @Slf4j
-class HelloControllerClientTests {
+class HelloControllerIntegrationTests {
   private int getGrettyRandomPort() {
     Path portProps =
         Paths.get(Paths.get("build").toAbsolutePath().toString(), "gretty_ports.properties");

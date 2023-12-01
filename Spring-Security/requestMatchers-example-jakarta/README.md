@@ -56,3 +56,60 @@
 
 그래도 뭐 해결되서 다행이다. 😂
 
+
+
+---
+
+### integrationTest  실행 문제 수정
+
+지금까지 한 내용으로는 test 만 수행시켜도 무조건 Tomcat을 실행시키기 때문에, 
+
+서버 실행이 필요없는 Mock 테스트만을 해도 서버를 실행시키는 문제가 있어서, 다음과 같이 되도록 했다.
+
+1. `gradle test` 를 실행 하면 integration 테그 설정을 하지 않는 테스트만 수행
+2. `gradle integrationTest`를 실행하면 integration 테그 설정을 한 테스트만 수행
+
+
+
+통합 테스트를 위한 클래스에는 `@Tag("integration")` 어노테이션을 붙임
+
+```java
+@Tag("integration")
+@Slf4j
+class HelloControllerIntegrationTests {
+    ...       
+```
+
+
+
+* build.gradle
+
+  ```groovy
+  gretty {
+    // ...
+    integrationTestTask = "integrationTest"
+  }
+  
+  // ...
+  
+  tasks.named('test') {
+    useJUnitPlatform {
+      excludeTags 'integration'
+    }
+  }
+  
+  tasks.register('integrationTest', Test) {
+    useJUnitPlatform {
+      includeTags 'integration'
+    }
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+  }
+  ```
+
+  
+
+
+
+
+

@@ -21,14 +21,16 @@ class HelloControllerIntegrationTests {
     // https://akhikhl.github.io/gretty-doc/Integration-tests-support.html
     // ✨ Your test code can access these properties via System.getProperty function.
     //    This allows to parametrize test code with Gretty-specific parameters.
-    String randomPort = System.getProperty("gretty.httpPort");
-    LOGGER.info("### gretty random port: {}", randomPort);
+    // ✨ gretty.httpBaseURI: "http://${host}:${httpPort}${contextPath}",
+    //     when HTTP protocol is enabled; null otherwise.
+    String httpBaseURI = System.getProperty("gretty.httpBaseURI");
+    LOGGER.info("### gretty httpBaseURI: {}", httpBaseURI);
     HttpClient client =
         HttpClient.newBuilder() //
             .build();
     HttpRequest request =
         HttpRequest.newBuilder() //
-            .uri(URI.create("http://localhost:%s".formatted(randomPort)))
+            .uri(URI.create(httpBaseURI))
             .timeout(Duration.ofSeconds(5)) // 타임아웃 설정을 꼭 해야한다. 제대로 연결이 안될 때, 무한정 대기함.
             .build();
 

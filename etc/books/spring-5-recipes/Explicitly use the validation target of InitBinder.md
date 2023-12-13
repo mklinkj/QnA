@@ -21,13 +21,14 @@ In ReactiveWeb in Chapter 5 and Spring Security application project in Chapter 7
 
 * Spring Webflux
   * `InMemoryWebSessionStore$InMemoryWebSession  `
+  * `HttpWebHandlerAdapter`
 
 - Spring Security
   - `UsernamePasswordAuthenticationToken`
+  
   - `SecurityContextImpl`
-  - `HttpWebHandlerAdapter`
-
-
+  
+    
 
 So, I saw that the related projects in Chapters 5 and 7 were written to return only `true` as follows.
 
@@ -98,13 +99,14 @@ Thank you have a good day. 👍
 
 * Spring Webflux
   * `InMemoryWebSessionStore$InMemoryWebSession  `
+  * `HttpWebHandlerAdapter`
 
 - Spring Security
   - `UsernamePasswordAuthenticationToken`
+  
   - `SecurityContextImpl`
-  - `HttpWebHandlerAdapter`
-
-
+  
+    
 
 그래서 5장과 7장의 프로젝트에 다음과 같이 true만 반환하게 작성하신 것을 보았습니다.
 

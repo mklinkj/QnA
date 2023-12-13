@@ -14,10 +14,9 @@ When `@InitBinder` for using the `ReservationValidator` validator in `Reservatio
 ```
 
 
+There are no issues with a simple MVC project, 
 
-There is no problem in simple MVC projects, but
-
-In ReactiveWeb in Chapter 5 and Spring Security application project in Chapter 7, in addition to verifying `Reservation`, we also want to verify the classes below.
+but in projects applying Chapter 5’s ReactiveWeb or Chapter 7’s Spring Security, problems arise as I end up validating not only the Reservation but also the following classes.
 
 * Spring Webflux
   * `InMemoryWebSessionStore$InMemoryWebSession  `
@@ -93,11 +92,9 @@ Thank you have a good day. 👍
 
 
 
-단순 MVC 프로젝트에서는 문제가 없지만,
+단순 MVC 프로젝트에서는 문제가 없지만, 
 
-5장의 ReactiveWeb이나  7장의 Spring Security 적용 프로젝트에서는
-
-`Reservation` 의 검증 외에도 다음 클래스까지 검증하려합니다.
+5장의 ReactiveWeb이나 7장의 Spring Security 적용 프로젝트에서는 Reservation 의 검증 외에도 다음 클래스들까지 검증하게 되어 문제가 생깁니다.
 
 * Spring Webflux
   * `InMemoryWebSessionStore$InMemoryWebSession  `

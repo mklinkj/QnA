@@ -1,6 +1,6 @@
 # Explicitly use the validation target of InitBinder
 
-
+> * Pull Request: https://github.com/Apress/spring-5-recipes/pull/4
 
 Hello.
 
@@ -75,6 +75,8 @@ Thank you have a good day. 👍
 
 
 # InitBinder의 유효성 검사 대상을 명시적으로 사용합니다.
+
+> * 풀 리퀘스트: https://github.com/Apress/spring-5-recipes/pull/4
 
 
 

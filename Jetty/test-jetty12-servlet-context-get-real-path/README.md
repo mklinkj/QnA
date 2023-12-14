@@ -10,7 +10,7 @@ Struts2 를 사용한 다른 프로젝트에서 Jetty12 버전업 후 리스너�
 
 
 
-## [test-jetty12-servlet-context-get-real-path-simple-servlet](test-jetty12-servlet-context-get-real-path-simple-servlet) 단순 서블릿 프로젝트
+## [simple-servlet](simple-servlet) 단순 서블릿 프로젝트
 
 #### Jetty 12 실행
 

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.mklinkj.qna</groupId>
+  <artifactId>simple-struts2</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+
+  <packaging>war</packaging>
+  <name>${project.artifactId}</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>17</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+
+    <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
+    <javax.servlet.jsp-api.version>2.3.3</javax.servlet.jsp-api.version>
+
+    <log4j2.version>2.22.0</log4j2.version>
+    
+    <!-- ### Struts 2 ### -->
+    <struts2.version>6.3.0.2</struts2.version>
+    
+
+    <!-- ### Jetty 12 ###-->
+    <jetty.version>12.0.4</jetty.version>
+    <jetty-plugin-group-id>org.eclipse.jetty.ee8</jetty-plugin-group-id>
+    <jetty-plugin-artifact-id>jetty-ee8-maven-plugin</jetty-plugin-artifact-id>
+
+    <jetty-root-jstl-group-id>org.eclipse.jetty.ee8</jetty-root-jstl-group-id>
+    <jetty-root-jstl-artifact-id>jetty-ee8-glassfish-jstl</jetty-root-jstl-artifact-id>
+
+    <jetty-exclude-jstl-group-id>org.glassfish.web</jetty-exclude-jstl-group-id>
+    <jetty-exclude-jstl-artifact-id>javax.servlet.jsp.jstl</jetty-exclude-jstl-artifact-id>
+    <jetty-exclude-jstl-version>1.2.5</jetty-exclude-jstl-version>
+
+    <!-- ### Jetty 10 ###-->
+    <jetty10.version>10.0.18</jetty10.version>
+    <jetty10-plugin-group-id>org.eclipse.jetty</jetty10-plugin-group-id>
+    <jetty10-plugin-artifact-id>jetty-maven-plugin</jetty10-plugin-artifact-id>
+
+    <jetty10-root-jstl-group-id>org.eclipse.jetty</jetty10-root-jstl-group-id>
+    <jetty10-root-jstl-artifact-id>apache-jstl</jetty10-root-jstl-artifact-id>
+
+    <jetty10-exclude-jstl-group-id>org.apache.taglibs</jetty10-exclude-jstl-group-id>
+    <jetty10-exclude-jstl-artifact-id>taglibs-standard-impl</jetty10-exclude-jstl-artifact-id>
+    <jetty10-exclude-jstl-version>1.2.5</jetty10-exclude-jstl-version>
+
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>jetty10</id>
+      <properties>
+        <jetty.version>${jetty10.version}</jetty.version>
+        <jetty-plugin-group-id>${jetty10-plugin-group-id}</jetty-plugin-group-id>
+        <jetty-plugin-artifact-id>${jetty10-plugin-artifact-id}</jetty-plugin-artifact-id>
+
+        <jetty-root-jstl-group-id>${jetty10-root-jstl-group-id}</jetty-root-jstl-group-id>
+        <jetty-root-jstl-artifact-id>apache-jstl</jetty-root-jstl-artifact-id>
+
+        <jetty-exclude-jstl-group-id>${jetty10-exclude-jstl-group-id}</jetty-exclude-jstl-group-id>
+        <jetty-exclude-jstl-artifact-id>${jetty10-exclude-jstl-artifact-id}
+        </jetty-exclude-jstl-artifact-id>
+        <jetty-exclude-jstl-version>${jetty10-exclude-jstl-version}</jetty-exclude-jstl-version>
+      </properties>
+    </profile>
+  </profiles>
+
+  <dependencyManagement>
+    <dependencies>
+       <dependency>
+        <groupId>org.apache.struts</groupId>
+        <artifactId>struts2-bom</artifactId>
+        <version>${struts2.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-bom</artifactId>
+        <version>${log4j2.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>${javax.servlet-api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>javax.servlet.jsp-api</artifactId>
+      <version>${javax.servlet.jsp-api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>${jetty-exclude-jstl-group-id}</groupId>
+      <artifactId>${jetty-exclude-jstl-artifact-id}</artifactId>
+      <version>${jetty-exclude-jstl-version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j2-impl</artifactId>
+    </dependency>
+  </dependencies>
+
+
+  <build>
+    <finalName>${project.artifactId}</finalName>
+    <plugins>
+      <plugin>
+        <!-- https://eclipse.dev/jetty/documentation/jetty-10/programming-guide/index.html#jetty-maven-plugin -->
+        <!-- https://eclipse.dev/jetty/documentation/jetty-12/programming-guide/index.html#jetty-maven-plugin -->
+        <groupId>${jetty-plugin-group-id}</groupId>
+        <artifactId>${jetty-plugin-artifact-id}</artifactId>
+        <version>${jetty.version}</version>
+        <configuration>
+          <jvmArgs>
+            --add-opens java.base/java.util=ALL-UNNAMED
+          </jvmArgs>
+          <webApp>
+            <contextPath>/</contextPath>
+          </webApp>
+          <deployMode>EMBED</deployMode>
+          <stopKey>CTRL+C</stopKey>
+          <stopPort>8999</stopPort>
+          <scan>-1</scan>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>${jetty-root-jstl-group-id}</groupId>
+            <artifactId>${jetty-root-jstl-artifact-id}</artifactId>
+            <version>${jetty.version}</version>
+            <exclusions>
+              <exclusion>
+                <groupId>${jetty-exclude-jstl-group-id}</groupId>
+                <artifactId>${jetty-exclude-jstl-artifact-id}</artifactId>
+              </exclusion>
+            </exclusions>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -70,3 +70,14 @@ Jetty 12에서도 경로 제대로 출력됨 😅
 
 webpapp 경로의 index.jsp도 정상 접근하는 걸로봐서 DefaultServlet 도 잘동작하는 것 같은데...
 그래도 web.xml의 welcome 목록에 index.jsp가 등록이 되어있는데... 12에서는 / 에서 바로 index.jsp로 가질 않음.. 10에서는 가는데...
+
+
+
+## [simple-struts2](simple-struts2) 단순 Struts 2 프로젝트
+
+단순 Struts 2 테스트를 만들어서 Jetty 12에서 확인해보았는데, 정상적으로 realPath를 가져온다.. 
+
+문제가 있던 프로젝트는... 뭐가 문제일까?
+
+
+

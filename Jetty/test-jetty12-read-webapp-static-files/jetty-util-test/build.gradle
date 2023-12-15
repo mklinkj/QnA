@@ -1,0 +1,44 @@
+plugins {
+  id "io.freefair.lombok" version "${lombokPluginVersion}"
+  id 'application'
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of("${javaVersion}")
+  }
+}
+
+compileJava.options.encoding = "${projectEncoding}"
+compileTestJava.options.encoding = "${projectEncoding}"
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "org.eclipse.jetty:jetty-util:${jettyVersion}"
+
+  implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+  implementation "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+
+  testImplementation "org.assertj:assertj-core:${assertJVersion}"
+  testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+  testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+}
+
+application {
+  mainClass = 'org.mklinkj.qna.jetty.App'
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
+}
+
+run {
+  standardInput = System.in
+}

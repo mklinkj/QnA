@@ -1,6 +1,8 @@
 
 
-# Problem with Reading Static Resource Files Located Under the Webapp Path in Jetty12 (EE8)
+# Unable to Read Static Resource Files Located Under the Webapp Path in Jetty12 (EE8)
+
+
 
 Hello,
 
@@ -43,7 +45,7 @@ Thank you. Have a nice day 👍
 
 ---
 
-# Jetty12 (EE8)에서 webapp경로 이하의 정적 리소스 파일을 읽을 수 없는 문제
+# Jetty12 (EE8)에서 webapp경로 이하의 정적 리소스 파일을 읽을 수 없음
 
 
 

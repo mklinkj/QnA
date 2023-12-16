@@ -10,7 +10,7 @@
   <Loggers>
     <Logger name="org.mklinkj.qna" level="DEBUG"/>
 
-    <Root level="DEBUG">
+    <Root level="INFO">
       <AppenderRef ref="console"/>
     </Root>
   </Loggers>

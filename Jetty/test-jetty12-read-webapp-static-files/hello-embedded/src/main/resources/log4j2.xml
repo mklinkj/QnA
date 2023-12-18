@@ -10,6 +10,10 @@
   <Loggers>
     <Logger name="org.mklinkj.qna" level="DEBUG"/>
 
+    <Logger name="org.apache.tomcat.util.scan" level="TRACE"/>
+    <Logger name="org.apache.jasper.servlet" level="TRACE"/>
+    <Logger name="org.eclipse.jetty.ee8.apache.jsp" level="DEBUG"/>
+
     <Root level="INFO">
       <AppenderRef ref="console"/>
     </Root>

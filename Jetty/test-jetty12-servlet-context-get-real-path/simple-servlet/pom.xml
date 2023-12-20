@@ -23,7 +23,7 @@
     <log4j2.version>2.22.0</log4j2.version>
 
     <!-- ### Jetty 12 ###-->
-    <jetty.version>12.0.4</jetty.version>
+    <jetty.version>12.0.5</jetty.version>
     <jetty-plugin-group-id>org.eclipse.jetty.ee8</jetty-plugin-group-id>
     <jetty-plugin-artifact-id>jetty-ee8-maven-plugin</jetty-plugin-artifact-id>
 
@@ -35,7 +35,7 @@
     <jetty-exclude-jstl-version>1.2.5</jetty-exclude-jstl-version>
 
     <!-- ### Jetty 10 ###-->
-    <jetty10.version>10.0.18</jetty10.version>
+    <jetty10.version>10.0.19</jetty10.version>
     <jetty10-plugin-group-id>org.eclipse.jetty</jetty10-plugin-group-id>
     <jetty10-plugin-artifact-id>jetty-maven-plugin</jetty10-plugin-artifact-id>
 

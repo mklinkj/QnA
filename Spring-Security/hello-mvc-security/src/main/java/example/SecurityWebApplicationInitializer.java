@@ -16,8 +16,10 @@
 
 package example;
 
+import jakarta.servlet.ServletContext;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 /**
  * We customize {@link AbstractSecurityWebApplicationInitializer} to enable the {@link
@@ -30,5 +32,18 @@ public class SecurityWebApplicationInitializer extends AbstractSecurityWebApplic
   @Override
   protected boolean enableHttpSessionEventPublisher() {
     return true;
+  }
+
+  @Override
+  protected void beforeSpringSecurityFilterChain(ServletContext servletContext) {
+    // When submitting a form, set additional filters
+    // to make requests other than GET and POST using the _method Hidden input.
+    //
+    // * The HiddenHttpMethodFilter filter determines the request method by
+    //   looking at the `_method` Hidden input value received in the Form POST request,
+    //   so it must be located before the Spring Security filter.
+    servletContext
+        .addFilter("hiddenHttpMethodFilter", new HiddenHttpMethodFilter())
+        .addMappingForUrlPatterns(null, false, "/*");
   }
 }

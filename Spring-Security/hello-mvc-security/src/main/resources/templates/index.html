@@ -20,7 +20,7 @@
 </head>
 <body>
 <div>
-    <h1>Hello Security</h1>
+    <h1 th:text="|Hello Security - ${#authentication.name}|"></h1>
     <img src="/resources/img/smile.png" alt="smile">
 
     <form id="logout" th:action="@{/logout}" method="post">

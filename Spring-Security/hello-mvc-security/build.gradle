@@ -1,7 +1,7 @@
 plugins {
 	id "java"
-	id "nebula.integtest" version "8.2.0"
-	id "org.gretty" version "4.0.3"
+	id "nebula.integtest" version "${nebulaTestPluginVersion}"
+	id "org.gretty" version "${grettyPluginVersion}"
 	id "war"
 }
 
@@ -16,21 +16,25 @@ repositories {
 dependencies {
 	implementation platform("org.springframework:spring-framework-bom:${springVersion}")
 	implementation platform("org.springframework.security:spring-security-bom:${springSecurityVersion}")
-	implementation platform("org.junit:junit-bom:5.10.0")
+	implementation platform("org.junit:junit-bom:${junitVersion}")
 
 	implementation "org.springframework.security:spring-security-config"
 	implementation "org.springframework.security:spring-security-web"
 	implementation "org.springframework:spring-webmvc"
-	implementation "org.thymeleaf:thymeleaf-spring6:3.1.0.M1"
 
-	testImplementation "org.assertj:assertj-core:3.18.0"
+	implementation "org.thymeleaf:thymeleaf-spring6:${thymeleafSpring6Version}"
+  implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity6:${thymeleafSpring6Version}"
+
+	implementation "ch.qos.logback:logback-classic:${logbackVersion}"
+
+	testImplementation "org.assertj:assertj-core:${assertjVersion}"
 	testImplementation "org.springframework:spring-test"
 	testImplementation "org.springframework.security:spring-security-test"
 	testImplementation("org.junit.jupiter:junit-jupiter-api")
 
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
-	integTestImplementation "org.seleniumhq.selenium:htmlunit-driver:3.64.0"
+	integTestImplementation "org.seleniumhq.selenium:htmlunit-driver:${htmlunitDriverVersion}"
 }
 
 tasks.withType(Test).configureEach {

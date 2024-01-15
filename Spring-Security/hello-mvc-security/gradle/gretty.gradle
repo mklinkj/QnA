@@ -1,12 +1,21 @@
 gretty {
 	servletContainer = "tomcat10"
 	contextPath = "/"
-	fileLogEnabled = false
+	// fileLogEnabled = false // There is no such setting in Gretty 4.1.2
+	tomcat10ServletApiVersion = "${tomcat10_servlet_api_version}"
 	integrationTestTask = 'integrationTest'
+	jvmArgs = [
+		"--add-opens=java.base/java.io=ALL-UNNAMED",
+		"--add-opens=java.base/java.lang=ALL-UNNAMED",
+		"--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
+	]
 }
 
 // In Gretty version 3.x, it was possible to run the appRun task without the /src/main/webapp directory.
 // However, strangely, in version 4.x, this directory is required.
+// * integrationTest Task
+//   When running the integrationTest Task, it operates normally even without the webapp directory.
+//   When executing the appRun Task, the webapp directory must exist.
 task createWebAppDir {
 	doLast {
 		def webAppDir = new File(project.projectDir, '/src/main/webapp')

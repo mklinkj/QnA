@@ -34,8 +34,14 @@ public class HomePage {
   @FindBy(css = "p")
   private WebElement message;
 
-  @FindBy(css = "input[type=submit]")
+  @FindBy(css = "#logout > input[type=submit]")
   private WebElement logoutButton;
+
+  @FindBy(css = "#put1 > input[type=submit]")
+  private WebElement putButton;
+
+  @FindBy(css = "#delete1 > input[type=submit]")
+  private WebElement deleteButton;
 
   public static LoginPage to(WebDriver driver, int port) {
     driver.get("http://localhost:" + port + "/");
@@ -54,5 +60,15 @@ public class HomePage {
   public LoginPage logout() {
     this.logoutButton.submit();
     return PageFactory.initElements(this.webDriver, LoginPage.class);
+  }
+
+  public PutPage put() {
+    this.putButton.submit();
+    return PageFactory.initElements(this.webDriver, PutPage.class);
+  }
+
+  public DeletePage delete() {
+    this.deleteButton.submit();
+    return PageFactory.initElements(this.webDriver, DeletePage.class);
   }
 }

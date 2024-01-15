@@ -13,16 +13,33 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
-<html xmlns:th="https://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Hello Security</title>
 </head>
 <body>
 <div>
     <h1>Hello Security</h1>
-    <form th:action="@{/logout}" method="post">
+    <img src="/resources/img/smile.png" alt="smile">
+
+    <form id="logout" th:action="@{/logout}" method="post">
         <input type="submit" value="Logout"/>
+    </form>
+
+    <hr>
+    <h1>HiddenMethodFilter Test</h1>
+
+    <h3>Put</h3>
+    <form id="put1" th:action="@{/test/put}" method="post">
+        <input type="hidden" name="_method" value="PUT"/>
+        <input type="submit" value="Put"/>
+    </form>
+
+    <h3>Delete</h3>
+    <form id="delete1" th:action="@{/test/delete}" method="post">
+        <input type="hidden" name="_method" value="DELETE"/>
+        <input type="submit" value="Delete"/>
     </form>
 </div>
 </body>

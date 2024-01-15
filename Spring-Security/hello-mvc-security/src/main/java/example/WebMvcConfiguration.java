@@ -45,7 +45,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     // @formatter:off
     registry
         .addResourceHandler("/resources/**")
-        .addResourceLocations("classpath:/resources/")
+        .addResourceLocations("classpath:/static/")
         .setCachePeriod(31556926);
     // @formatter:on
     registry.setOrder(Ordered.HIGHEST_PRECEDENCE);

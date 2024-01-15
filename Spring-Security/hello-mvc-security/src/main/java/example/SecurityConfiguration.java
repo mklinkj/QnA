@@ -19,6 +19,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -37,8 +38,18 @@ public class SecurityConfiguration {
     http.authorizeHttpRequests(
             authorize ->
                 authorize //
+                    .requestMatchers(
+                        "/login", //
+                        "/resources/**")
+                    .permitAll()
+                    .requestMatchers("/")
+                    .authenticated()
+                    .requestMatchers(HttpMethod.PUT, "/test/put")
+                    .hasAnyRole("USER", "ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/test/delete")
+                    .hasRole("ADMIN")
                     .anyRequest()
-                    .authenticated())
+                    .denyAll())
         .httpBasic(withDefaults())
         .formLogin(withDefaults());
     // @formatter:on
@@ -50,10 +61,16 @@ public class SecurityConfiguration {
   public UserDetailsService userDetailsService() {
     UserDetails user =
         User.withUsername("user") //
-            .password("{noop}password")
+            .password("{noop}user")
             .roles("USER")
             .build();
-    return new InMemoryUserDetailsManager(user);
+    UserDetails admin =
+        User.withUsername("admin") //
+            .password("{noop}admin")
+            .roles("ADMIN")
+            .build();
+
+    return new InMemoryUserDetailsManager(user, admin);
   }
   // @formatter:on
 

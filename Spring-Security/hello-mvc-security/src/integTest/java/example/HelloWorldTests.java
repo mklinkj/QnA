@@ -15,8 +15,10 @@
  */
 package example;
 
+import example.pages.DeletePage;
 import example.pages.HomePage;
 import example.pages.LoginPage;
+import example.pages.PutPage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,10 +67,10 @@ class HelloWorldTests {
   void authenticatedUserIsSentToOriginalPage() {
     // @formatter:off
     final HomePage homePage =
-        HomePage.to(this.driver, this.port)
+        HomePage.to(this.driver, this.port) //
             .loginForm()
             .username("user")
-            .password("password")
+            .password("user")
             .submit();
     // @formatter:on
     homePage.assertAt();
@@ -81,7 +83,7 @@ class HelloWorldTests {
         HomePage.to(this.driver, this.port)
             .loginForm()
             .username("user")
-            .password("password")
+            .password("user")
             .submit()
             .logout();
     // @formatter:on
@@ -89,5 +91,33 @@ class HelloWorldTests {
 
     loginPage = HomePage.to(this.driver, this.port);
     loginPage.assertAt();
+  }
+
+  @Test
+  void authenticatedUserPut() {
+    // @formatter:off
+    PutPage putPage =
+        HomePage.to(this.driver, this.port)
+            .loginForm()
+            .username("user")
+            .password("user")
+            .submit()
+            .put();
+    // @formatter:on
+    putPage.assertAt();
+  }
+
+  @Test
+  void adminUserDelete() {
+    // @formatter:off
+    DeletePage delete =
+        HomePage.to(this.driver, this.port)
+            .loginForm()
+            .username("admin")
+            .password("admin")
+            .submit()
+            .delete();
+    // @formatter:on
+    delete.assertAt();
   }
 }

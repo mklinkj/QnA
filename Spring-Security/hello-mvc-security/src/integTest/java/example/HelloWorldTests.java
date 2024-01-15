@@ -120,4 +120,18 @@ class HelloWorldTests {
     // @formatter:on
     delete.assertAt();
   }
+
+  @Test
+  void normalUserDelete() {
+    // @formatter:off
+    DeletePage deletePage =
+        HomePage.to(this.driver, this.port)
+            .loginForm()
+            .username("user")
+            .password("user")
+            .submit()
+            .delete();
+    // @formatter:on
+    deletePage.assert403();
+  }
 }

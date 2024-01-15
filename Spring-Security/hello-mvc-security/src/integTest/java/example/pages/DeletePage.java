@@ -32,4 +32,9 @@ public class DeletePage {
     assertThat(this.webDriver.getTitle()).isEqualTo("Delete Page");
     return this;
   }
+
+  public void assert403() {
+    assertThat(this.webDriver.getTitle())
+        .contains("HTTP Status 403"); // Title message dependent on Tomcat 10
+  }
 }

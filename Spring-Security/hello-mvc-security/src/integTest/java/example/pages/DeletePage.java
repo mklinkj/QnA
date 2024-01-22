@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.openqa.selenium.WebDriver;
 
-/** The put page. */
+/** The delete page. */
 public class DeletePage {
 
   private final WebDriver webDriver;
@@ -35,6 +35,7 @@ public class DeletePage {
 
   public void assert403() {
     assertThat(this.webDriver.getTitle())
-        .contains("HTTP Status 403"); // Title message dependent on Tomcat 10
+        .contains("HTTP Status 403"); // Title message dependent on Tomcat 10,
+    // This can be solved by creating a custom 403 page.
   }
 }

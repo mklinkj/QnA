@@ -41,7 +41,7 @@ public class SecurityWebApplicationInitializer extends AbstractSecurityWebApplic
     //
     // * The HiddenHttpMethodFilter filter determines the request method by
     //   looking at the `_method` Hidden input value received in the Form POST request,
-    //   so it must be located before the Spring Security filter.
+    //   so it must be located before the Spring Security FilterChain.
     servletContext
         .addFilter("hiddenHttpMethodFilter", new HiddenHttpMethodFilter())
         .addMappingForUrlPatterns(null, false, "/*");

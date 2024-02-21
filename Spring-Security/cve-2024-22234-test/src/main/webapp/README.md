@@ -1,0 +1,1 @@
+###  Gretty 4.1.1 requires the src/main/webapp path to be present to avoid errors.

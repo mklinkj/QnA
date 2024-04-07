@@ -1,0 +1,71 @@
+plugins {
+  id 'war'
+  alias(libs.plugins.gretty)
+  alias(libs.plugins.lombok)
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of("${javaVersion}")
+  }
+}
+
+[compileJava, compileTestJava]*.options*.encoding = "${projectEncoding}"
+
+repositories {
+  mavenCentral()
+}
+
+ext {
+  // javaTimeJsptagsVersion = "2.0.0"
+  javaTimeJsptagsVersion = "2.0.2"
+}
+
+dependencies {
+  implementation enforcedPlatform(libs.spring.bom)
+
+  implementation (libs.log4j.core)
+  implementation (libs.log4j.slf4j2.impl)
+
+  implementation "net.sargue:java-time-jsptags:${javaTimeJsptagsVersion}"
+  // runtimeOnly (libs.jakarta.jstl)
+  // 💡 2.0.2 부터는 jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api를 사용해야하는 것 같다.
+  runtimeOnly (libs.jakarta.jstl.api)
+
+
+
+  implementation "org.springframework:spring-context"
+  implementation "org.springframework:spring-webmvc"
+
+  compileOnly (libs.jakarta.servlet.api)
+
+  testImplementation (libs.junit.jupiter)
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+  testImplementation (libs.jakarta.servlet.api)
+  testImplementation "org.springframework:spring-test"
+  testImplementation (libs.hamcrest)
+  testImplementation (libs.assertj.core)
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
+}
+
+gretty {
+  // https://akhikhl.github.io/gretty-doc/Gretty-configuration.html
+  httpPort = 8080
+  contextPath = "/"
+  servletContainer = "tomcat10"
+  tomcat10ServletApiVersion = "${jakartaServletApiVersion}"
+  jvmArgs = [
+    "--add-opens=java.base/java.io=ALL-UNNAMED",
+    "--add-opens=java.base/java.lang=ALL-UNNAMED",
+    "--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
+  ]
+  redeployMode = "restart"
+}

@@ -29,7 +29,7 @@ dependencies {
 
   implementation "net.sargue:java-time-jsptags:${javaTimeJsptagsVersion}"
   // runtimeOnly (libs.jakarta.jstl)
-  // 💡 2.0.2 부터는 jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api를 사용해야하는 것 같다.
+  // 💡 2.0.2 부터는 jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api도 상황에 따라 추가되야함.
   runtimeOnly (libs.jakarta.jstl.api)
 
 

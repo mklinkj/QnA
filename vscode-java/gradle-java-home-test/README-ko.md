@@ -12,7 +12,7 @@ coursework 프로젝트를 JDK 18로 사용하길 원하시면 다음과 같이 
 ```json
 {
     "java.configuration.runtimes": [
-			  { 
+        { 
             "name": "JavaSE-18",  // 💡 Java 18을 설치해서 경로 추가
             "path": "/home/username/.jdks/openjdk-18",
         },

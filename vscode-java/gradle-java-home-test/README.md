@@ -12,7 +12,7 @@ If you want to use the coursework project with JDK 18, you can do it as follows.
 ```json
 {
     "java.configuration.runtimes": [
-			  { 
+        { 
             "name": "JavaSE-18",  // 💡Install Java 18 on the system and add the path
             "path": "/home/username/.jdks/openjdk-18",
         },
@@ -168,3 +168,4 @@ Even though version 18 is not declared in settings.json, if the automatic downlo
 At this point, Gradle for Java  runs the program with the downloaded automatically version.
 However, when running from the Run Link in main(), it runs with a Java version from the Java list declared in settings.json that can handle version 18.
 In my case, because JDK version 21 was registered in settings.json, it ran with version 21.
+

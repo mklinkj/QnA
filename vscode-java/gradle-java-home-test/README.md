@@ -156,3 +156,15 @@ Java Home: C:\JDK\18
 
 
 Then, please take note of this. Have a great day.
+
+
+
+---
+
+Upon further inspection…
+
+Even though version 18 is not declared in settings.json, if the automatic download option is turned on in the global gradle.properties, it will download version 18.
+
+At this point, Gradle for Java  runs the program with the downloaded automatically version.
+However, when running from the Run Link in main(), it runs with a Java version from the Java list declared in settings.json that can handle version 18.
+In my case, because JDK version 21 was registered in settings.json, it ran with version 21.

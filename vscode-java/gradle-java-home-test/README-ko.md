@@ -162,3 +162,15 @@ Java Home: C:\JDK\18
  
 
 그럼 참고 부탁드립니다. 좋은하루되세요.
+
+
+---
+
+조금 더 보았을 때...
+
+settings.json 에는 18버전이 선언 되어있지는 않지만,  전역 gradle.properties에 자동 다운로드 옵션이 켜져있으면, 18버전을 다운로드 받음.
+
+1. 이때, Gradle for Java는 자동으로 다운로드 된 버전으로 프로그램을 실행함.
+2. 그러나 main()에서 `Run` Link로 실행할 때는 settings.json에 선언된 Java 목록 중 18버전을 처리할 수 있는 Java 버전으로 실행됨.
+   * 나의 경우는 JDK 21버전이 settings.json에 등록 되어있었기 때문에 21버전으로 실행되었음.
+

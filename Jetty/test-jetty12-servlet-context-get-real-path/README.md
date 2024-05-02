@@ -1,6 +1,17 @@
 # Jetty12에서 ServletContext#getRealPath() 가 null을 반환하는 문제 확인용 예제
 
+### 다른 예제에서 문제 확인했음
 
+Jetty 12의 경우... ServletContext의 getRealPath()동작이 약간 다름.
+
+* `getRealPath("/not_exist_path")`  일 경우 null을 반환함
+* `getRealPath("/exist_path")`  일 경우 `{WEB_ROOT 절대경로}/exist_path` 로 정상 반환함.
+
+✨ 위의 동작 때문에, Jetty 12에서는 반드시 존재하는 경로를 넣어줘야함.
+
+
+
+---
 
 Struts2 를 사용한 다른 프로젝트에서 Jetty12 버전업 후 리스너의 contextInitialized 메서드에서 얻은 ServletContext 의 getRealPath() 를 호출하면 null을 반환하길레, 최소한의 예제를 만들어보았는데...
 

@@ -169,3 +169,23 @@ At this point, Gradle for Java  runs the program with the downloaded automatical
 However, when running from the Run Link in main(), it runs with a Java version from the Java list declared in settings.json that can handle version 18.
 In my case, because JDK version 21 was registered in settings.json, it ran with version 21.
 
+---
+
+There are parts where I gave speculative answers. 😅
+
+```json
+    // Specifies the folder path to the JDK (17 or more recent) used to launch the Java Language Server. 
+    // This setting will replace the Java extension's embedded JRE to start the Java Language Server.
+    "java.jdt.ls.java.home": "C:\\JDK\\17",
+    // The location to the JVM used to run the Gradle daemon.
+    "java.import.gradle.java.home": "C:\\JDK\\17",
+```
+
+* If `java.jdt.ls.java.home` is not set, Java Language Server runs as the following built-in JRE. `%USERPROFILE%\.vscode\extensions\redhat.java-1.30.0-win32-x64\jre\17.0.10-win32-x86_64`
+  * 💡However, when using this value without setting it, there were rare cases where automatic completion of Java basic classes did not work properly.
+
+
+* `java.import.gradle.java.home` seems to mean the Java path that Gradle For Java uses when running the Gradle daemon rather than executing Gradle For Java itself.
+
+  
+

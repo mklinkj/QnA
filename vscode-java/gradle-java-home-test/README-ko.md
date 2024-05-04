@@ -174,3 +174,25 @@ settings.json 에는 18버전이 선언 되어있지는 않지만,  전역 gradl
 2. 그러나 main()에서 `Run` Link로 실행할 때는 settings.json에 선언된 Java 목록 중 18버전을 처리할 수 있는 Java 버전으로 실행됨.
    * 나의 경우는 JDK 21버전이 settings.json에 등록 되어있었기 때문에 21버전으로 실행되었음.
 
+
+
+---
+
+내가 몇가지 추측성 답변을 한 부분이 있는 것 같다. 😅
+
+```json
+    // Java Language Server를 시작하는 데 사용되는 JDK(17 이상)에 대한 폴더 경로를 지정합니다. 
+    // 이 설정은 Java 확장의 내장 JRE를 대체하여 Java 언어 서버를 시작합니다.
+    "java.jdt.ls.java.home": "C:\\JDK\\17",
+    // Gradle 데몬을 실행하는 데 사용되는 JVM의 위치입니다.
+    "java.import.gradle.java.home": "C:\\JDK\\17",
+```
+
+* `java.jdt.ls.java.home`를 설정하지 않으면 Java Language Server를 다음의 내장 JRE로 실행함.
+
+  `%USERPROFILE%\.vscode\extensions\redhat.java-1.30.0-win32-x64\jre\17.0.10-win32-x86_64`
+
+  * 💡그런데 이 값을 설정하지 않고 사용했을 때, Java 기본 클래스들의 자동완성이 정상 동작하지 않았던 적이 드물게 있었음.
+
+* `java.import.gradle.java.home`는 Gradle For Java의 자체 실행보다는 Gradle For Java가 Gradle 데몬을 실행할 때 사용하는 Java 경로라는 의미가 정확한 것 같다.
+

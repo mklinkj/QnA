@@ -26,4 +26,8 @@ application {
 
 tasks.named('test') {
   useJUnitPlatform()
+  testLogging {
+    outputs.upToDateWhen { false }
+    showStandardStreams = true
+  }
 }

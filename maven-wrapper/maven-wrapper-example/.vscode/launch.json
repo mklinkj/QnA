@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "App",
+      "request": "launch",
+      "mainClass": "org.example.App",
+      "projectName": "surefire-test-example",
+      "vmArgs": [
+        "--add-opens=java.base/java.lang=ALL-UNNAMED"
+      ]
+    }
+  ]
+}

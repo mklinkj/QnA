@@ -6,11 +6,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.example</groupId>
-  <artifactId>surefire-test-example</artifactId>
+  <artifactId>maven-wrapper-example</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>surefire-test-example</name>
-  <description>A simple surefire-test-example.</description>
+  <name>maven-wrapper-example</name>
+  <description>A simple maven-wrapper-example.</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

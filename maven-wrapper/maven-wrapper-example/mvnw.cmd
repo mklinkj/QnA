@@ -80,25 +80,28 @@ $distributionUrlName = $distributionUrl -replace '^.*/',''
 $distributionUrlNameMain = $distributionUrlName -replace '\.[^.]*$','' -replace '-bin$',''
 
 $MAVEN_M2_PATH = "$HOME/.m2"
+Write-Output = "MAVEN_M2_PATH: $MAVEN_M2_PATH"
+Write-Output = "MAVEN_USER_HOME: $env:MAVEN_USER_HOME"
+# MAVEN_USER_HOME 자체가 잘못 입력되어있어도 당연히 오류가 발생할 수 있다. 그냥 공백 하나만 들어가 있을 경우.
 if ($env:MAVEN_USER_HOME) {
   $MAVEN_M2_PATH = "$env:MAVEN_USER_HOME"
 }
-Write-Output "$MAVEN_M2_PATH"
+Write-Output = "MAVEN_M2_PATH: $MAVEN_M2_PATH"
 
 if (-not (Test-Path -Path $MAVEN_M2_PATH)) {
     New-Item -Path $MAVEN_M2_PATH -ItemType Directory | Out-Null
 }
 
 $MAVEN_WRAPPER_DISTS = $null
+Write-Output = "MAVEN_M2_PATH: $MAVEN_M2_PATH"
 if ((Get-Item $MAVEN_M2_PATH).Target[0] -eq $null) {
-  Write-Output "is null"
   $MAVEN_WRAPPER_DISTS = "$MAVEN_M2_PATH/wrapper/dists"
 } else {
-  $MAVEN_WRAPPER_DISTS = (Get-Item $MAVEN_M2_PATH).Target + "/wrapper/dists"
-  Write-Output "not null"
-  Write-Output "$MAVEN_WRAPPER_DISTS"
+  $MAVEN_WRAPPER_DISTS = (Get-Item $MAVEN_M2_PATH).Target[0] + "/wrapper/dists"
+  Write-Output = "MAVEN_M2_PATH: $MAVEN_M2_PATH"
+  Write-Output = "1MAVEN_WRAPPER_DISTS:" + (Get-Item $MAVEN_M2_PATH).Target[0]
+  Write-Output = "2MAVEN_WRAPPER_DISTS: $MAVEN_WRAPPER_DISTS"
 }
-
 
 $MAVEN_HOME_PARENT = "$MAVEN_WRAPPER_DISTS/$distributionUrlNameMain"
 $MAVEN_HOME_NAME = ([System.Security.Cryptography.MD5]::Create().ComputeHash([byte[]][char[]]$distributionUrl) | ForEach-Object {$_.ToString("x2")}) -join ''
